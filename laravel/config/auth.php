@@ -34,12 +34,17 @@ return [
     | Supported: "session"
     |
     */
-
-    'guards' => [
+  'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // 追記
+       'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+
     ],
 
     /*
