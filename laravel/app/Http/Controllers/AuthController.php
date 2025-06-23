@@ -49,7 +49,11 @@ class AuthController extends Controller
         // 既存トークンを全部無効にしたいなら ↓ を付ける
         // $user->tokens()->delete();
 
+        //is_adminがtrueならabilityとしてadminを付与 違うならuserを付与
+
         $token = $user->createToken('default')->plainTextToken;
+
+
 
         return response()->json([
             'token' => $token,

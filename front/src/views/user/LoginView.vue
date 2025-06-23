@@ -57,6 +57,8 @@ const handleSubmit = async () => {
       showLoggedInState()
     }, 500)
 
+    router.push('top')
+
   } catch (error) {
     console.error('ログインエラー:', error)
     showMessage(error.message || 'ログインに失敗しました', true)
