@@ -60,7 +60,7 @@ Route::middleware(['auth:sanctum', 'can:admin'])->group(function(){
 
 
 //認証管理しているかつユーザー権限を持っている場合に実行
-Route::middleware(['auth:sanctum', 'abilities:user'])->group(function(){
+Route::middleware(['auth:sanctum', 'can:user'])->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
