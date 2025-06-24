@@ -5,7 +5,7 @@ namespace App\Http\Resources\toyzamas;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BuyResource extends JsonResource
+class HistoryListResource extends JsonResource
 {
     public function toArray($request)
     {

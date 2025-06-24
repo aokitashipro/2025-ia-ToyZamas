@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api\Toyzamas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Sale;
+
+use App\Http\Resources\toyzamas\HistoryListResource;
 
 class HistoryController extends Controller
 {
@@ -12,7 +16,14 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id(); // ログインユーザーのID取得
+
+        // ユーザーの購入履歴を取得
+        $history = Sale::with(['items.toy'])
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return HistoryListResource::collection($history);
     }
 
     /**
