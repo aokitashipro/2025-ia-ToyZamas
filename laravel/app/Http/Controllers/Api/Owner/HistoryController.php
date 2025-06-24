@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Owner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stocks_History;
-use
+use App\Http\Resources\Owner\StocksHistoryListResource;
 
 class HistoryController extends Controller
 {
@@ -18,6 +18,7 @@ class HistoryController extends Controller
         $stock_histories = Stocks_History::with('toy')
                                     ->first();
 
+        dd($stock_histories);
         return StocksHistoryListResource::collection($stock_histories);
     }
 
