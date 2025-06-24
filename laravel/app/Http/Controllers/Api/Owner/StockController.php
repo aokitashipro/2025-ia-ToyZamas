@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Toy;
+use App\Http\Resources\Owner\StockListResource;
 
 class StockController extends Controller
 {
@@ -13,6 +15,11 @@ class StockController extends Controller
     public function index()
     {
         //
+        $stocks = Toy::select('name', 'stock')
+                    ->orderBy('stock', 'asc')
+                    ->get();
+
+        return StockListResource::collection($stocks);
     }
 
     /**
