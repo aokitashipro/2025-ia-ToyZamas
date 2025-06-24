@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Toy;
+use App\Http\Resources\Owner\ToyListResource;
 
 class ToyController extends Controller
 {
@@ -13,6 +15,11 @@ class ToyController extends Controller
     public function index()
     {
         //
+        $toys = Toy::with(['category', 'series'])
+                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve')
+                    ->get();
+
+        return ToyListResource::collection($toys);
     }
 
     /**
@@ -21,6 +28,7 @@ class ToyController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -29,6 +37,10 @@ class ToyController extends Controller
     public function show(string $id)
     {
         //
+        $toy = Toy::with(['category', 'series'])
+                    ->findOrFail($id);
+
+        return $toy;
     }
 
     /**
