@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Resources\Owner\UserListResource;
 
 class UserController extends Controller
 {
@@ -12,7 +14,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        //ユーザーデータ一覧
+        $users = User::select('name', 'is_admin')
+                    ->get();
+
+        return UserListResource::collection($users);
     }
 
     /**
@@ -21,6 +27,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $user = User::create($request->all());
+
+        return ('ユーザー登録完了');
     }
 
     /**
