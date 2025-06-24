@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Stocks_History;
+use
 
 class HistoryController extends Controller
 {
@@ -13,6 +15,10 @@ class HistoryController extends Controller
     public function index()
     {
         //
+        $stock_histories = Stocks_History::with('toy')
+                                    ->first();
+
+        return StocksHistoryListResource::collection($stock_histories);
     }
 
     /**
