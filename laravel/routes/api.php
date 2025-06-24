@@ -40,12 +40,14 @@ Route::apiResource('/owner/series', OwnerSeriesController::class);
 Route::apiResource('/owner/users', OwnerUserController::class);
 Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
 
+
 //ユーザデータの登録、ログイン
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
 //認証完了しているかつ管理者権限を持っている場合に実行
+
 Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
@@ -68,3 +70,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/toyzamas/reserves', UserReservesController::class);
     Route::apiResource('/toyzamas/favorites', UserFavoritesController::class);
 });
+
