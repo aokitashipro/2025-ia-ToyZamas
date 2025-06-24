@@ -31,7 +31,7 @@ Route::get('/user', function (Request $request) {
 
 
 // Owner用ルート追加
-Route::apiResource('/owner/toys', OwnerToyController::class);
+
 Route::apiResource('/owner/stocks', OwnerStockController::class);
 Route::apiResource('/owner/history', OwnerHistoryController::class);
 Route::apiResource('/owner/reserves', OwnerReserveController::class);
@@ -47,7 +47,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 //認証完了しているかつ管理者権限を持っている場合に実行
-
 Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });

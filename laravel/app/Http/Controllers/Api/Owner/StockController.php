@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Toy;
+use App\Models\Stocks_History;
+use App\Http\Resources\Owner\StockListResource;
+
 
 class StockController extends Controller
 {
@@ -13,6 +18,11 @@ class StockController extends Controller
     public function index()
     {
         //
+        $stocks = Toy::select('name', 'stock')
+                    ->orderBy('stock', 'asc')
+                    ->get();
+
+        return StockListResource::collection($stocks);
     }
 
     /**
@@ -36,7 +46,26 @@ class StockController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $toy = Toy::findOrFail($id);
+
+        //toyのstockを仕入れ分増加させる
+        $toy->stock = $toy->stock + $request->purchase;
+        $toy->save();
+
+        //仕入れ履歴に今回の仕入れを追加
+        $stock =[
+            'toy_id' => $toy->id,
+            'be_stored' => $toy->stock,
+            'stock_in' => $request->purchase,
+            'stock_out' => 0,
+            'description' => $request->description
+        ];
+
+        Stocks_History::create($stock);
+
+        return $stock;
+
     }
 
     /**
