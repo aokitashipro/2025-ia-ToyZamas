@@ -52,7 +52,21 @@ class ToyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $toy = Toy::findOrFail($id);
+
+        $toy->name = $request->name;
+        $toy->information = $request->information;
+        $toy->price = $request->price;
+        $toy->category_id = $request->category_id;
+        $toy->series_id = $request->series_id;
+        $toy->image_url = $request->image_url;
+        $toy->stock = $request->stock;
+        $toy->is_reserve = $request->is_reserve;
+        $toy->release_date = $request->release_date;
+
+        $toy->save();
+
+        return('更新完了');
     }
 
     /**
