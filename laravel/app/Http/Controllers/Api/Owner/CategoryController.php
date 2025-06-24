@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Psy\Util\Json;
+
 
 use App\Http\Requests\CategoryRequest;//リクエスト追加
 use  App\Http\Resources\owner\CategoryListResource;//リソース追加
