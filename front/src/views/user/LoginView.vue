@@ -57,7 +57,6 @@ const handleSubmit = async () => {
       showLoggedInState()
     }, 500)
 
-    router.push('top')
 
   } catch (error) {
     console.error('ログインエラー:', error)
@@ -71,19 +70,19 @@ const handleSubmit = async () => {
 const handleLogout = async () => {
   try {
     // APIでログアウト
-    await apiClient.post('/logout', {})
-  } catch (error) {
-    console.error('ログアウトAPIエラー:', error)
-  } finally {
+    await apiClient.post('/logout', {});
     // ローカルストレージをクリア
     localStorage.removeItem('token')
     localStorage.removeItem('user')
 
-    // フォームを再表示
+        // フォームを再表示
     isLoggedIn.value = false
     formData.email = ''
     formData.password = ''
     showMessage('ログアウトしました', false)
+    
+  } catch (error) {
+    console.error('ログアウトAPIエラー:', error)
   }
 }
 

@@ -19,7 +19,7 @@ class Toy extends Model
         return $this->belongsTo(Series::class, 'series_id'); // 外部キー名を指定
     }
 
-    protected $fillable = ['name', 'information','price','category_id','series_id','stock','release_date'];
+    protected $fillable = ['name', 'information','price','category_id','series_id','stock','release_date', 'is_selling', 'is_reserve'];
 
     use HasFactory;
 }
