@@ -41,20 +41,27 @@ Route::apiResource('/owner/users', OwnerUserController::class);
 Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
 
 
-
 //ユーザデータの登録、ログイン
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
 //認証完了しているかつ管理者権限を持っている場合に実行
-// Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
-//     Route::post('/logout', [AuthController::class, 'logout']);
-// });
+
+Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 
 //認証管理しているかつユーザー権限を持っている場合に実行
+Route::middleware(['auth:sanctum', 'can:user'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('/toyzamas/carts', UserCartController::class);
+});
+
+//ポストマン用
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
     // User用ルート
     Route::apiResource('/toyzamas/toys', UserToyController::class);
     Route::apiResource('/toyzamas/carts', UserCartController::class);
@@ -62,5 +69,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/toyzamas/history', UserHistoryController::class);
     Route::apiResource('/toyzamas/reserves', UserReservesController::class);
     Route::apiResource('/toyzamas/favorites', UserFavoritesController::class);
-    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
