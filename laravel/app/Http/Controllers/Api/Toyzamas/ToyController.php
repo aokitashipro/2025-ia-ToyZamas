@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api\Toyzamas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Toyzamas\ToyListResource;
+use App\Http\Resources\Toyzamas\ToyResource;
 use Illuminate\Http\Request;
+use App\Models\Toy;
+
 
 class ToyController extends Controller
 {
@@ -12,7 +16,9 @@ class ToyController extends Controller
      */
     public function index()
     {
-        //
+        //仮 id1~10までを取得
+        $toys = Toy::whereBetween('id',[1,10])->get();
+        return ToyListResource::collection($toys);
     }
 
     /**
@@ -28,7 +34,8 @@ class ToyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $toy = Toy::findOrfail($id);
+        return new ToyResource($toy);
     }
 
     /**

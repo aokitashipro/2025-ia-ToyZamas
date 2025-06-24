@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Resources\Owner\UserListResource;
+use App\Http\Resources\Owner\UserResource;
 
 class UserController extends Controller
 {
@@ -12,7 +15,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        //ユーザーデータ一覧
+        $users = User::select('name', 'is_admin')
+                    ->get();
+
+        return UserListResource::collection($users);
     }
 
     /**
@@ -21,6 +28,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $user = User::create($request->all());
+
+        return ('ユーザー登録完了');
     }
 
     /**
@@ -29,6 +39,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        $user = User::findOrFail($id);
+
+        return (new UserResource($user));
     }
 
     /**
@@ -37,6 +50,14 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $user = User::findOrFail($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->is_admin = $request->is_admin;
+
+        $user->save();
+        return('更新完了');
     }
 
     /**
@@ -45,5 +66,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = User::findOrFail($id)->delete();
+
+        return('削除完了');
     }
 }

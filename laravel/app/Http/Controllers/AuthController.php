@@ -47,7 +47,7 @@ class AuthController extends Controller
         }
 
         // 既存トークンを全部無効にしたいなら ↓ を付ける
-        // $user->tokens()->delete();
+        $user->tokens()->delete();
 
         //is_adminがtrueならabilityとしてadminを付与 違うならuserを付与
 
