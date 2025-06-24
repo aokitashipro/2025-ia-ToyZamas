@@ -16,7 +16,7 @@ class ToyListResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'price' => number_format($this->price),
+            'price' => number_format($this->price) . '円',
             'category' => $this->category->name,
             'series' => $this->series->name,
             'stock' => $this->stock . '個',

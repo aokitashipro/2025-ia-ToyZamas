@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Toy;
 use App\Http\Resources\Owner\ToyListResource;
+use App\Http\Resources\Owner\ToyResource;
 
 class ToyController extends Controller
 {
@@ -16,7 +17,7 @@ class ToyController extends Controller
     {
         //
         $toys = Toy::with(['category', 'series'])
-                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve')
+                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
                     ->get();
 
         return ToyListResource::collection($toys);
@@ -28,7 +29,9 @@ class ToyController extends Controller
     public function store(Request $request)
     {
         //
+        $toy = Toy::create($request->all());
 
+        return('登録完了');
     }
 
     /**
@@ -40,7 +43,8 @@ class ToyController extends Controller
         $toy = Toy::with(['category', 'series'])
                     ->findOrFail($id);
 
-        return $toy;
+        return (new ToyResource($toy))
+                    ->additional(['message' => '商品詳細']);
     }
 
     /**
@@ -57,5 +61,6 @@ class ToyController extends Controller
     public function destroy(string $id)
     {
         //
+
     }
 }
