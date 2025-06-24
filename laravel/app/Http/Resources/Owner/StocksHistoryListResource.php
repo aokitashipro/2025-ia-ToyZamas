@@ -14,6 +14,13 @@ class StocksHistoryListResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'name' => $this->toy->name,
+            'be_stored' => $this->be_stored,
+            'stock_in' => $this->stock_in,
+            'stock_out' => $this->stock_out,
+            'description' => $this->description,
+            'created_at' => $this->created_at->format('Y-m-d')
+        ];
     }
 }

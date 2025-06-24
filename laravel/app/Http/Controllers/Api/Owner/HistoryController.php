@@ -16,9 +16,8 @@ class HistoryController extends Controller
     {
         //
         $stock_histories = Stocks_History::with('toy')
-                                    ->first();
+                                    ->get();
 
-        dd($stock_histories);
         return StocksHistoryListResource::collection($stock_histories);
     }
 
