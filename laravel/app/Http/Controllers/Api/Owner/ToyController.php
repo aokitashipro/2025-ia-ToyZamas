@@ -61,6 +61,9 @@ class ToyController extends Controller
     public function destroy(string $id)
     {
         //
+        $toy = Toy::findOrFail($id)
+                    ->delete();
 
+        return('情報を削除しました');
     }
 }
