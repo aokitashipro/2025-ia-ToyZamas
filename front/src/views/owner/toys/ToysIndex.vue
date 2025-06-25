@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
@@ -8,7 +7,7 @@
 
     const toys = ref([])
 
-    async function getAllToys(){
+    async function getToys(){
         try{
             loading.value = true
             error.value = null
@@ -24,7 +23,7 @@
     }
 
     onMounted(() => 
-        getAllToys() 
+        getToys() 
     )
 </script>
 
@@ -62,11 +61,4 @@
             </table>
         </div>
     </div>
-=======
-<script setup>
-</script>
-
-<template>
-  <div>ToysIndex</div>
->>>>>>> 1136c6c85baab785266d16af69c398ba3e3a6636
 </template>

@@ -16,13 +16,17 @@
     const categories = ref([])
     const series = ref([])
 
-    const error = (null)
-    const loading = (true)
+    const loading = ref(true)
+    const error = ref(null)
+
 
     async function getCategories(){
         try{
-        const response_categories = await apiClient.get('/owner/categories')
-        categories.value = response_categories.data
+            loading.value = true
+            error.value = null
+
+            const response_categories = await apiClient.get('/owner/categories')
+            categories.value = response_categories.data
         }catch(err){
             console.log('カテゴリ名の取得に失敗:', err)
             error.value = 'カテゴリ名一覧の取得に失敗しました'
@@ -34,16 +38,17 @@
         const response_series = await apiClient.get('/owner/series')
         series.value = response_series.data
         }catch(err){
-            console.log('カテゴリ名の取得に失敗:', err)
-            error.value = 'カテゴリ名一覧の取得に失敗しました'
+            console.log('シリーズ名の取得に失敗:', err)
+            error.value = 'シリーズ名一覧の取得に失敗しました'
+        }finally{
+            loading.value = false
         }
     }
 
-    onMounted(() =>
-        loading.value = true,
-        error.value = null,
-        getCategories(),
+    onMounted(() =>{
+        getCategories()
         getSeries()
+        }
     )
 
 </script>
@@ -97,7 +102,7 @@
             <p>
                 シリーズ名：
                 <select v-model="series_id">
-                    <option v-for="a_series in series" :value="series.id">
+                    <option v-for="a_series in series" :value="a_series.id">
                         {{ a_series.name }}
                     </option>
                 </select>
