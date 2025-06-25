@@ -60,6 +60,9 @@ import UserToysShow from '../views/toyzamas/toys/ToysShow.vue'
 // ユーザ:予約画面
 // import UserReservesIndex from '../views/toyzamas/reserves/ReservesIndex.vue'
 
+// ユーザ:お気に入り画面
+import UserFavoritesIndex from '../views/toyzamas/favorites/FavoritesIndex.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -112,22 +115,23 @@ const router = createRouter({
     { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop },
     // ユーザ:商品画面
     { path: '/toyzamas/toys', name: 'UserToysIndex', component: UserToysIndex, props: true },
-    { path: '/toyzamas/toys/:id', name: 'UserToysShow', component: UserToysShow, props: true },
 
-    // // ユーザ:カート画面
-    // { path: '/toyzamas/:user_id/cart', name: 'UserCartIndex', component: UserCartIndex, props: true },
+    { path: '/toyzamas/toys/:toy', name: 'UserToysShow', component: UserToysShow, props: true },
+
+    // ユーザ:カート画面
+    { path: '/toyzamas/cart', name: 'UserCartIndex', component: UserCartIndex, props: true },
     
-    // // ユーザ:購入完了画面
-    // { path: '/toyzamas/:user_id/buy/completion', name: 'UserBuyCompletion', component: UserBuyCompletion, props: true },
+    // ユーザ:購入完了画面
+    { path: '/toyzamas/buy/completion', name: 'UserBuyCompletion', component: UserBuyCompletion, props: true },
 
-    // // ユーザ:購入履歴画面
-    // { path: '/toyzamas/:user_id/buy/history', name: 'UserHistoryIndex', component: UserHistoryIndex, props: true },
+    // ユーザ:購入履歴画面
+    { path: '/toyzamas/buy/history', name: 'UserHistoryIndex', component: UserHistoryIndex, props: true },
 
-    // // ユーザ:予約画面
-    // { path: '/toyzamas/:user_id/reserves', name: 'UserReservesIndex', component: UserReservesIndex, props: true },
+    // ユーザ:予約画面
+    { path: '/toyzamas/reserves', name: 'UserReservesIndex', component: UserReservesIndex, props: true },
 
-    // // ユーザ:お気に入り画面
-    // { path: '/toyzamas/:user_id/favorites', name: 'FavoritesIndex', component: FavoritesIndex, props: true },
+    // ユーザ:お気に入り画面
+    { path: '/toyzamas/favorites', name: 'UserFavoritesIndex', component: UserFavoritesIndex, props: true },
   ],
 })
 
