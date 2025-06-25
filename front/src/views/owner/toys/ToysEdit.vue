@@ -1,7 +1,7 @@
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
-    import { useRoute } from 'vue-router'
+    import { useRoute, useRouter } from 'vue-router'
 
     const loading = ref(true)
     const error = ref(null)
@@ -13,6 +13,7 @@
     const current_series = ref(null)
 
     const route = useRoute()
+    const router = useRouter()
     const toyId = route.params.toy
 
     async function getToys(toyId){  
@@ -51,28 +52,43 @@
       }
     }
 
-    // async function getCategories(){
-    //     try{
+    async function toyUpdate(toy, current_category, current_series, toyId){
+      try{
+        error.value = null
 
-    //         console.log(response_categories.data);
-    //         console.log(categories.value);
-    //     }catch(err){
-    //         console.log('カテゴリ名の取得に失敗:', err)
-    //         error.value = 'カテゴリ名一覧の取得に失敗しました'
-    //     }
-    // }
+        //選択されているカテゴリとシリーズのidをtoyに格納
+        toy.category_id = current_category.id
+        toy.series_id = current_series.id
 
-    // async function getSeries(){
-    //     try{
-    //     const response_series = await apiClient.get('/owner/series')
-    //     series.value = response_series.data
-    //     }catch(err){
-    //         console.log('シリーズ名の取得に失敗:', err)
-    //         error.value = 'シリーズ名一覧の取得に失敗しました'
-    //     }finally{
-    //         loading.value = false
-    //     }
-    // }
+        //is_sellingとis_reserveの値をtrue : falseに変更
+        if(toy.is_selling === '販売中'){
+          toy.is_selling = true
+        }else if(toy.is_selling === '販売中止'){
+          toy.is_selling = false
+        }
+
+        if(toy.is_reserve === '予約可能'){
+          toy.is_reserve = true
+        }else if(toy.is_reserve === '予約不可'){
+          toy.is_reserve = false
+        }
+
+        console.log(toy)
+
+        const response = await apiClient.put(`/owner/toys/${toyId}`, toy)
+
+        alert('商品情報の更新に成功しました！商品詳細ページに戻ります')
+        router.push(`/owner/toys/${toyId}`)
+      }catch(err){
+        console.log('商品情報の更新に失敗:', err)
+        error = '商品情報の更新に失敗しました'
+      }
+    }
+
+    async function toyDelete(){
+
+    }
+
     onMounted(() => 
         {
           getToys(toyId) 
@@ -94,7 +110,7 @@
         </div>
 
         <div v-else>
-          <RouterLink :to="'/owner/toys'">商品一覧へ戻る</RouterLink><br><br>
+          <RouterLink :to="`/owner/toys/${toyId}`">商品詳細へ戻る</RouterLink><br><br>
           <p>
             商品名: 
             <input type="text" v-model="toy.name" name="name">
@@ -105,10 +121,11 @@
             <input type="number" v-model="toy.price" name="price" min="0">
           </p>
           
+<!--      在庫は仕入れか予約、購入のいずれかでしか変動できないものとする  
           <p>
             在庫: 
             <input type="number" v-model="toy.stock" name="stock" min="0">
-          </p>
+          </p> -->
           
           <p>
             商品説明:
@@ -137,16 +154,16 @@
             販売状況：
             <!-- 販売中の場合は販売中にチェックが入っている -->
             <div v-if="toy.is_selling">
-              <input type="radio" v-model="toy.is_selling" id="selling_now" name="is_selling" value="true" checked="checked">
+              <input type="radio" v-model="toy.is_selling" id="can_selling" name="is_selling" value="販売中" checked="checked">
               <label for="can_selling">販売中</label>
-              <input type="radio" v-model="toy.is_selling" id="not_selling" name="is_selling" value="false">
+              <input type="radio" v-model="toy.is_selling" id="cant_selling" name="is_selling" value="販売中止" >
               <label for="cant_selling">販売中止</label>
             </div>
             <!-- 販売中止の場合は販売中止にチェックが入っている -->
             <div v-else>
-              <input type="radio" v-model="toy.is_selling" id="selling_now" name="is_selling" value="true">
+              <input type="radio" v-model="toy.is_selling" id="can_selling" name="is_selling" value="販売中">
               <label for="can_selling">販売中</label>
-              <input type="radio" v-model="toy.is_selling" id="not_selling" name="is_selling" value="false" checked="checked">
+              <input type="radio" v-model="toy.is_selling" id="cant_selling" name="is_selling" value="販売中止" checked="checked">
               <label for="cant_selling">販売中止</label>
             </div>
           </p>
@@ -155,16 +172,16 @@
             予約状況：
             <!-- 予約可能状況なら予約可能にチェックが入っている -->
             <div v-if="toy.is_reserve">
-              <input type="radio" v-model="toy.is_reserve" id="can_reserve" name="is_reserve" value="true" checked="checked">
+              <input type="radio" v-model="toy.is_reserve" id="can_reserve" name="is_reserve" value="予約可能" checked="checked">
               <label for="can_reserve">予約可能</label>
-              <input type="radio" v-model="toy.is_reserve" id="cant_reserve" name="is_reserve" value="false">
+              <input type="radio" v-model="toy.is_reserve" id="cant_reserve" name="is_reserve" value="予約不可">
               <label for="cant_reserve">予約不可</label>
             </div>
             <!-- 予約不可状況なら予約不可にチェックが入っている -->
             <div v-else>
-              <input type="radio" v-model="toy.is_reserve" id="can_reserve" name="is_reserve" value="true">
+              <input type="radio" v-model="toy.is_reserve" id="can_reserve" name="is_reserve" value="予約可能">
               <label for="can_reserve">予約可能</label>
-              <input type="radio" v-model="toy.is_reserve" id="cant_reserve" name="is_reserve" value="false" checked="checked">
+              <input type="radio" v-model="toy.is_reserve" id="cant_reserve" name="is_reserve" value="予約不可" checked="checked">
               <label for="cant_reserve">予約不可</label>
             </div>
             
@@ -174,7 +191,7 @@
             <input type="text" v-model="toy.release_date" name="release_date">
           </p>
 
-          <input type="button" @click="toyUpdate" value="商品情報を更新">
+          <input type="button" @click="toyUpdate(toy, current_category, current_series, toyId)" value="商品情報を更新">
           <input type="button" @click="toyDelete" value="商品を削除">
         </div>
     </div>

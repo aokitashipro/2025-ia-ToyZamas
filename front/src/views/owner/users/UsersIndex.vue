@@ -1,10 +1,12 @@
 <template>
   a
  <select v-model="selectedInfo"><!-- ★ v-modelに初期値オブジェクトを設定 -->
-  <option v-for="info in infoList" :value="code"><!-- ★ valueにinfoというオブジェクトを設定 -->
+  <option v-for="info in infoList" :value="info"><!-- ★ valueにinfoというオブジェクトを設定 -->
    {{ info.label }}
   </option>
  </select>
+
+ {{ selectedInfo }}
 </template>
 
 <script>

@@ -24,8 +24,8 @@ class ToyResource extends JsonResource
             'category_pop' => $this->category->sort_order,
             'series_name' => $this->series->name,
             'series_pop' => $this->series->sort_order,
-            'is_selling' => $this->is_selling == 1 ? '販売中' : '在庫なし',
-            'is_reserve' => $this->is_reserve == 1 ? '予約可' : '予約不可',
+            'is_selling' => $this->is_selling == 1 ? '販売中' : '販売中止',
+            'is_reserve' => $this->is_reserve == 1 ? '予約可能' : '予約不可',
             'release_date'=> $this->release_date,
 
             //front, ToysEditに必要なため追加

@@ -17,7 +17,7 @@ class ToyController extends Controller
     {
         //
         $toys = Toy::with(['category', 'series'])
-                    ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
                     ->get();
 
         return ToyListResource::collection($toys);
@@ -60,13 +60,16 @@ class ToyController extends Controller
         $toy->category_id = $request->category_id;
         $toy->series_id = $request->series_id;
         $toy->image_url = $request->image_url;
-        $toy->stock = $request->stock;
+        $toy->is_selling = $request->is_selling;
         $toy->is_reserve = $request->is_reserve;
         $toy->release_date = $request->release_date;
 
         $toy->save();
 
-        return('更新完了');
+        return (new ToyResource($toy))
+        ->additional(['message' => '商品情報が更新されました。商品詳細へ戻ります'])
+        ->response()
+        ->setStatusCode(201);
     }
 
     /**
