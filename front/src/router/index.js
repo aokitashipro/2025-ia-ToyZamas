@@ -68,24 +68,6 @@ const router = createRouter({
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue'),},
 
     //userディレクトリのルート設定
-<<<<<<< HEAD
-    {
-      //ログイン用ルートの追加
-      path: '/login', name: 'login', component: Login
-    },
-    {
-      //ログアウト用ルートの追加
-      path: '/logout', name: 'logout', component: Logout
-    },
-    {
-      //登録用ルートの追加
-      path: '/register', name: 'register', component: Register
-    },
-    //Ownerディレクトリのルート設定
-    {
-      path: '/owner', name: 'OwnerTop', component: OwnerTop 
-    },
-=======
     { path: '/login', name: 'login', component: Login }, //ログイン用ルートの追加
 
     { path: '/logout', name: 'logout', component: Logout }, //ログアウト用ルートの追加
@@ -126,19 +108,6 @@ const router = createRouter({
 
     // 管理者:売上分析画面ルート
     { path: '/owner/sales-analysis', name: 'OwnerSalesAnalysis', component: OwnerSalesAnalysis },
->>>>>>> 189fbf5bd4d89dd1b82c9838bf444f8b27bb107b
-
-    //ユーザー側 ========================================================
-    //Toyzamasディレクトリのルート設定
-<<<<<<< HEAD
-    {
-      path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop
-    },
-    {
-      //商品一覧用ルートの追加
-      path: '/toyzamas/toys', name: 'toysIndex', component:ToysIndex
-    },
-=======
     { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop },
     // ユーザ:商品画面
     { path: '/toyzamas/:user_id/toys', name: 'UserToysIndex', component: UserToysIndex, props: true },
@@ -158,7 +127,6 @@ const router = createRouter({
 
     // ユーザ:お気に入り画面
     { path: '/toyzamas/:user_id/favorites', name: 'FavoritesIndex', component: FavoritesIndex, props: true },
->>>>>>> 189fbf5bd4d89dd1b82c9838bf444f8b27bb107b
   ],
 })
 
