@@ -1,7 +1,6 @@
 <script setup>
-
 </script>
 
 <template>
-  管理者向けトップ
+    一般ユーザ用トップ
 </template>
