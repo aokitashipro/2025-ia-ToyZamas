@@ -1,33 +1,17 @@
 <template>
-<<<<<<< HEAD
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-
-    <div class="wrapper">
-      <!-- <HelloWorld msg="You did it!" /> -->
-      <nav>
-        <!-- <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink> -->
-        <!-- <RouterLink to="/login">Login</RouterLink> -->
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
-=======
   <div>
-    <Header v-if="isAuthenticated" />
+    <!-- <Header v-if="isAuthenticated" /> -->
     <main class="container">
   
-      <div v-if="!isAuthenticated">
+      <!-- <div v-if="!isAuthenticated"> -->
+      <div>
         <h2>といザます</h2>
         <RouterLink to="/login">機能を使うにはログインが必要です。</RouterLink>
       </div>
           <router-view /> <!-- ページごとに切り替わる部分 -->
     </main>
-    <Footer v-if="isAuthenticated" />
+    <!-- <Footer v-if="isAuthenticated" /> -->
   </div>
->>>>>>> 189fbf5bd4d89dd1b82c9838bf444f8b27bb107b
 </template>
 
 <script setup>

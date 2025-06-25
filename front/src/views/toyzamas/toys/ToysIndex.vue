@@ -3,9 +3,10 @@
     <main>
       <h1>商品一覧</h1>
       <div v-for="toy in toys" :key="toy.id">
-        商品名: {{ toy.name }} 価格: ¥{{ toy.price }}
-        <!-- <a :href="`/toys/show.html?id=${toy.id}`">詳細</a>
-          <a :href="`/toys/edit.html?id=${toy.id}`">編集</a> -->
+        <img :src="toy.image_url" alt="" width="100" height="100">
+        商品名: {{ toy.name }} 価格: ¥{{ toy.price }} 
+        <a :href="`/toyzamas/toys/${toy.id}`">詳細</a>
+        <!-- <a :href="`/toys/edit.html?id=${toy.id}`">編集</a> -->
       </div>
     </main>
   </div>
@@ -27,7 +28,7 @@ export default {
   methods: {
     async loadtoys() {
       try {
-        const response = await apiClient.get("/toys"); // LaravelのAPIエンドポイントに一致させる
+        const response = await apiClient.get("/toyzamas/toys"); // LaravelのAPIエンドポイントに一致させる
         this.toys = response.data; // JSONレスポンスのdataプロパティを参照
         console.log("レスポンス内容:", response); // レスポンス全体を確認
         console.log("データ部分:", response.data); // JSONデータを確認
