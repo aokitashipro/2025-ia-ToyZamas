@@ -14,40 +14,21 @@ import ToyzamasTop from '../views/toyzamas/TopView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/', name: 'home', component: HomeView,
-    },
-    {
-      path: '/about', name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
+    { path: '/', name: 'home', component: HomeView, },
+    { path: '/about', name: 'about', component: () => import('../views/AboutView.vue'),},
 
     //userディレクトリのルート設定
-    {
-      //ログイン用ルートの追加
-      path: '/login', name: 'login', component: Login
-    },
-    {
-      //ログアウト用ルートの追加
-      path: '/logout', name: 'logout', component: Logout
-    },
-    {
-      //登録用ルートの追加
-      path: '/register', name: 'register', component: Register
-    },
+    { path: '/login', name: 'login', component: Login }, //ログイン用ルートの追加
+
+    { path: '/logout', name: 'logout', component: Logout }, //ログアウト用ルートの追加
+    
+    { path: '/register', name: 'register', component: Register }, //登録用ルートの追加
 
     //Ownerディレクトリのルート設定
-    {
-      path: '/owner', name: 'OwnerTop', component: OwnerTop
-    },
+    { path: '/owner', name: 'OwnerTop', component: OwnerTop },
 
     //Toyzamasディレクトリのルート設定
-    {
-      path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop
-    }
+    { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop }
   ],
 })
 
