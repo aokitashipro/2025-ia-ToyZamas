@@ -16,7 +16,7 @@ class ToyResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'price' => number_format($this->price) . '円',
+            'price' => $this->price,
             'stock' => $this->stock,
             'information' => $this->information,
             'img_url' => $this->img_url,
@@ -26,6 +26,11 @@ class ToyResource extends JsonResource
             'series_pop' => $this->series->sort_order,
             'is_selling' => $this->is_selling == 1 ? '販売中' : '在庫なし',
             'is_reserve' => $this->is_reserve == 1 ? '予約可' : '予約不可',
+            'release_date'=> $this->release_date,
+
+            //front, ToysEditに必要なため追加
+            'category_id' => $this->category_id,
+            'series_id' => $this->series_id,
         ];
     }
 }

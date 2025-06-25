@@ -5,11 +5,10 @@
 
     const loading = ref(true)
     const error = ref(null)
-
     const toy = ref(null)
 
     const route = useRoute()
-    const toyId = route.param.id
+    const toyId = route.params.toy
 
     async function getToys(toyId){  
       try{
@@ -42,6 +41,7 @@
         </div>
 
         <div v-else>
+            <RouterLink :to="'/owner/toys'">商品一覧へ戻る</RouterLink>
           <p>商品名: {{ toy.name }}</p>
           <p>値段: {{ toy.price }}</p>
           <p>在庫: {{ toy.stock }}</p>
@@ -49,9 +49,14 @@
           <p>カテゴリ名: {{ toy.category_name }}</p>
           <p>カテゴリ人気度: {{ toy.category_pop }}</p>
           <p>シリーズ名: {{ toy.series_name }}</p>
-          <p>シリーズ人気度: {{ toy.category_pop }}</p>
+          <p>シリーズ人気度: {{ toy.series_pop }}</p>
           <p>販売状況: {{ toy.is_selling }}</p>
           <p>予約可否: {{ toy.is_reserve }}</p>
+          <p>発売日:{{ toy.release_date }}</p>
+          <!-- 商品画像も引っ張ってくる -->
+          <p>
+            <RouterLink :to="`/owner/toys/${toyId}/edit`">商品データ編集</RouterLink>
+          </p>
         </div>
     </div>
 </template>

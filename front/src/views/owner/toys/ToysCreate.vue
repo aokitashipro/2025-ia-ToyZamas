@@ -76,22 +76,6 @@
                 <input type="number" v-model="price" name="price" min="0" placeholder="値段を入力してください">
             </p>
             <p>
-                販売状況：
-                <input type="radio" v-model="is_selling" id="selling_now" name="is_selling" value="true">
-                <label for="can_selling">販売中</label>
-
-                <input type="radio" v-model="is_selling" id="not_selling" name="is_selling" value="false">
-                <label for="cant_selling">販売中止</label>
-            </p>
-            <p>
-                予約状況：
-                <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="true">
-                <label for="can_reserve">予約可能</label>
-
-                <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="false">
-                <label for="cant_reserve">予約不可</label>
-            </p>
-            <p>
                 カテゴリ名：
                 <select v-model="category_id">
                     <option v-for="category in categories" :value="category.id">
@@ -108,10 +92,26 @@
                 </select>
             </p>
             <p>
+                販売状況：
+                <input type="radio" v-model="is_selling" id="selling_now" name="is_selling" value="true">
+                <label for="can_selling">販売中</label>
+
+                <input type="radio" v-model="is_selling" id="not_selling" name="is_selling" value="false">
+                <label for="cant_selling">販売中止</label>
+            </p>
+            <p>
+                予約状況：
+                <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="true">
+                <label for="can_reserve">予約可能</label>
+
+                <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="false">
+                <label for="cant_reserve">予約不可</label>
+            </p>
+            <p>
                 <!-- 入力された画像をフォルダに保存、パスをDBに保存 -->
+                https://qiita.com/MK32A/items/8a9bd640fc9c8e69efdd
                 画像：
-                <img :src="'/images' + props.profile.filename">
-                <input type="hidden" v-model="image_url">
+                
             </p>
             <p>
                 在庫：
