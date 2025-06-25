@@ -7,6 +7,7 @@ import Register from '../views/user/RegisterView.vue'
 
 //管理者側のルートimport
 import OwnerTop from '../views/owner/TopView.vue'
+import OwnerToysIndex from '../views/owner/toys/ToysIndex.vue'
 
 //一般ユーザ側のルートimport
 import ToyzamasTop from '../views/toyzamas/TopView.vue'
@@ -24,9 +25,10 @@ const router = createRouter({
 
     //Ownerディレクトリのルート設定
     { path: '/owner', name: 'OwnerTop', component: OwnerTop },
+    { path: '/owner/toys/', name: 'OwnerToysIndex', component: OwnerToysIndex},
 
     //Toyzamasディレクトリのルート設定
-    { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop }
+    { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop },
   ],
 })
 
