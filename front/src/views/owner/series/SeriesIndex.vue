@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <div>ToysShow</div>
+  <div>SeriesIndex</div>
 </template>

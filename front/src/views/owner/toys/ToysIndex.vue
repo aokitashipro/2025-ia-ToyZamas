@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
@@ -61,4 +62,11 @@
             </table>
         </div>
     </div>
+=======
+<script setup>
+</script>
+
+<template>
+  <div>ToysIndex</div>
+>>>>>>> 1136c6c85baab785266d16af69c398ba3e3a6636
 </template>
