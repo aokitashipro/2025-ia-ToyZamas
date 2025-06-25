@@ -1,5 +1,6 @@
 <script setup>
     import {ref, onMounted} from 'vue'
+    import { apiClient } from '@/utils/api'
 
     const loading = ref(true)
     const error = ref(null)
@@ -11,7 +12,7 @@
             loading.value = true
             error.value = null
 
-            const response = await apiClient.get('owners/toys')
+            const response = await apiClient.get('/owner/toys')
             toys.value = response.data
         }catch(err){
             console.log('商品情報の取得に失敗:', err)
