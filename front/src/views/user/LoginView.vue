@@ -50,7 +50,15 @@ const handleSubmit = async () => {
       localStorage.setItem('user', JSON.stringify(data.user))
     }
 
+    if(data.user.is_admin === 1){
+      router.push('/owner')
+    }else if(data.user.is_admin === 0){
+      router.push(`/toyzamas/${data.user.id}/top`)
+    }
+
     showMessage('ログイン成功！', false)
+
+    console.log(data.user.is_admin)
 
     // ログイン成功後の画面を表示
     setTimeout(() => {

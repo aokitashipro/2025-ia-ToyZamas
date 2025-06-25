@@ -4,7 +4,12 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/user/LoginView.vue'
 import Logout from '../views/user/LogoutView.vue'
 import Register from '../views/user/RegisterView.vue'
-import Top from '../views/owner/TopView.vue'
+
+//管理者側のルートimport
+import OwnerTop from '../views/owner/TopView.vue'
+
+//一般ユーザ側のルートimport
+import ToyzamasTop from '../views/toyzamas/TopView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +24,8 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+
+    //userディレクトリのルート設定
     {
       //ログイン用ルートの追加
       path: '/login', name: 'login', component: Login
@@ -29,11 +36,18 @@ const router = createRouter({
     },
     {
       //登録用ルートの追加
-      path: '/register', name: 'register', component:Register
+      path: '/register', name: 'register', component: Register
     },
+
+    //Ownerディレクトリのルート設定
     {
-      path: '/top', name: 'top', component: Top
+      path: '/owner', name: 'OwnerTop', component: OwnerTop
     },
+
+    //Toyzamasディレクトリのルート設定
+    {
+      path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop
+    }
   ],
 })
 
