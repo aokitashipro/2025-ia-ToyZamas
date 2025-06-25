@@ -1,7 +1,7 @@
 <template>
-      <component :is="layoutComponent">
-        <router-view /> <!-- ページごとに切り替わる部分 -->
-      </component>
+  <component :is="layoutComponent">
+    router-view /> <!-- ページごとに切り替わる部分 -->
+   </component>
 </template>
 
 <script setup>

@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/user/LoginView.vue'
 import Logout from '../views/user/LogoutView.vue'
 import Register from '../views/user/RegisterView.vue'
-
 //管理者側のルートimport
 import OwnerTop from '../views/owner/TopView.vue'
 
