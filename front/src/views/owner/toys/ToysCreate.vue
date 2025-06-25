@@ -108,6 +108,7 @@
                 </select>
             </p>
             <p>
+                <!-- 入力された画像をフォルダに保存、パスをDBに保存 -->
                 画像：
                 <img :src="'/images' + props.profile.filename">
                 <input type="hidden" v-model="image_url">
