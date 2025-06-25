@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/user/LoginView.vue'
 import Logout from '../views/user/LogoutView.vue'
 import Register from '../views/user/RegisterView.vue'
-import Top from '../views/owner/TopView.vue'
+import ToysIndex from '../views/toyzamas/toys/IndexView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,8 +31,10 @@ const router = createRouter({
       //登録用ルートの追加
       path: '/register', name: 'register', component:Register
     },
+    //ユーザー側 ========================================================
     {
-      path: '/top', name: 'top', component: Top
+      //登録用ルートの追加
+      path: '/toyzamas/:user_id/toys', name: 'toysIndex', component:ToysIndex
     },
   ],
 })
