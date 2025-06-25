@@ -1,15 +1,16 @@
 <template>
   <div>
-    <Header v-if="isAuthenticated" />
+    <!-- <Header v-if="isAuthenticated" /> -->
     <main class="container">
   
-      <div v-if="!isAuthenticated">
+      <!-- <div v-if="!isAuthenticated"> -->
+      <div>
         <h2>といザます</h2>
         <RouterLink to="/login">機能を使うにはログインが必要です。</RouterLink>
       </div>
           <router-view /> <!-- ページごとに切り替わる部分 -->
     </main>
-    <Footer v-if="isAuthenticated" />
+    <!-- <Footer v-if="isAuthenticated" /> -->
   </div>
 </template>
 

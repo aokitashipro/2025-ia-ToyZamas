@@ -16,8 +16,8 @@ class ToyController extends Controller
      */
     public function index()
     {
-        //仮 id1~10までを取得
-        $toys = Toy::whereBetween('id',[1,10])->get();
+        //仮 ランダムに１０こ取得
+        $toys = Toy::inRandomOrder()->limit(10)->get();
         return ToyListResource::collection($toys);
     }
 
