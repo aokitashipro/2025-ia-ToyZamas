@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Owner\UserController as OwnerUserController;
 use App\Http\Controllers\Api\Owner\SalesAnalysisController as OwnerSalesAnalysisController;
 
 //user側のコントローラを追加
+use App\Http\Controllers\Api\Toyzamas\TopController as UserTopController;
 use App\Http\Controllers\Api\Toyzamas\ToyController as UserToyController;
 use App\Http\Controllers\Api\Toyzamas\CartController as UserCartController;
 use App\Http\Controllers\Api\Toyzamas\BuyController as UserBuyController;
@@ -62,6 +63,7 @@ Route::middleware(['auth:sanctum', 'can:user'])->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     // User用ルート
+    Route::get('/toyzamas/top', [UserTopController::class, 'index']);
     Route::apiResource('/toyzamas/toys', UserToyController::class);
     Route::apiResource('/toyzamas/carts', UserCartController::class);
     Route::apiResource('/toyzamas/buy', UserBuyController::class);
