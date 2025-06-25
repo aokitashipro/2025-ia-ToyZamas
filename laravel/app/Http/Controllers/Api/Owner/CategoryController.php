@@ -19,8 +19,8 @@ class CategoryController extends Controller
         $categories = Category::orderBy('sort_order')
             ->get();//ソート優先度を昇順で並びかえて表示
 
-        return CategoryListResource::collection($categories)
-            ->json(['data' => $categories], 200);
+        return CategoryListResource::collection($categories);
+            // ->json(['data' => $categories], 200);
         // 取得したデータをCategoryListResourceに変換し、統一フォーマットで返却
     }
 
