@@ -156,7 +156,8 @@ onMounted(() => {
       <p>ログインが完了しました。</p>
       <button @click="handleLogout">ログアウト</button>
       <p>
-        <router-link to="/toyzamas/{$user.id}/toys">商品一覧</router-link>
+        <router-link to="`/toyzamas/${data.user.id}/toys`">商品一覧</router-link>
+        <router-link to="/toyzamas/${{data.user.id}}">top</router-link>
       </p>
     </div>
   </div>

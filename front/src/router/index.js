@@ -38,22 +38,20 @@ const router = createRouter({
       //登録用ルートの追加
       path: '/register', name: 'register', component: Register
     },
-
-    //ユーザー側 ========================================================
-    {
-      //登録用ルートの追加
-      path: '/toyzamas/:user_id/toys', name: 'toysIndex', component:ToysIndex
-    }
-
     //Ownerディレクトリのルート設定
     {
       path: '/owner', name: 'OwnerTop', component: OwnerTop 
     },
 
+    //ユーザー側 ========================================================
     //Toyzamasディレクトリのルート設定
     {
       path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop
-    }
+    },
+    {
+      //商品一覧用ルートの追加
+      path: '/toyzamas/toys', name: 'toysIndex', component:ToysIndex
+    },
   ],
 })
 
