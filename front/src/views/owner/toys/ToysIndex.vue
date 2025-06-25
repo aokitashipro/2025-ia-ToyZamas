@@ -1,11 +1,14 @@
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
+    import { useRouter } from 'vue-router' 
 
     const loading = ref(true)
     const error = ref(null)
 
     const toys = ref([])
+
+    const router = useRouter()
 
     async function getToys(){
         try{
@@ -50,7 +53,9 @@
                     <td>予約可否</td>
                 </tr>
                 <tr v-for="toy in toys" :key="toy.id">
-                    <td>{{ toy.name }}</td>
+                    <td><RouterLink :to="`/owner/toys/${toy.id}`">
+                        {{ toy.name }}
+                    </RouterLink></td>
                     <td>{{ toy.price }}</td>
                     <td>{{ toy.category }}</td>
                     <td>{{ toy.series }}</td>

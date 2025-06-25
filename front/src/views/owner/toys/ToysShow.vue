@@ -1,7 +1,7 @@
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
-    import { useRoute} from 'vue-router'
+    import { useRoute } from 'vue-router'
 
     const loading = ref(true)
     const error = ref(null)

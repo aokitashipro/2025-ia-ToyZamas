@@ -15,6 +15,7 @@ class ToyListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'price' => number_format($this->price) . '円',
             'category' => $this->category->name,
