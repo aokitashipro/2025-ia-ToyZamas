@@ -28,18 +28,18 @@
 </script>
 
 <template>
-    <dev>
+    <div>
         <h1>登録済み商品一覧</h1>
-        <dev v-if="loading">
+        <div v-if="loading">
             商品情報を読み取り中...
-        </dev>
+        </div>
 
-        <dev v-else-if="error">
+        <div v-else-if="error">
             エラー：{{ error }}
-        </dev>
+        </div>
 
-        <dev v-else>
-            <table>
+        <div v-else>
+            <table border="1">
                 <tr>
                     <td>商品名</td>
                     <td>値段</td>
@@ -49,18 +49,16 @@
                     <td>販売状況</td>
                     <td>予約可否</td>
                 </tr>
-                <dev v-for="toy in toys" :key="toy.id">
-                    <tr>
-                        <td>{{ toy.name }}</td>
-                        <td>{{ toy.price }}</td>
-                        <td>{{ toy.category }}</td>
-                        <td>{{ toy.series }}</td>
-                        <td>{{ toy.stock }}</td>
-                        <td>{{ toy.is_selling }}</td>
-                        <td>{{ toy.is_reserve }}</td>
-                    </tr>
-                </dev>
+                <tr v-for="toy in toys" :key="toy.id">
+                    <td>{{ toy.name }}</td>
+                    <td>{{ toy.price }}</td>
+                    <td>{{ toy.category }}</td>
+                    <td>{{ toy.series }}</td>
+                    <td>{{ toy.stock }}</td>
+                    <td>{{ toy.is_selling }}</td>
+                    <td>{{ toy.is_reserve }}</td>
+                </tr>
             </table>
-        </dev>
-    </dev>
+        </div>
+    </div>
 </template>
