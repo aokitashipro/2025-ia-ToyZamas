@@ -7,7 +7,6 @@ import Register from '../views/user/RegisterView.vue'
 
 //管理者側のルートimport
 import OwnerTop from '../views/owner/TopView.vue'
-import OwnerToysIndex from '../views/owner/toys/ToysIndex.vue'
 
 // 管理者:商品画面
 import OwnerToysIndex from '../views/owner/toys/ToysIndex.vue'
