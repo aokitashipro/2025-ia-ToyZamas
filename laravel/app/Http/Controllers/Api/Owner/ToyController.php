@@ -32,7 +32,7 @@ class ToyController extends Controller
     {
         //publicのstorageに画像ファイルを保存
         Log::info($request);
-        $file_path = $request->image_url->store('storage', 'public');
+        $file_path = $request->image_url->store('images', 'public');
 
         $toy = Toy::create([
             'name' => $request->name,
