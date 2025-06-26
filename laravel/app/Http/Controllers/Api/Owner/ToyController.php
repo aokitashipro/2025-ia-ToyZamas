@@ -17,7 +17,7 @@ class ToyController extends Controller
     {
         //
         $toys = Toy::with(['category', 'series'])
-                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                    ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
                     ->get();
 
         return ToyListResource::collection($toys);

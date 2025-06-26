@@ -53,6 +53,7 @@
                     <td>予約可否</td>
                 </tr>
                 <tr v-for="toy in toys" :key="toy.id">
+                    {{ toy.id }}
                     <td><RouterLink :to="`/owner/toys/${toy.id}`">
                         {{ toy.name }}
                     </RouterLink></td>
