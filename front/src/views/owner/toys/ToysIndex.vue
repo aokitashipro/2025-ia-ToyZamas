@@ -42,6 +42,7 @@
         </div>
 
         <div v-else>
+            <RouterLink :to="'/owner/toys/create'">商品を新規登録</RouterLink>
             <table border="1">
                 <tr>
                     <td>商品名</td>
