@@ -12,11 +12,13 @@ class HistoryListResource extends JsonResource
         return [
             'sale_id' => $this->id,
             'total' => $this->items->sum('purchase_amount') . '円',
-            'purchased_at' => $this->created_at->format('Y年n月j日 H:i'),
+            'purchased_at' => $this->created_at->format('Y/n/j H:i'),
             'items' => $this->items->map(function ($item) {
                 return [
+                    'toy_id' => $item->toy_id,
                     'toy_name' => $item->toy ? $item->toy->name : '不明',
-                    'quantity' => $item->purchase_num . '個',
+                    'image_url' => $item->image_url,
+                    'quantity' => $item->purchase_num,
                     'price' => ($item->toy ? $item->toy->price : 0) . '円',
                     'subtotal' => $item->purchase_amount . '円',
                 ];
