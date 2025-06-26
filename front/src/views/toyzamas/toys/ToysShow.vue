@@ -75,7 +75,7 @@
             loading.value = true
             error.value = {}
             const toyData = {
-                toy_id: toy.id,
+                toy_id: toy.value.id,
                 quantity: num.value,
             }
             console.log('送信データ:', toyData)

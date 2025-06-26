@@ -15,6 +15,7 @@ class UserListResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'is_admin' => $this->is_admin == 1 ? '管理者' : '一般ユーザ'
         ];

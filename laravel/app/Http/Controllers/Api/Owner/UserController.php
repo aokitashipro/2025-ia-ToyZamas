@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         //ユーザーデータ一覧
-        $users = User::select('name', 'is_admin')
+        $users = User::select('id','name', 'is_admin')
                     ->get();
 
         return UserListResource::collection($users);
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user->is_admin = $request->is_admin;
 
         $user->save();
-        return('更新完了');
+        return response()->json($user);
     }
 
     /**
