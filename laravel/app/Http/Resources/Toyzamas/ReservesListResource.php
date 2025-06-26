@@ -20,7 +20,7 @@ class ReservesListResource extends JsonResource
             'price' => $this->toy->price,
             'reserve_num' => $this->reserve_num,
             'total' => $this->toy->price * $this->reserve_num,
-            'reserve_date' => $this->reserve_date
+            'reserve_date' => $this->toy->release_date,
         ];
     }
 }

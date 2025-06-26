@@ -116,7 +116,7 @@ const router = createRouter({
     { path: '/toyzamas/:id/top', name:'ToyzamasTop', component: ToyzamasTop,  meta: { layout: 'user' }, },
     // ユーザ:商品画面
     { path: '/toyzamas/toys', name: 'UserToysIndex', component: UserToysIndex, props: true,  meta: { layout: 'user' },  },
-    { path: '/toyzamas/toys/:toy', name: 'UserToysShow', component: UserToysShow, props: true,  meta: { layout: 'user' },  },
+    { path: '/toyzamas/toys/:id', name: 'UserToysShow', component: UserToysShow, props: true,  meta: { layout: 'user' },  },
 
     // ユーザ:カート画面
     { path: '/toyzamas/cart', name: 'UserCartIndex', component: UserCartIndex, props: true,  meta: { layout: 'user' },  },
