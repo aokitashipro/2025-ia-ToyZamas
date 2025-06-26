@@ -38,10 +38,9 @@
     async function favoritSubmit () {
         try {
             loading.value = true
-            console.log(route.params.id)
             error.value = {}
             const toyData = {
-                toy_id: route.params.id,
+                toy_id: toy.value.id,
             }
             console.log('送信データ:', toyData)
 
@@ -111,12 +110,12 @@
             loading.value = true
             error.value = {}
             console.log(route.params.id)
-            console.log(toy.release_date)
+            console.log(toy.value.release_date)
             console.log(num.value)
             console.log(toy)
             const toyData = {
-                toy_id: route.params.id,
-                reserve_date: toy.release_date,
+                toy_id: toy.value.id,
+                reserve_date: toy.value.release_date,
                 reserve_num: num.value,
             }
             console.log('送信データ:', toyData)
