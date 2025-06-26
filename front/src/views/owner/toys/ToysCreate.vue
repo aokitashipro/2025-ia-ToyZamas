@@ -62,16 +62,17 @@
 
             //is_selling, is_reserveを文字列から1, 0に変換
             //true, falseだと.appendした際に文字列に変換されてしまう
-            if(is_selling.value === '販売中'){
-                is_selling.value = 1
-            }else if(is_selling.value === '販売中止'){
-                is_selling.value = 0
-            }
-            if(is_reserve.value === '予約可能'){
-                is_reserve.value = 1
-            }else if(is_reserve.value === '予約不可'){
-                is_reserve.value = 0
-            }
+            // console.log(is_selling, is_reserve)
+            // if(is_selling === '販売中'){
+            //     is_selling.value = 1
+            // }else if(is_selling === '販売中止'){
+            //     is_selling.value = 0
+            // }
+            // if(is_reserve === '予約可能'){
+            //     is_reserve.value = 1
+            // }else if(is_reserve === '予約不可'){
+            //     is_reserve.value = 0
+            // }
 
             console.log(is_selling, is_reserve)
 
@@ -79,15 +80,17 @@
             formData.append('name', name.value)
             formData.append('information', information.value)
             formData.append('price', price.value)
-            formData.append('is_selling', is_selling.value)
-            formData.append('is_reserve', is_reserve.value)
+            formData.append('is_selling', is_selling.value ? 1 : 0)
+            formData.append('is_reserve', is_reserve.value ? 1 : 0)
             formData.append('category_id', category_id.value)
             formData.append('series_id', series_id.value)
             formData.append('image_url', image_url.value)
             formData.append('stock', stock.value)
             formData.append('release_date', release_date.value)
 
-            console.log(formData)
+            for(let [key, value] of formData.entries()){
+                console.log(key, value)
+            }
 
             const response = await apiClient.post('/owner/toys', formData)
 
@@ -162,18 +165,17 @@
                 </p>
                 <p>
                     販売状況：
-                    <input type="radio" v-model="is_selling" id="selling_now" name="is_selling" value="販売中">
+                    <input type="radio" v-model="is_selling" id="can_selling" name="is_selling" value="true" checked="checked">
                     <label for="can_selling">販売中</label>
-
-                    <input type="radio" v-model="is_selling" id="not_selling" name="is_selling" value="販売中止" checked="checked">
+                    <input type="radio" v-model="is_selling" id="cant_selling" name="is_selling" value="false" >
                     <label for="cant_selling">販売中止</label>
                 </p>
                 <p>
                     予約状況：
-                    <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="予約可能" checked="checked">
+                    <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="true" checked="checked">
                     <label for="can_reserve">予約可能</label>
 
-                    <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="予約不可">
+                    <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="false">
                     <label for="cant_reserve">予約不可</label>
                 </p>
                 <p>

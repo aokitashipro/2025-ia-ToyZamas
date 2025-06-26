@@ -34,8 +34,18 @@ class ToyController extends Controller
         Log::info($request);
         $file_path = $request->image_url->store('images', 'public');
 
-        $request->image_url = $file_path;
-        $toy = Toy::create($request->all());
+        $toy = Toy::create([
+            'name' => $request->name,
+            'information' => $request->information,
+            'price' => $request->price,
+            'is_selling' => $request->is_selling,
+            'is_reserve' => $request->is_reserve,
+            'category_id' => $request->category_id,
+            'series_id' => $request->series_id,
+            'image_url' => $file_path,
+            'stock' => $request->stock,
+            'release_date' => $request->release_date
+        ]);
 
         return (new ToyResource($toy));
     }
