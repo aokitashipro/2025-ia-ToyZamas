@@ -3,7 +3,9 @@
     import { apiClient } from '@/utils/api'
     import { useRoute, useRouter } from 'vue-router'
 
-    const loading = ref(true)
+    const loadingGettoys = ref(true)
+    const loadingUpdate = ref(false)
+    const loadingDelete = ref(false)
     const error = ref(null)
 
     let toy = ref(null)
@@ -16,14 +18,19 @@
     const router = useRouter()
     const toyId = route.params.toy
 
+
     async function getToys(toyId){  
       try{
-        loading.value = true
+        loadingGettoys.value = true
+        loadingUpdate.value = false
+        loadingDelete.value = false
         error.value = null
 
         //toyの情報を取得
         const response = await apiClient.get(`/owner/toys/${toyId}`)
         toy.value = response.data
+
+        console.log(toy.value)
 
         //category一覧を取
         const response_categories = await apiClient.get('/owner/categories')
@@ -48,13 +55,18 @@
           console.log('商品情報の取得に失敗:', err)
           error.value = '商品情報の取得に失敗しました'
       }finally{
-        loading.value = false
+        loadingGettoys.value = false
       }
     }
 
     async function toyUpdate(toy, current_category, current_series, toyId){
       try{
+        
+        loadingGettoys.value = false
+        loadingUpdate.value = true
+        loadingDelete.value = false
         error.value = null
+
 
         //選択されているカテゴリとシリーズのidをtoyに格納
         toy.category_id = current_category.id
@@ -73,8 +85,6 @@
           toy.is_reserve = false
         }
 
-        console.log(toy)
-
         const response = await apiClient.put(`/owner/toys/${toyId}`, toy)
 
         alert('商品情報の更新に成功しました！商品詳細ページに戻ります')
@@ -82,11 +92,27 @@
       }catch(err){
         console.log('商品情報の更新に失敗:', err)
         error = '商品情報の更新に失敗しました'
+      }finally{
+        loadingUpdate.value = false
       }
     }
 
     async function toyDelete(){
+      try{
+        loadingGettoys.value = false
+        loadingUpdate.value = false
+        loadingDelete.value = true
+        error.value = null
 
+        const response = await apiClient.delete(`/owner/toys/${toyId}`)
+        alert('商品を削除しました')
+        router.push('/owner/toys')
+      }catch(err){
+        console.log('商品情報の削除に失敗:', err)
+        error = '商品情報の削除に失敗しました'
+      }finally{
+        loadingDelete.value = false
+      }
     }
 
     onMounted(() => 
@@ -101,8 +127,16 @@
 <template>
     <div>
         <h1>商品情報編集ページ</h1>
-        <div v-if="loading">
+        <div v-if="loadingGettoys">
             商品情報を読み取り中...
+        </div>
+
+        <div v-else-if="loadingUpdate">
+          商品情報を更新中...
+        </div>
+
+        <div v-else-if="loadingDelete">
+          商品情報を削除中...
         </div>
 
         <div v-else-if="error">

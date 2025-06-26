@@ -78,9 +78,13 @@ class ToyController extends Controller
     public function destroy(string $id)
     {
         //
-        $toy = Toy::findOrFail($id)
-                    ->delete();
+        $toy = Toy::findOrFail($id);
+        $toy->delete();
 
-        return('情報を削除しました');
+
+        return (new ToyResource($toy))
+        ->additional(['message' => '商品情報が削除されました。商品一覧へ戻ります'])
+        ->response()
+        ->setStatusCode(201);
     }
 }
