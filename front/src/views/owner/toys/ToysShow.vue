@@ -72,11 +72,8 @@
           <p>販売状況: {{ toy.is_selling }}</p>
           <p>予約可否: {{ toy.is_reserve }}</p>
           <p>発売日:{{ toy.release_date }}</p>
-          <!-- 商品画像も引っ張ってくる -->
           <p>
-
             <img v-if="toy.image_url" :src="img" alt="toy image">
-            {{  img }}
           </p>
           <p>
             <RouterLink :to="`/owner/toys/${toyId}/edit`">商品データ編集</RouterLink>
