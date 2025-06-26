@@ -73,7 +73,10 @@
           <p>予約可否: {{ toy.is_reserve }}</p>
           <p>発売日:{{ toy.release_date }}</p>
           <p>
-            <img v-if="toy.image_url" :src="img" alt="toy image">
+            <img v-if="toy.image_url" :src="img" alt="toy image" width="200" height="150">
+            <div v-else>
+                登録されている画像はありません
+            </div>
           </p>
           <p>
             <RouterLink :to="`/owner/toys/${toyId}/edit`">商品データ編集</RouterLink>

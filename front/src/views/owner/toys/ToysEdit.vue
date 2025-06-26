@@ -248,7 +248,12 @@
               画像データ：
               <input type="file" name="image" ref="fileInput">
               <br>現在の画像:
-              <img v-if="toy.image_url" :src="img" alt="toy image">
+              <div>
+                <img v-if="toy.image_url" :src="img" alt="toy image" width="200" height="150">
+                <div v-else>
+                  登録されていません
+                </div>
+              </div>
             </p>
             <input type="submit" value="商品情報を更新">
           </form>
