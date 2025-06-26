@@ -88,10 +88,6 @@
             formData.append('stock', stock.value)
             formData.append('release_date', release_date.value)
 
-            for(let [key, value] of formData.entries()){
-                console.log(key, value)
-            }
-
             const response = await apiClient.post('/owner/toys', formData)
 
             alert('商品を登録しました')

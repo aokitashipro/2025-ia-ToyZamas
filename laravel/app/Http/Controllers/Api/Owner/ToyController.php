@@ -31,7 +31,6 @@ class ToyController extends Controller
     public function store(Request $request)
     {
         //publicのstorageに画像ファイルを保存
-        Log::info($request);
         $file_path = $request->image_url->store('images', 'public');
 
         $toy = Toy::create([
@@ -75,7 +74,10 @@ class ToyController extends Controller
         $toy->price = $request->price;
         $toy->category_id = $request->category_id;
         $toy->series_id = $request->series_id;
-        $toy->image_url = $request->image_url;
+        if($toy->image_url !== $request->image_url){
+            $file_path = $request->image_url->store('images', 'public');
+            $toy->image_url = $file_path;
+        }
         $toy->is_selling = $request->is_selling;
         $toy->is_reserve = $request->is_reserve;
         $toy->release_date = $request->release_date;
