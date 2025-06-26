@@ -127,6 +127,7 @@
         </div>
 
         <div v-else>
+            <RouterLink :to="'/owner/toys'">商品一覧へ戻る</RouterLink><br><br>
             <form @submit.prevent="toyStore()" enctype="multipart/form-data">
                 <h1>新規商品登録</h1>
                 <p>
@@ -144,9 +145,6 @@
                 <p>
                     カテゴリ名：
                     <select v-model="category_id">
-                        <option selected>
-                            カテゴリ名を選択してください
-                        </option>
                         <option v-for="category in categories" :value="category.id">
                             {{ category.name }}
                         </option>
@@ -155,9 +153,6 @@
                 <p>
                     シリーズ名：
                     <select v-model="series_id">
-                        <option selected>
-                            シリーズ名を選択してください
-                        </option>
                         <option v-for="a_series in series" :value="a_series.id">
                             {{ a_series.name }}
                         </option>
