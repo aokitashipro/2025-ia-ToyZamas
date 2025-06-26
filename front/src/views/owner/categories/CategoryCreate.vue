@@ -27,7 +27,8 @@ const router = useRouter()
       </div>
       <div>
         <label>表示順</label>
-        <input type="number" v-model.number="form.sort_order" required />
+          <input v-model="price" type="number" min="1" max="100" required />
+        <!-- <input type="number" v-model.number="form.sort_order" required /> -->
       </div>
       <button type="submit">登録</button>
     </form>
