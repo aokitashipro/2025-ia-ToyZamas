@@ -8,6 +8,8 @@ use App\Models\Toy;
 use App\Http\Resources\Owner\ToyListResource;
 use App\Http\Resources\Owner\ToyResource;
 
+use Illuminate\Support\Facades\Log;
+
 class ToyController extends Controller
 {
     /**
@@ -28,10 +30,14 @@ class ToyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //publicのstorageに画像ファイルを保存
+        Log::info($request);
+        $file_path = $request->image_url->store('images', 'public');
+
+        $request->image_url = $file_path;
         $toy = Toy::create($request->all());
 
-        return('登録完了');
+        return (new ToyResource($toy));
     }
 
     /**

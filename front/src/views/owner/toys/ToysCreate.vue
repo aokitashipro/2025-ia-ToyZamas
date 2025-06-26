@@ -57,12 +57,39 @@
             loadingStore.value = true
             error.value = null
 
+            //image_urlに画像情報を保存
             image_url.value = fileInput.value.files[0]
 
-            const postData = {
-                name, information, price, is_selling, is_reserve, category_id, series_id, image_url, stock, release_date 
+            //is_selling, is_reserveを文字列から1, 0に変換
+            //true, falseだと.appendした際に文字列に変換されてしまう
+            if(is_selling.value === '販売中'){
+                is_selling.value = 1
+            }else if(is_selling.value === '販売中止'){
+                is_selling.value = 0
             }
-            const response = await apiClient.post('/toys', postData)
+            if(is_reserve.value === '予約可能'){
+                is_reserve.value = 1
+            }else if(is_reserve.value === '予約不可'){
+                is_reserve.value = 0
+            }
+
+            console.log(is_selling, is_reserve)
+
+            const formData = new FormData()
+            formData.append('name', name.value)
+            formData.append('information', information.value)
+            formData.append('price', price.value)
+            formData.append('is_selling', is_selling.value)
+            formData.append('is_reserve', is_reserve.value)
+            formData.append('category_id', category_id.value)
+            formData.append('series_id', series_id.value)
+            formData.append('image_url', image_url.value)
+            formData.append('stock', stock.value)
+            formData.append('release_date', release_date.value)
+
+            console.log(formData)
+
+            const response = await apiClient.post('/owner/toys', formData)
 
             alert('商品を登録しました')
             router.push('/owner/toys')
@@ -97,7 +124,7 @@
         </div>
 
         <div v-else>
-            <form @submit="toyStore(name, information, price, is_selling, is_reserve, category_id, series_id, image_url,stock, release_date)" enctype="multipart/form-data">
+            <form @submit.prevent="toyStore()" enctype="multipart/form-data">
                 <h1>新規商品登録</h1>
                 <p>
                     商品名：
@@ -135,18 +162,18 @@
                 </p>
                 <p>
                     販売状況：
-                    <input type="radio" v-model="is_selling" id="selling_now" name="is_selling" value="true">
+                    <input type="radio" v-model="is_selling" id="selling_now" name="is_selling" value="販売中">
                     <label for="can_selling">販売中</label>
 
-                    <input type="radio" v-model="is_selling" id="not_selling" name="is_selling" value="false">
+                    <input type="radio" v-model="is_selling" id="not_selling" name="is_selling" value="販売中止" checked="checked">
                     <label for="cant_selling">販売中止</label>
                 </p>
                 <p>
                     予約状況：
-                    <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="true">
+                    <input type="radio" v-model="is_reserve" id="can_reserve" name="is_reserve" value="予約可能" checked="checked">
                     <label for="can_reserve">予約可能</label>
 
-                    <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="false">
+                    <input type="radio" v-model="is_reserve" id="cant_reserve" name="is_reserve" value="予約不可">
                     <label for="cant_reserve">予約不可</label>
                 </p>
                 <p>
