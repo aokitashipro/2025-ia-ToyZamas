@@ -10,6 +10,9 @@
     const route = useRoute()
     const toyId = route.params.toy
 
+    const laravel_base_url = 'http://127.0.0.1:8000/storage/'
+    const img = ref(null)
+
     async function getToys(toyId){  
       try{
             loading.value = true
@@ -17,6 +20,9 @@
 
             const response = await apiClient.get(`/owner/toys/${toyId}`)
             toy.value = response.data
+
+            img.value = laravel_base_url + toy.value.image_url
+            
         }catch(err){
             console.log('商品情報の取得に失敗:', err)
             error.value = '商品情報の取得に失敗しました'
@@ -24,8 +30,21 @@
             loading.value = false
         }
     }
-    onMounted(() => 
+
+    // async function getImage(){
+    //     try{
+    //         const 
+    //     }catch{
+    //         console.log('画像情報の取得に失敗:', err)
+    //         error.value = '画像情報の取得に失敗しました'
+    //     }finally{
+    //         loading.value = false
+    //     }
+    // }
+
+    onMounted(() => {
         getToys(toyId) 
+        }
     )
 </script>
 
@@ -54,6 +73,11 @@
           <p>予約可否: {{ toy.is_reserve }}</p>
           <p>発売日:{{ toy.release_date }}</p>
           <!-- 商品画像も引っ張ってくる -->
+          <p>
+
+            <img v-if="toy.image_url" :src="img" alt="toy image">
+            {{  img }}
+          </p>
           <p>
             <RouterLink :to="`/owner/toys/${toyId}/edit`">商品データ編集</RouterLink>
           </p>

@@ -19,7 +19,7 @@ class ToyResource extends JsonResource
             'price' => $this->price,
             'stock' => $this->stock,
             'information' => $this->information,
-            'img_url' => $this->img_url,
+            'image_url' => $this->image_url,
             'category_name' => $this->category->name,
             'category_pop' => $this->category->sort_order,
             'series_name' => $this->series->name,
