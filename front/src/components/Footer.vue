@@ -32,8 +32,7 @@ const isOwnerRoute = computed(() => {
   background-color: #338fe5;
   color: white;
   text-align: center;
-  padding: 1em 0;
-  width: 100vw;
+  padding: 1em;
   margin-left: calc(50% - 50vw);
   box-sizing: border-box;
   margin-top: 4em;
