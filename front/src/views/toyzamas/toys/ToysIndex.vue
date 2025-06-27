@@ -25,22 +25,81 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <main>
-      <h1>商品一覧</h1>
-      <div v-for="toy in toys" :key="toy.id">
-        <img :src="toy.image_url" alt="" width="100" height="100">
-        ID: {{ toy.id }} 商品名: {{ toy.name }} 価格: ¥{{ toy.price }} 
-        <a :href="`/toyzamas/toys/${toy.id}`">詳細</a>
+  <div class="toy-list-container">
+    <h1 class="text-2xl font-bold mb-4">商品一覧</h1>
+
+    <div class="toy-grid">
+      <div v-for="toy in toys" :key="toy.id" class="toy-card">
+        <img :src="toy.image_url" alt="商品画像" class="toy-image" />
+        <div class="toy-info">
+          <p><strong>{{ toy.name }}</strong></p>
+          <p>価格: ¥{{ toy.price }}</p>
+          <a :href="`/toyzamas/toys/${toy.id}`" class="details-link">詳細を見る</a>
+        </div>
       </div>
-      <form @submit.prevent="loadToys">
-        <label>
-          <input type="radio" name="sort" value=1 v-model="sort"> 予約対象商品一覧
-        </label>
-        <p>現在のソート値: {{ sort }}</p>
-        <button type="submit">ソート実行</button>
-      </form>
+    </div>
+
+    <form @submit.prevent="loadToys" class="sort-form">
+      <label>
+        <input type="radio" name="sort" value="1" v-model="sort" />
+        予約対象商品一覧
+      </label>
+      <p>現在のソート値: {{ sort }}</p>
+      <button type="submit">ソート実行</button>
       <p><a href="/toyzamas/toys">ソートリセット</a></p>
-    </main>
+    </form>
   </div>
 </template>
+
+
+<style scoped>
+.toy-list-container {
+  padding: 20px;
+}
+
+.toy-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.toy-card {
+  width: calc(25% - 20px); /* 4列に並べる */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.toy-card:hover {
+  transform: scale(1.03);
+}
+
+.toy-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.toy-info p {
+  margin: 4px 0;
+}
+
+.details-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.sort-form {
+  margin-top: 30px;
+}
+</style>
