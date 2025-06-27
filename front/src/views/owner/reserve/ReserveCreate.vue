@@ -50,11 +50,20 @@
           <td>{{ reserve.id }}</td>
           <td>{{ reserve.user?.name || reserve.user_id }}</td>
           <td>{{ reserve.toy?.name || reserve.toy_id }}</td>
-          <td>{{ reserve.reserve_date }}</td>
-          <td>{{ reserve.reserve_num }}</td>
+          <!-- // isEditがtrueの場合のみinputにする -->
+          <td v-if="isEdit === true && reserve_id === reserve.id">
+            <input type="date" v-model="reserve.reserve_date" required>
+          </td>
+          <td v-else-if="isEdit === false || reserve_id !== reserve.id">{{ reserve.reserve_date }}</td>
+
+          <td v-if="isEdit === true && reserve_id === reserve.id">
+            <input type="number" v-model="reserve.reserve_num" min="1" max="20" required> 
+          </td>
+          <td v-else-if="isEdit === false || reserve_id !== reserve.id">{{ reserve.reserve_num }}</td>
+          
           <td>
             <button @click="editReserve(reserve)">
-              編集 {{ isEdit ? '予約更新' : '予約登録' }}
+                {{ isEdit ? '予約登録' : '予約編集' }}
             </button>
             <button @click="deleteReserve(reserve.id)">削除</button>
           </td>
@@ -78,14 +87,15 @@ const form = ref({
 const isEdit = ref(false)
 const editingId = ref(null)
 const isSubmitting = ref(false);
+const reserve_id = ref(null)
 
 const fetchReserves = async () => {
-     if (isSubmitting.value) return; // すでに送信中なら何もしない
-   isSubmitting.value = true; // 送信開始でボタン無効化
+  //   //  if (isSubmitting.value) return; // すでに送信中なら何もしない
+  //isSubmitting.value = true; // 送信開始でボタン無効化
   try {
     const res = await apiClient.get('/owner/reserves')
       console.log('取得成功:', res.data)
-    reserves.value = res.data.data
+    reserves.value = res.data
   } catch (e) {
         console.error('予約一覧取得に失敗', e)
     alert('予約一覧の取得に失敗しました')
@@ -97,33 +107,42 @@ const fetchReserves = async () => {
 
 const submitReserve = async () => {
   try {
-    console.log(reserves.value)
-
-    // console.log(form.value)
-
-    if (isEdit.value) {
-      await apiClient.put(`/owner/reserves/${editingId.value}`, form.value)
-      alert('予約を更新しました')
-    } else {
       await apiClient.post('/owner/reserves', form.value)
       alert('予約を登録しました')
-    }
-    await fetchReserves()
-    resetForm()
+    
+      await fetchReserves()
+      resetForm()
   } catch (e) {
     alert(e.response?.data?.message || '予約の登録に失敗しました')
   }
 }
 
-const editReserve = (reserve) => {
-  form.value = {
-    user_id: reserve.user_id,
-    toy_id: reserve.toy_id,
-    reserve_date: reserve.reserve_date,
-    reserve_num: reserve.reserve_num
+// const editReserve = (reserve) => {
+//   form.value = {
+//     user_id: reserve.user_id,
+//     toy_id: reserve.toy_id,
+//     reserve_date: reserve.reserve_date,
+//     reserve_num: reserve.reserve_num
+//   }
+//   isEdit.value = true
+//   editingId.value = reserve.id
+// }
+
+
+async function editReserve(reserve){
+  if(isEdit.value === false){
+    isEdit.value = true
+    reserve_id.value = reserve.id
+  }else if(isEdit.value === true){
+    form.value.user_id = reserve.user_id
+    form.value.toy_id = reserve.toy_id
+    form.value.reserve_date = reserve.reserve_date
+    form.value.reserve_num = reserve.reserve_num
+
+    console.log(form.value)
+    await apiClient.put(`/owner/reserves/${reserve.id}`, form.value)
+    resetForm()
   }
-  isEdit.value = true
-  editingId.value = reserve.id
 }
 
 const deleteReserve = async (id) => {
@@ -146,17 +165,6 @@ const resetForm = () => {
 
 onMounted(() => {
   fetchReserves()
-  reserves.value = [
-    {
-      id: 1,
-      user_id: 1,
-      user: { name: 'テスト太郎' },
-      toy_id: 2,
-      toy: { name: 'おもちゃA' },
-      reserve_date: '2025-06-27',
-      reserve_num: 3
-    }
-  ]
 })
 </script>
 

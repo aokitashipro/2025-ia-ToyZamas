@@ -127,7 +127,7 @@ table {
   margin-top: 20px;
 }
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   padding: 8px;
   text-align: center;
 }

@@ -1,12 +1,18 @@
 共通ヘッダ
 
 <template>
-  <!-- <header class="header"> -->
-  <!-- <header class="header"> -->
-  <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">
-      {{ isOwnerRoute ? 'ToyZamas 管理画面' : 'ToyZamas ECサイト' }}
-    </h1>
+    <header class="header">
+    <div class="flex items-center space-x-3">
+      <!-- ロゴとタイトルをクリック可能にする -->
+      <router-link :to="isOwnerRoute ? '/owner' : '/toyzamas/toys'" class="flex items-center space-x-2">
+        <!-- ロゴ画像 -->
+        <img src="@/assets/logo_toyzamas_frame.svg" alt="ToyZamas Logo" style="height: 80px;" />
+        <!-- タイトル
+        <h1 class="text-xl font-bold">
+          {{ isOwnerRoute ? 'ToyZamas 管理画面' : 'ToyZamas ECサイト' }}
+        </h1> -->
+      </router-link>
+    </div>
     <nav>
       <template v-if="isOwnerRoute">
         <!-- 管理者ヘッダー -->
@@ -23,6 +29,7 @@
 
       <template v-else>
         <!-- ユーザーヘッダー -->
+ 
         <router-link to="/toyzamas/toys">商品一覧</router-link>
         <router-link to="/toyzamas/cart">カート</router-link>
         <router-link to="/toyzamas/buy/history">購入履歴</router-link>
@@ -50,8 +57,8 @@ const isOwnerRoute = computed(() => {
 
 <style scoped>
 .header {
-  background-color: #333;
-  color: white;
+  background-color: #338fe5;
+  color: rgb(211, 196, 196);
   padding: 1em;
   display: flex;
   justify-content: space-between;
@@ -79,6 +86,6 @@ a {
 
 a.router-link-active {
   font-weight: bold;
-  border-bottom: 2px solid white;
+  /* border-bottom: 2px solid white; */
 }
 </style>

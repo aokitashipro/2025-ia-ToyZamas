@@ -33,6 +33,7 @@
 
             const response_categories = await apiClient.get('/owner/categories')
             categories.value = response_categories.data
+            console.log(categories.value)
         }catch(err){
             console.log('カテゴリ名の取得に失敗:', err)
             error.value = 'カテゴリ名一覧の取得に失敗しました'
