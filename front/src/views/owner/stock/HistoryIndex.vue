@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr v-for="history in histories" :key="history.id">
-            {{ history }}
+            <!-- {{ history }} -->
             <td>{{ history.created_at }}</td>
             <td>{{ history.name }}</td>
             <td>{{ history.be_stored }}</td>
