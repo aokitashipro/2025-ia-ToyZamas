@@ -7,13 +7,7 @@
     const error = ref(null)
 
     const toys = ref([])
-    const sort = ref('')
-    const sortList = ref([
-        {sort: 'price_high'},
-        {sort: 'price_low'},
-        {sort: 'stock_much'},
-        {sort: 'stock_little'}
-    ])
+    const sort = ref(null)
 
     async function getToys(){
         try{
@@ -70,7 +64,6 @@
             <div>
                 <h4>ソート:</h4>
                 <select v-model="sort">
-                    <option disabled value="" selected>ソート条件を選択してください</option>
                     <option value="price_high">値段の高い順</option>
                     <option value="price_low">値段の低い順</option>
                     <option value="stock_much">在庫多い順</option>
