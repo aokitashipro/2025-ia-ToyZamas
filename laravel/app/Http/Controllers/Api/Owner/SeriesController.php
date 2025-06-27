@@ -41,7 +41,7 @@ class SeriesController extends Controller
         $Series = Series::create($request->all());
         // 登録完了メッセージを追加してレスポンス
         return (new SeriesListResource($Series ))
-            ->additional(['message' => 'カテゴリーが登録されました'])->response()
+            ->additional(['message' => 'シリーズが登録されました'])->response()
             ->setStatusCode(201);
     }
 

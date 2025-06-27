@@ -58,15 +58,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <main>
-      <h1>商品一覧</h1>
-      <div v-for="toy in toys" :key="toy.id">
-        <img :src="toy.image_url" alt="" width="100" height="100">
-        ID: {{ toy.id }} 商品名: {{ toy.name }} 価格: ¥{{ toy.price }} 
-        <a :href="`/toyzamas/toys/${toy.id}`">詳細</a>
+  <div class="toy-list-container">
+    <h1 class="text-2xl font-bold mb-4">商品一覧</h1>
+
+    <div class="toy-grid">
+      <div v-for="toy in toys" :key="toy.id" class="toy-card">
+        <img :src="toy.image_url" alt="商品画像" class="toy-image" />
+        <div class="toy-info">
+          <p><strong>{{ toy.name }}</strong></p>
+          <p>価格: ¥{{ toy.price }}</p>
+          <a :href="`/toyzamas/toys/${toy.id}`" class="details-link">詳細を見る</a>
+        </div>
       </div>
-      <form @submit.prevent="loadToys">
+      <form @submit.prevent="loadToys" class="sort-form">
         <label>
           <input type="radio" name="sort" value=1 v-model="sort"> 予約対象商品一覧
         </label>
@@ -90,81 +94,58 @@ onMounted(() => {
         </p>
       </form>
       <p><a href="/toyzamas/toys">ソートリセット</a></p>
-    </main>
+    </form>
   </div>
 </template>
 
-<<style>
-main {
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9; /* 背景色を明るい灰色に */
+<style scoped>
+.toy-list-container {
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-
-  max-width: 1200px; /* 最大幅を設定 */
-  margin: 0 auto; /* 中央揃え */
-  padding: 20px; /* 余白を設定 */
 }
 
-h1 {
-  text-align: center;
-  color: #333; /* タイトルの色を濃い灰色に */
-  margin-bottom: 20px;
-}
-
-div[v-for] {
+.toy-grid {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff; /* 商品カードの背景を白に */
-  border: 1px solid #ddd;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.toy-card {
+  width: calc(25% - 20px); /* 4列に並べる */
+  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  width: 80%; /* 横幅を指定（全体の80%） */
-  max-width: 1200px; /* 最大幅を指定（例: 1200px） */
-  margin: 15px auto; /* 自動で中央揃え */
+  padding: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-
-img {
-  border-radius: 5px; /* 画像の角を丸く */
-  margin-right: 15px;
+.toy-card:hover {
+  transform: scale(1.03);
 }
 
-a {
-  color: #007bff; /* リンク色を青に */
-  text-decoration: none;
+.toy-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
-a:hover {
+.toy-info p {
+  margin: 4px 0;
+}
+
+.details-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #007bff;
   text-decoration: underline;
 }
 
-form {
-  margin-top: 20px;
-}
-
-button {
-  background-color: #007bff; /* ボタンの背景色を青に */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3; /* ボタンホバー時の濃い青 */
-}
-
-p {
-  margin-top: 10px;
-  color: #666;
-  font-size: 14px;
+.sort-form {
+  margin-top: 30px;
 }
 </style>
-
