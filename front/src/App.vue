@@ -23,4 +23,5 @@ const layoutComponent = computed(() => {
 .container {
   padding: 20px;
 }
+
 </style>
