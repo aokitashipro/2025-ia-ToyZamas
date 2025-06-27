@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
     Route::apiResource('/owner/series', OwnerSeriesController::class);
     Route::apiResource('/owner/users', OwnerUserController::class);
     Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
+    Route::apiResource('/owner/reserves', OwnerReserveController::class);
     // Toyを更新するためのルート
     Route::post('/owner/toys/{toy}/update', [OwnerToyController::class, 'update']);
     // Toyindexでソートをかけるためのルート
