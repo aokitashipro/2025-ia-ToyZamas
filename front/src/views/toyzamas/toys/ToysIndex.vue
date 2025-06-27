@@ -59,8 +59,7 @@ onMounted(() => {
 
 <template>
   <div class="toy-list-container">
-    <h1 class="text-2xl font-bold mb-4">商品一覧</h1>
-
+  <h1 class="text-2xl font-bold mb-4">商品一覧</h1>
     <div class="toy-grid">
       <div v-for="toy in toys" :key="toy.id" class="toy-card">
         <img :src="toy.image_url" alt="商品画像" class="toy-image" />
@@ -94,7 +93,7 @@ onMounted(() => {
         </p>
       </form>
       <p><a href="/toyzamas/toys">ソートリセット</a></p>
-    </form>
+    </div>
   </div>
 </template>
 
