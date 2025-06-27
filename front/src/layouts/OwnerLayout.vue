@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="layout-root">
     <Header v-if="isLoggedIn" />
-    <main class="min-h-screen p-4 bg-gray-100">
+    <main class="main-content">
       <slot />
     </main>
     <Footer v-if="isLoggedIn" />
@@ -15,3 +15,14 @@ import Footer from '../components/Footer.vue'
 import { computed } from 'vue'
 const isLoggedIn = computed(() => !!localStorage.getItem('token')) // ユーザー情報があればログインと判断
 </script>
+
+<style scoped>
+.layout-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1;
+}
+</style>
