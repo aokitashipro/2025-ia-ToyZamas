@@ -32,14 +32,6 @@ onMounted(() => {
         ID: {{ user.id }} 名前: {{ user.name }} 権限: {{ user.is_admin }} 
         <a :href="`/owner/users/${user.id}`">詳細</a>
       </div>
-      <!-- <form @submit.prevent="loadToys">
-        <label>
-          <input type="radio" name="sort" value=1 v-model="sort"> 予約対象商品一覧
-        </label>
-        <p>現在のソート値: {{ sort }}</p>
-        <button type="submit">ソート実行</button>
-      </form>
-      <p><a href="/owner/users">ソートリセット</a></p> -->
     </main>
   </div>
 </template>
