@@ -72,7 +72,7 @@
                 <input type="button" @click="sortDo(sort)" value="ソートを実行">
             </div>
             <table border="1">
-                <tr>
+                <tr class="culm_name">
                     <td>商品名</td>
                     <td>値段</td>
                     <td>カテゴリ名</td>
@@ -96,3 +96,27 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    } 
+    th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+    .clum_name{
+        
+    }
+    button {
+    background-color: #f44336; /* 赤色 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    }
+    button:hover {
+    background-color: #d32f2f; /* 濃い赤色 */
+    }
+</style>

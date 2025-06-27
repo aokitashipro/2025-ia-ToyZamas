@@ -43,8 +43,6 @@ Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
     Route::apiResource('/owner/toys', OwnerToyController::class)->only(['index', 'store', 'show', 'destroy']);
     Route::apiResource('/owner/stocks', OwnerStockController::class);
     Route::apiResource('/owner/history', OwnerHistoryController::class);
-    Route::apiResource('/owner/reserves', OwnerReserveController::class);
-    Route::apiResource('/owner/categories', OwnerCategoryController::class);
     Route::apiResource('/owner/series', OwnerSeriesController::class);
     Route::apiResource('/owner/users', OwnerUserController::class);
     Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
@@ -57,6 +55,7 @@ Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
 
 //認証管理しているかつユーザー権限を持っている場合に実行
 Route::middleware(['auth:sanctum', 'can:user'])->group(function () {
+
     // User用ルート
     Route::get('/toyzamas/top', [UserTopController::class, 'index']);
     Route::apiResource('/toyzamas/toys', UserToyController::class);
@@ -67,7 +66,12 @@ Route::middleware(['auth:sanctum', 'can:user'])->group(function () {
     Route::apiResource('/toyzamas/favorites', UserFavoritesController::class);
 });
 
-//ポストマン用
+//ごり押し用
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('/owner/categories', OwnerCategoryController::class);
+    Route::apiResource('/owner/series', OwnerSeriesController::class);
+});
+
 
 
 
