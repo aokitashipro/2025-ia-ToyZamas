@@ -16,6 +16,7 @@
            <router-link to="/owner/reserve">電話予約</router-link>
         <router-link to="/owner/stocks">在庫</router-link>
         <router-link to="/owner/sales-analysis">売上分析</router-link>
+           <router-link to="/owner/users">ユーザー管理</router-link>
         <router-link to="/logout">ログアウト</router-link>
 
       </template>
