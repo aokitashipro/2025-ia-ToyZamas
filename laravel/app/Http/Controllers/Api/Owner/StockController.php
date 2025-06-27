@@ -66,7 +66,7 @@ class StockController extends Controller
             'be_stored' => $toy->stock,
             'stock_in' => $increment > 0 ? $increment : 0,
             'stock_out' => $increment < 0 ? abs($increment) : 0,
-            'description' => $request->description ?? '',
+            'description' => $request->description ?? '仕入れによる入庫',
         ];
 
         Stocks_History::create($stock);

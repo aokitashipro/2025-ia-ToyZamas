@@ -20,7 +20,7 @@ class StocksHistoryListResource extends JsonResource
             'stock_in' => $this->stock_in,
             'stock_out' => $this->stock_out,
             'description' => $this->description,
-            'created_at' => $this->created_at->format('Y-m-d')
+            'created_at' => $this->created_at->format('Y/n/j H:i')
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\Toy;
 use App\Models\Sale;
 use App\Models\Sale_Item;
+use App\Models\Stocks_History;
 use App\Http\Resources\toyzamas\BuyResource;
 
 class BuyController extends Controller
@@ -50,9 +51,18 @@ class BuyController extends Controller
                 ]);
 
                 // 在庫減算
-                $product = Toy::find($item->toy_id);
-                $product->stock -= $item->quantity;
-                $product->save();
+                $toy = Toy::find($item->toy_id);
+                $toy->stock -= $item->quantity;
+                $toy->save();
+
+                // 在庫履歴の登録
+                Stocks_History::create([
+                    'toy_id'      => $toy->id,
+                    'be_stored'   => $toy->stock,
+                    'stock_in'    => 0,
+                    'stock_out'   => $item->quantity,
+                    'description' => '購入による出庫',
+                ]);
             }
 
             // 5. カート削除
