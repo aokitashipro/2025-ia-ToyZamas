@@ -5,10 +5,22 @@ import { apiClient } from '@/utils/api.js'
 const toys = ref([]) // toysをリアクティブに定義
 const sort = ref(0);
 
+const categories = ref([])
+const category_id = ref(0)
+const series = ref([])
+const series_id = ref(0)
+
+
 // 商品一覧を取得する関数
 const loadToys = async () => {
+  console.log(category_id.value)
+  console.log(series_id.value)
   try {
-    const response = await apiClient.get(`/toyzamas/toys?sort=${sort.value}`); // Laravel APIからデータ取得
+    // const toyData = {
+    //   category_id: category_id.value,
+    //   series_id: series_id.value,
+    // }
+    const response = await apiClient.get(`/toyzamas/toys?sort=${sort.value}&category_id=${category_id.value}&series_id=${series_id.value}`); // Laravel APIからデータ取得
     toys.value = response.data; // toysにデータを格納
     console.log("レスポンス内容:", response);
     console.log("データ部分:", response.data);
@@ -18,9 +30,30 @@ const loadToys = async () => {
   }
 }
 
+async function getCategories(){
+  try{
+    const response_categories = await apiClient.get('/owner/categories')
+    categories.value = response_categories.data
+  }catch(err){
+      console.log('カテゴリ名の取得に失敗:', err)
+  }
+}
+
+  async function getSeries(){
+    try{
+      const response_series = await apiClient.get('/owner/series')
+      series.value = response_series.data
+      }catch(err){
+          console.log('シリーズ名の取得に失敗:', err)
+      }
+}
+
+
 // コンポーネントのマウント時にデータをロード
 onMounted(() => {
   loadToys();
+  getCategories();
+  getSeries();
 })
 </script>
 
@@ -37,20 +70,33 @@ onMounted(() => {
           <a :href="`/toyzamas/toys/${toy.id}`" class="details-link">詳細を見る</a>
         </div>
       </div>
-    </div>
-
-    <form @submit.prevent="loadToys" class="sort-form">
-      <label>
-        <input type="radio" name="sort" value="1" v-model="sort" />
-        予約対象商品一覧
-      </label>
-      <p>現在のソート値: {{ sort }}</p>
-      <button type="submit">ソート実行</button>
+      <form @submit.prevent="loadToys" class="sort-form">
+        <label>
+          <input type="radio" name="sort" value=1 v-model="sort"> 予約対象商品一覧
+        </label>
+        <!-- <p>現在のソート値: {{ sort }}</p> -->
+        <button type="submit">ソート実行</button>
+        <p>
+          カテゴリ名：
+          <select v-model="category_id">
+            <option v-for="category in categories" :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </p>
+        <p>
+          シリーズ名：
+          <select v-model="series_id">
+            <option v-for="a_series in series" :value="a_series.id">
+              {{ a_series.name }}
+            </option>
+          </select>
+        </p>
+      </form>
       <p><a href="/toyzamas/toys">ソートリセット</a></p>
     </form>
   </div>
 </template>
-
 
 <style scoped>
 .toy-list-container {
