@@ -49,7 +49,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="page-container">
         <h1>登録済み商品一覧</h1>
         <div v-if="loading">
             商品情報を読み取り中...
@@ -98,25 +98,29 @@
 </template>
 
 <style scoped>
-    table {
-    width: 100%;
-    border-collapse: collapse;
-    } 
-    th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    }
-    .clum_name{
-        
-    }
-    button {
-    background-color: #f44336; /* 赤色 */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    }
-    button:hover {
-    background-color: #d32f2f; /* 濃い赤色 */
-    }
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 追加：列幅を均等に */
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  word-break: break-all; /* 長い文字列も折り返す */
+}
+body, html, .table-wrapper {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 </style>
