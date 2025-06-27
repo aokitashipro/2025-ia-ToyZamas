@@ -1,6 +1,6 @@
 <template>
   <!-- <footer class="footer"> -->
-     <footer class="bg-gray-100 text-center p-4 mt-10 text-sm text-gray-600">
+     <footer class="footer">
        <div v-if="isOwnerRoute">
       <p> 2025 ToyZamas 管理画面</p>
     </div>
@@ -28,7 +28,7 @@ const isOwnerRoute = computed(() => {
 
 <style scoped>
 .footer {
-  background-color: #d03737;
+  background-color:  #338fe5;
   padding: 1em;
   text-align: center;
   margin-top: 2em;
