@@ -117,6 +117,7 @@
                 toy_id: toy.value.id,
                 reserve_date: toy.value.release_date,
                 reserve_num: num.value,
+                reserve_price: toy.value.price,
             }
             console.log('送信データ:', toyData)
 
