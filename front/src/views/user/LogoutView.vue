@@ -14,7 +14,8 @@ const logout = async () => {
   } finally {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    router.push('/login')
+    // router.push('/login')
+    window.location.href = '/login' // 画面遷移＋リロード
   }
 }
 
