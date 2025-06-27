@@ -4,6 +4,8 @@
 
     <!-- 新規予約フォーム -->
     <form @submit.prevent="submitReserve">
+          <fieldset :disabled="isSubmitting" style="border: none; padding: 0;">
+      <!-- //送信中はフォームを無効化 -->
       <div>
         <label>ユーザーID:</label>
         <input v-model="form.user_id" type="number" min="1"  required />
@@ -21,8 +23,12 @@
         <input v-model="form.reserve_num" type="number" min="1" max="20" required />
       </div>
       <!-- <button type="submit">予約登録</button> -->
-      <button type="submit">{{ isEdit ? '予約更新' : '予約登録' }}</button>
+      <button type="submit" :disabled="isSubmitting">
+        <!-- {{ isEdit ? '予約更新' : '予約登録' }} -->
+       {{ isSubmitting ? '送信中...' : '登録' }}
+      </button>
       <br />
+          </fieldset>
     </form>
 
     <hr />
@@ -47,7 +53,9 @@
           <td>{{ reserve.reserve_date }}</td>
           <td>{{ reserve.reserve_num }}</td>
           <td>
-            <button @click="editReserve(reserve)">編集</button>
+            <button @click="editReserve(reserve)">
+              編集 {{ isEdit ? '予約更新' : '予約登録' }}
+            </button>
             <button @click="deleteReserve(reserve.id)">削除</button>
           </td>
         </tr>
@@ -69,8 +77,11 @@ const form = ref({
 })
 const isEdit = ref(false)
 const editingId = ref(null)
+const isSubmitting = ref(false);
 
 const fetchReserves = async () => {
+     if (isSubmitting.value) return; // すでに送信中なら何もしない
+   isSubmitting.value = true; // 送信開始でボタン無効化
   try {
     const res = await apiClient.get('/owner/reserves')
       console.log('取得成功:', res.data)
@@ -78,6 +89,9 @@ const fetchReserves = async () => {
   } catch (e) {
         console.error('予約一覧取得に失敗', e)
     alert('予約一覧の取得に失敗しました')
+  } finally {
+    // 送信完了でボタン再有効化
+    isSubmitting.value = false;
   }
 }
 
