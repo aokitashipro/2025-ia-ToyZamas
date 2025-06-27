@@ -1,50 +1,106 @@
+<template>
+  <div>
+    <h2>カテゴリー編集</h2>
+
+    <div v-if="isSubmitting">読み込み中...</div>
+
+    <form @submit.prevent="submit" v-else>
+      <div>
+        <label for="name">カテゴリー名:</label>
+        <input type="text" id="name" v-model="form.name" required />
+      </div>
+
+      <div>
+        <label for="sort_order">表示順:</label>
+        <!-- <input type="number" id="sort_order" v-model="form.sort_order" required /> -->
+          <input v-model="form.sort_order" type="number" min="1" max="100" required />
+      </div>
+
+      <button type="submit" :disabled="isSubmitting">更新</button>
+      <p v-if="message">{{ message }}</p>
+      <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
+    </form>
+  </div>
+</template>
+
 <script setup>
-import { reactive, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { defineProps, reactive, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { apiClient } from '@/utils/api'
+
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    required: true
+  }
+})
+
 const router = useRouter()
-const route = useRoute()
 
 const form = reactive({
   name: '',
-  sort_order: 0,
+  sort_order: 1,
 })
 
+const isSubmitting = ref(false)
+const message = ref('')
+const errorMessage = ref('')
+
 const fetchCategory = async () => {
+  console.log('id:', props.id)
+  isSubmitting.value = true
   try {
-    const res = await fetch.get(`/api/owner/categories/${route.params.category}`)
-    const data = res.data.data
-    form.name = data.name
-    form.sort_order = data.sort_order
+    const res = await apiClient.get(`/owner/categories/${props.id}`)
+    form.name = res.data.name
+    form.sort_order = res.data.sort_order
   } catch (error) {
-    alert('カテゴリーの取得に失敗しました')
+    errorMessage.value = 'カテゴリーの取得に失敗しました'
+  } finally {
+    isSubmitting.value = false
   }
 }
 
 const submit = async () => {
+  isSubmitting.value = true
   try {
-    await fetch.put(`/api/owner/categories/${route.params.category}`, form)
+    await apiClient.put(`/owner/categories/${props.id}`, {
+      name: form.name,
+      sort_order: form.sort_order
+    })
+    message.value = 'カテゴリーを更新しました'
     router.push('/owner/categories')
   } catch (error) {
-    alert('更新に失敗しました')
+    errorMessage.value = '更新に失敗しました'
+  } finally {
+    isSubmitting.value = false
   }
 }
 
 onMounted(fetchCategory)
 </script>
-
-<template>
- <div>
-    <h2>カテゴリー編集</h2>
-    <form @submit.prevent="submit">
-      <div>
-        <label>名前</label>
-        <input v-model="form.name" required />
-      </div>
-      <div>
-        <label>表示順</label>
-        <input type="number" v-model.number="form.sort_order" required />
-      </div>
-      <button type="submit">更新</button>
-    </form>
-  </div>
-</template>
+<style scoped>
+/* スタイルは必要に応じて追加 */
+form {
+  max-width: 400px;
+  margin: auto;
+} 
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+}
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+p {
+  margin-top: 10px;
+}
+</style>

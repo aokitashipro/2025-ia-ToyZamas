@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;//0626追加
+use App\Models\Toy;//0626追加
 
 use Illuminate\Database\Eloquent\Model;
 

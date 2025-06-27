@@ -25,6 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
+
   <div>
     <main>
       <h1>ユーザー一覧</h1>

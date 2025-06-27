@@ -95,6 +95,7 @@
 </script>
 
 <template>
+
     <div>
         <h1 v-if="user">{{ user.name }}</h1>
         <div v-if="loading">
@@ -126,4 +127,5 @@
 
       </div>
     </div>
+
 </template>

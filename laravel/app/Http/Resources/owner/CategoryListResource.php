@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\owner;
+namespace App\Http\Resources\Owner;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,6 +19,7 @@ class CategoryListResource extends JsonResource
             'id'         => $this->id,
             'name'       => $this->name,
             'sort_order' => $this->sort_order,
+            
         ];
     }
 }
