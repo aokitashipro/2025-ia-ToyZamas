@@ -7,7 +7,6 @@
     const error = ref(null)
 
     const toys = ref([])
-
     const router = useRouter()
 
     async function getToys(){
@@ -30,8 +29,12 @@
             loading.value = true
             error.value = null
 
-            const response = await apiClient.post('/owner/toys/sort', sort)
+            const postData = {'sort' : sort}
+            console.log(postData)
+
+            const response = await apiClient.post('/owner/toys/sort', postData)
             toys.value = response.data
+            console.log(response)
         }catch(err){
             console.log('商品情報の取得に失敗:', err)
             error.value = '商品情報の取得に失敗しました'
