@@ -11,6 +11,9 @@ use App\Models\Toy;
 use App\Models\Sale;
 use App\Models\Sale_Item;
 use App\Http\Resources\toyzamas\BuyResource;
+//メール処理に使うので追加
+use App\Mail\PurchaseCompletedMail;
+use Illuminate\Support\Facades\Mail;
 
 class BuyController extends Controller
 {
@@ -28,7 +31,7 @@ class BuyController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::id(); // ログインユーザーのID取得
-
+        // $sale = null; // 事前に定義。メール処理で使う
         DB::beginTransaction();
         try {
             // 1. カート情報取得
@@ -57,8 +60,10 @@ class BuyController extends Controller
 
             // 5. カート削除
             Cart::where('user_id', $userId)->delete();
-
             DB::commit();
+
+            // 5. メール送信
+            Mail::to(Auth::user()->email)->send(new PurchaseCompletedMail($sale));
             return response()->json(['message' => '購入が完了しました']);
         } catch (\Exception $e) {
             DB::rollBack();
