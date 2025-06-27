@@ -53,7 +53,7 @@ const handleSubmit = async () => {
     if(data.user.is_admin === 1){
       router.push('/owner')
     }else if(data.user.is_admin === 0){
-      router.push(`/toyzamas/${data.user.id}/top`)
+      window.location.href = `/toyzamas/${data.user.id}/top`
     }
 
     showMessage('ログイン成功！', false)

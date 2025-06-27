@@ -61,7 +61,7 @@ const isOwnerRoute = computed(() => {
 nav a,
 nav button {
   margin: 0 10px;
-  color: white;
+  color: #222;
   background: none;
   border: none;
   cursor: pointer;
