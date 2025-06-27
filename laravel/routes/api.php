@@ -32,7 +32,7 @@ Route::get('/user', function (Request $request) {
 
 
 // Owner用ルート追加
-Route::apiResource('/owner/toys', OwnerToyController::class);
+Route::apiResource('/owner/toys', OwnerToyController::class)->only(['index', 'store', 'show', 'destroy']);
 Route::apiResource('/owner/stocks', OwnerStockController::class);
 Route::apiResource('/owner/history', OwnerHistoryController::class);
 Route::apiResource('/owner/reserves', OwnerReserveController::class);
@@ -40,7 +40,8 @@ Route::apiResource('/owner/categories', OwnerCategoryController::class);
 Route::apiResource('/owner/series', OwnerSeriesController::class);
 Route::apiResource('/owner/users', OwnerUserController::class);
 Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
-
+// Toyを更新するためのルート
+Route::post('/owner/toys/{toy}/update', [OwnerToyController::class, 'update']);
 
 //ユーザデータの登録、ログイン
 Route::post('/register', [AuthController::class, 'register']);
@@ -71,4 +72,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/toyzamas/reserves', UserReservesController::class);
     Route::apiResource('/toyzamas/favorites', UserFavoritesController::class);
 });
+
 

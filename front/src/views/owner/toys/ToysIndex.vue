@@ -1,14 +1,16 @@
-<<<<<<< HEAD
 <script setup>
     import {ref, onMounted} from 'vue'
     import { apiClient } from '@/utils/api'
+    import { useRouter } from 'vue-router' 
 
     const loading = ref(true)
     const error = ref(null)
 
     const toys = ref([])
 
-    async function getAllToys(){
+    const router = useRouter()
+
+    async function getToys(){
         try{
             loading.value = true
             error.value = null
@@ -24,7 +26,7 @@
     }
 
     onMounted(() => 
-        getAllToys() 
+        getToys() 
     )
 </script>
 
@@ -40,6 +42,7 @@
         </div>
 
         <div v-else>
+            <RouterLink :to="'/owner/toys/create'">商品を新規登録</RouterLink>
             <table border="1">
                 <tr>
                     <td>商品名</td>
@@ -51,7 +54,9 @@
                     <td>予約可否</td>
                 </tr>
                 <tr v-for="toy in toys" :key="toy.id">
-                    <td>{{ toy.name }}</td>
+                    <td><RouterLink :to="`/owner/toys/${toy.id}`">
+                        {{ toy.name }}
+                    </RouterLink></td>
                     <td>{{ toy.price }}</td>
                     <td>{{ toy.category }}</td>
                     <td>{{ toy.series }}</td>
@@ -62,11 +67,4 @@
             </table>
         </div>
     </div>
-=======
-<script setup>
-</script>
-
-<template>
-  <div>ToysIndex</div>
->>>>>>> 1136c6c85baab785266d16af69c398ba3e3a6636
 </template>

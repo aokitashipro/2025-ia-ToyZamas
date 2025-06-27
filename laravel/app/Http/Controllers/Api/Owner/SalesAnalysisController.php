@@ -18,12 +18,12 @@ class SalesAnalysisController extends Controller
         //クエリパラメータ：月か一日か
         $type  = $request->query('type','monthly');//デフォルトはmonthly
         //フォーマットを選択：
-        $format = $type === 'dally'? '%Y-%m-%d' :'&Y-%m';
+        $format = $type === 'dally'? '%Y-%m-%d' :'%Y-%m';
 
         //売上データを日別か月別で集計
         $salasData = Sale_Item::select(
             //SQLの関数を直接使う（SUM()やDATE_FORMAT()
-            DB::raw("DATE_FORMAT(sales.created.at,'$format') as date"),
+            DB::raw("DATE_FORMAT(sales.created_at,'$format') as date"),
             DB::raw("SUM(purchase_amount) as total_sales_amount"),
             DB::raw("SUM(purchase_num) as total_item_sold")
         )

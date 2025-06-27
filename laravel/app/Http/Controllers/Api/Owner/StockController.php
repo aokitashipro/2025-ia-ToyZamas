@@ -18,9 +18,9 @@ class StockController extends Controller
     public function index()
     {
         //
-        $stocks = Toy::select('name', 'stock')
-                    ->orderBy('stock', 'asc')
-                    ->get();
+        $stocks = Toy::select('id', 'name', 'stock')
+            ->orderBy('stock', 'asc')
+            ->get();
 
         return StockListResource::collection($stocks);
     }
@@ -38,7 +38,13 @@ class StockController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $toy = Toy::findOrFail($id);
+        // 必要に応じてリソースでラップ
+        return response()->json([
+            'id' => $toy->id,
+            'name' => $toy->name,
+            'stock' => $toy->stock,
+        ]);
     }
 
     /**
@@ -50,23 +56,28 @@ class StockController extends Controller
         $toy = Toy::findOrFail($id);
 
         //toyのstockを仕入れ分増加させる
-        $toy->stock = $toy->stock + $request->purchase;
+        $increment = $request->increment;
+        $toy->stock += $increment;
         $toy->save();
 
         //仕入れ履歴に今回の仕入れを追加
-        $stock =[
+        $stock = [
             'toy_id' => $toy->id,
             'be_stored' => $toy->stock,
-            'stock_in' => $request->purchase,
-            'stock_out' => 0,
-            'description' => $request->description
+            'stock_in' => $increment > 0 ? $increment : 0,
+            'stock_out' => $increment < 0 ? abs($increment) : 0,
+            'description' => $request->description ?? '',
         ];
 
         Stocks_History::create($stock);
 
-        return $stock;
-
+        return response()->json([
+            'id' => $toy->id,
+            'name' => $toy->name,
+            'stock' => $toy->stock,
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
