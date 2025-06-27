@@ -6,7 +6,7 @@ const users = ref([]) // usersをリアクティブに定義
 const sort = ref(0);
 
 // ユーザー一覧を取得する関数
-const loadToys = async () => {
+const loadUsers = async () => {
   try {
     const response = await apiClient.get(`/owner/users?sort=${sort.value}`); // Laravel APIからデータ取得
     users.value = response.data; // usersにデータを格納
@@ -18,9 +18,26 @@ const loadToys = async () => {
   }
 }
 
+// Delete a favorite item
+const deleteUser = async (userId) => {
+  if (!confirm("本当にユーザーを削除しますか？")) {
+    return;
+  }
+
+  try {
+    await apiClient.delete(`/owner/users/${userId}`);
+    alert("ユーザーを削除しました");
+    // Reload the favorites list after deletion
+    await loadUsers();
+  } catch (error) {
+    console.error("削除エラー:", error);
+    alert("ユーザー削除に失敗しました");
+  }
+};
+
 // コンポーネントのマウント時にデータをロード
 onMounted(() => {
-  loadToys();
+  loadUsers();
 })
 </script>
 
@@ -32,6 +49,7 @@ onMounted(() => {
       <div v-for="user in users" :key="user.id">
         ID: {{ user.id }} 名前: {{ user.name }} 権限: {{ user.is_admin }} 
         <a :href="`/owner/users/${user.id}`">詳細</a>
+        <button @click="deleteUser(user.id)">削除</button>
       </div>
     </main>
   </div>
