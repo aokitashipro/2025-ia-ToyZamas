@@ -11,6 +11,9 @@
     const error = ref(null)
     const num = ref(0)
 
+    const laravel_base_url = 'http://127.0.0.1:8000/storage/'
+    const img = ref(null)
+
     const loadToy = async () => {
         try {
             loading.value = true
@@ -20,7 +23,12 @@
             const response = await apiClient.get(`/toyzamas/toys/${toyId}`)
             toy.value = response.data || response
 
+            if (toy.value.image_url) {
+                img.value = laravel_base_url + toy.value.image_url
+            }
+
             console.log('商品詳細:', toy.value)
+            console.log( toy.value.image_url )
         }catch (err){
             console.error('商品詳細の取得に失敗:', err)
 
@@ -157,7 +165,7 @@
 <template>
     <div>
         <div>
-            <img v-if="image_url" :src="image_url" alt="toy image">
+            <img v-if="img" :src="img" alt="toy image" class="toy-image">
             <p v-else>画像が存在しません。</p>
         </div>
         <h1 v-if="toy">{{ toy.name }}</h1>
@@ -219,3 +227,11 @@
         </div>
     </div>
 </template>
+<style scoped>
+.toy-image {
+  width: 300px;     /* お好みの幅に調整 */
+  height: auto;     /* アスペクト比を維持 */
+  display: block;
+  margin: 0 auto 1em auto;
+}
+</style>

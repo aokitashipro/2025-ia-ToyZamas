@@ -28,10 +28,32 @@ class ToyController extends Controller
             }
 
         } else {
-            //仮 ランダムに１０こ取得
-            $toys = Toy::inRandomOrder()->limit(10)->get();
-            return ToyListResource::collection($toys);
+            Log::info($request->category_id);
+            Log::info($request->series_id);
+
+            if($request->category_id != 0 && $request->series_id != 0)
+            {
+                $toys = Toy::with(['category', 'series'])
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->where('category_id',$request->category_id)
+                ->where('series_id',$request->series_id)
+                ->get();
+            } else if($request->category_id != 0 && $request->series_id == 0){
+                $toys = Toy::with(['category', 'series'])
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->where('category_id',$request->category_id)
+                ->get();
+            } else if($request->category_id == 0 && $request->series_id != 0){
+                $toys = Toy::with(['category', 'series'])
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->where('series_id',$request->series_id)
+                ->get();
+            } else{
+                //ランダムに１０こ取得
+                $toys = Toy::inRandomOrder()->limit(10)->get();
+            }
         }
+        return ToyListResource::collection($toys);
     }
 
     /**
