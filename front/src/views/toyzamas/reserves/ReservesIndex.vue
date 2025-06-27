@@ -43,7 +43,7 @@ onMounted(() => {
 <template>
   <div>
     <main>
-      <h1>お気に入り一覧</h1>
+      <h1>予約商品一覧</h1>
       <div v-for="reserve in reserves" :key="reserve.id">
         <img :src="reserve.image_url" alt="" width="100" height="100">
         商品名: {{ reserve.name }} 価格: ¥{{ reserve.price }} 
