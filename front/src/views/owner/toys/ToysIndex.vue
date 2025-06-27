@@ -7,8 +7,7 @@
     const error = ref(null)
 
     const toys = ref([])
-
-    const router = useRouter()
+    const sort = ref(null)
 
     async function getToys(){
         try{
@@ -17,6 +16,25 @@
 
             const response = await apiClient.get('/owner/toys')
             toys.value = response.data
+        }catch(err){
+            console.log('商品情報の取得に失敗:', err)
+            error.value = '商品情報の取得に失敗しました'
+        }finally{
+            loading.value = false
+        }
+    }
+
+    async function sortDo(sort){
+        try{
+            loading.value = true
+            error.value = null
+
+            const postData = {'sort' : sort}
+            console.log(postData)
+
+            const response = await apiClient.post('/owner/toys/sort', postData)
+            toys.value = response.data
+            console.log(response)
         }catch(err){
             console.log('商品情報の取得に失敗:', err)
             error.value = '商品情報の取得に失敗しました'
@@ -43,6 +61,16 @@
 
         <div v-else>
             <RouterLink :to="'/owner/toys/create'">商品を新規登録</RouterLink>
+            <div>
+                <h4>ソート:</h4>
+                <select v-model="sort">
+                    <option value="price_high">値段の高い順</option>
+                    <option value="price_low">値段の低い順</option>
+                    <option value="stock_much">在庫多い順</option>
+                    <option value="stock_little">在庫少ない順</option>
+                </select>
+                <input type="button" @click="sortDo(sort)" value="ソートを実行">
+            </div>
             <table border="1">
                 <tr>
                     <td>商品名</td>

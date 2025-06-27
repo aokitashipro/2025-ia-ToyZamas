@@ -105,4 +105,30 @@ class ToyController extends Controller
         ->response()
         ->setStatusCode(201);
     }
+
+    public function sort(Request $request)
+    {
+        if($request->sort === 'price_high'){
+            $toys = Toy::with(['category', 'series'])
+                ->orderBy('price', 'desc')
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->get();
+        }else if($request->sort === 'price_low'){
+            $toys = Toy::with(['category', 'series'])
+                ->orderBy('price', 'asc')
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->get();
+        }else if($request->sort === 'stock_much'){
+            $toys = Toy::with(['category', 'series'])
+                ->orderBy('stock', 'desc')
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->get();
+        }else if($request->sort === 'stock_little'){
+            $toys = Toy::with(['category', 'series'])
+                ->orderBy('price', 'asc')
+                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                ->get();
+        }
+        return ToyListResource::collection($toys);
+    }
 }

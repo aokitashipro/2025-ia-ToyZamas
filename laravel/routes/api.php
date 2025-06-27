@@ -42,7 +42,8 @@ Route::apiResource('/owner/users', OwnerUserController::class);
 Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
 // Toyを更新するためのルート
 Route::post('/owner/toys/{toy}/update', [OwnerToyController::class, 'update']);
-
+// Toyindexでソートをかけるためのルート
+Route::post('/owner/toys/sort', [OwnerToyController::class, 'sort']);
 //ユーザデータの登録、ログイン
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
