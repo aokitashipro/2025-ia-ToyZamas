@@ -8,12 +8,13 @@
     const toy = ref(null)
 
     const route = useRoute()
-    const toyId = route.params.toy
+    const toyId = route.params.id
 
     const laravel_base_url = 'http://127.0.0.1:8000/storage/'
     const img = ref(null)
 
     async function getToys(toyId){  
+        console.log(toyId)
       try{
             loading.value = true
             error.value = null

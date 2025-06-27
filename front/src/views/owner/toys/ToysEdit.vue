@@ -20,7 +20,7 @@
 
     const route = useRoute()
     const router = useRouter()
-    const toyId = route.params.toy
+    const toyId = route.params.id
 
 
     async function getToys(toyId){  
@@ -44,6 +44,8 @@
           if(category.id === toy.value.category_id){
             current_category.value = category
           }
+          console.log(category)
+          console.log(current_category.value)
         })
 
         //series一覧を取得

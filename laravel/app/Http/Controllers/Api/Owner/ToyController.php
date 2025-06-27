@@ -118,14 +118,6 @@ class ToyController extends Controller
                 ->orderBy('price', 'asc')
                 ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
                 ->get();
-        // }else if($request->sort === 'category_high'){
-
-        // }else if($request->sort === 'category_low'){
-
-        // }else if($request->sort === 'series_high'){
-
-        // }else if($request->sort === 'series_low'){
-
         }else if($request->sort === 'stock_much'){
             $toys = Toy::with(['category', 'series'])
                 ->orderBy('stock', 'desc')
