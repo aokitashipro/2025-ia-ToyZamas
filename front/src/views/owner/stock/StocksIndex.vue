@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>在庫管理</h1>
+    <h1>在庫管理 / <RouterLink :to="`/owner/stocks/history`">在庫履歴</RouterLink></h1>
     <div v-if="loading">読み込み中...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
@@ -14,7 +14,7 @@
         <tbody>
           <tr v-for="toy in stocks" :key="toy.id">
             <td>
-            <a :href="`/owner/stocks/${toy.id}`">{{ toy.name }}</a>
+            <RouterLink :to="`/owner/stocks/${toy.id}`">{{ toy.name }}</RouterLink>
             </td>
             <td>{{ toy.stock }}</td>
           </tr>
