@@ -102,6 +102,7 @@ onMounted(() => {
     showLoggedInState()
   }
 })
+
 </script>
 <template>
   <div>
@@ -154,6 +155,10 @@ onMounted(() => {
       <h2>ログイン済み</h2>
       <p>ログインが完了しました。</p>
       <button @click="handleLogout">ログアウト</button>
+      <p>
+        <router-link to="`/toyzamas/${data.user.id}/toys`">商品一覧</router-link>
+        <router-link to="/toyzamas/${{data.user.id}}">top</router-link>
+      </p>
     </div>
   </div>
 </template>

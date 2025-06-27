@@ -187,7 +187,9 @@ onMounted(() => {
     <div v-show="isCompleted">
       <h2>登録完了！</h2>
       <p>ユーザー登録が完了しました。</p>
-      <button @click="handleLogout">ログアウト</button>
+      <button><router-link to="/toyzamas/:id/top">トップページへ</router-link></button> 
+      <br>
+      <!-- <button @click="handleLogout">ログアウト</button> -->
     </div>
   </div>
 </template>

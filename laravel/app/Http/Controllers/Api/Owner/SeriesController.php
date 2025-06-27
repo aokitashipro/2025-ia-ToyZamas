@@ -10,7 +10,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Psy\Util\Json;
 
 use App\Http\Requests\SeriesRequest;//リクエスト追加
+
 use App\Http\Resources\Owner\SeriesListResource;//リソース追加
+
+
 
 class SeriesController extends Controller
 {
@@ -22,7 +25,12 @@ class SeriesController extends Controller
         $series = Series::orderBy('sort_order')
             ->get();//ソート優先度を昇順で並びかえて表示
 
+
         return SeriesListResource::collection($series);
+
+
+            // ->json(['data' => $categories], 200);
+
         // 取得したデータをSeriesListResourceに変換し、統一フォーマットで返却
     }
 
