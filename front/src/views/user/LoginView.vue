@@ -51,7 +51,7 @@ const handleSubmit = async () => {
     }
 
     if(data.user.is_admin === 1){
-      router.push('/owner')
+      router.push('/owner/toys')
     }else if(data.user.is_admin === 0){
       window.location.href = `/toyzamas/${data.user.id}/top`
     }

@@ -1,7 +1,7 @@
 <script setup>
-
+  
 </script>
 
 <template>
-  管理者向けトップ
+  <h1></h1>
 </template>
