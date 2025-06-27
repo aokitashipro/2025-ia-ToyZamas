@@ -105,4 +105,32 @@ class ToyController extends Controller
         ->response()
         ->setStatusCode(201);
     }
+
+    public function sort(Request $request)
+    {
+        if($request->sort === 'price_high'){
+        $toys = Toy::with(['category', 'series'])
+                    ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                    ->orderBy()
+        }else if($request->sort === 'price_low'){
+
+        }else if($request->sort === 'category_high'){
+
+        }else if($request->sort === 'category_low'){
+
+        }else if($request->sort === 'series_high'){
+
+        }else if($request->sort === 'series_low'){
+
+        }else if($request->sort === 'stock_much'){
+
+        }else if($request->sort === 'stock_little'){
+
+        }
+        $toys = Toy::with(['category', 'series'])
+                    ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                    ->get();
+
+        return ToyListResource::collection($toys);
+    }
 }

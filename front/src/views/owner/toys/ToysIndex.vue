@@ -25,6 +25,23 @@
         }
     }
 
+    async function sortDo(sort){
+        try{
+            loading.value = true
+            error.value = null
+
+            const response = await apiClient.post('/owner/toys/sort', sort)
+            toys.value = response.data
+        }catch(err){
+            console.log('商品情報の取得に失敗:', err)
+            error.value = '商品情報の取得に失敗しました'
+        }finally{
+            loading.value = false
+        }
+    }
+
+
+
     onMounted(() => 
         getToys() 
     )
@@ -43,6 +60,21 @@
 
         <div v-else>
             <RouterLink :to="'/owner/toys/create'">商品を新規登録</RouterLink>
+            <div>
+                <h4>ソート:</h4>
+                <select v-model="sort">
+                    <option disabled value="">ソート条件を選択してください</option>
+                    <option value="price_high">値段の高い順</option>
+                    <option value="price_low">値段の低い順</option>
+                    <option value="category_high">カテゴリ人気順</option>
+                    <option value="category_low">カテゴリ不人気順</option>
+                    <option value="series_high">カテゴリ人気順</option>
+                    <option value="series_low">カテゴリ不人気順</option>
+                    <option value="stock_much">在庫多い順</option>
+                    <option value="stock_little">在庫少ない順</option>
+                </select>
+                <input type="button" @click="sortDo(sort)" value="ソートを実行">
+            </div>
             <table border="1">
                 <tr>
                     <td>商品名</td>
