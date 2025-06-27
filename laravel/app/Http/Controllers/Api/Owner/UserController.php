@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\Owner\UserListResource;
 use App\Http\Resources\Owner\UserResource;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -65,9 +66,20 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        $user = User::findOrFail($id)->delete();
+        //エラーが出たらキャッチする仕組み
+        //うまくいったらそのまま処理続行
+        Log::info($id);
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
 
-        return('削除完了');
+            return response()->json([
+                'message' => 'ユーザーが削除されました',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'ユーザーが見つかりません',
+            ], 404);
+        }
     }
 }
