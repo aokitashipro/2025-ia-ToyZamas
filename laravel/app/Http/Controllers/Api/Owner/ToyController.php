@@ -8,6 +8,8 @@ use App\Models\Toy;
 use App\Http\Resources\Owner\ToyListResource;
 use App\Http\Resources\Owner\ToyResource;
 
+use Illuminate\Support\Facades\Log;
+
 class ToyController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class ToyController extends Controller
     {
         //
         $toys = Toy::with(['category', 'series'])
-                    ->select('name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                    ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
                     ->get();
 
         return ToyListResource::collection($toys);
@@ -28,10 +30,23 @@ class ToyController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $toy = Toy::create($request->all());
+        //publicのstorageに画像ファイルを保存
+        $file_path = $request->image_url->store('images', 'public');
 
-        return('登録完了');
+        $toy = Toy::create([
+            'name' => $request->name,
+            'information' => $request->information,
+            'price' => $request->price,
+            'is_selling' => $request->is_selling,
+            'is_reserve' => $request->is_reserve,
+            'category_id' => $request->category_id,
+            'series_id' => $request->series_id,
+            'image_url' => $file_path,
+            'stock' => $request->stock,
+            'release_date' => $request->release_date
+        ]);
+
+        return (new ToyResource($toy));
     }
 
     /**
@@ -59,14 +74,20 @@ class ToyController extends Controller
         $toy->price = $request->price;
         $toy->category_id = $request->category_id;
         $toy->series_id = $request->series_id;
-        $toy->image_url = $request->image_url;
-        $toy->stock = $request->stock;
+        if($toy->image_url !== $request->image_url){
+            $file_path = $request->image_url->store('images', 'public');
+            $toy->image_url = $file_path;
+        }
+        $toy->is_selling = $request->is_selling;
         $toy->is_reserve = $request->is_reserve;
         $toy->release_date = $request->release_date;
 
         $toy->save();
 
-        return('更新完了');
+        return (new ToyResource($toy))
+        ->additional(['message' => '商品情報が更新されました。商品詳細へ戻ります'])
+        ->response()
+        ->setStatusCode(201);
     }
 
     /**
@@ -75,9 +96,13 @@ class ToyController extends Controller
     public function destroy(string $id)
     {
         //
-        $toy = Toy::findOrFail($id)
-                    ->delete();
+        $toy = Toy::findOrFail($id);
+        $toy->delete();
 
-        return('情報を削除しました');
+
+        return (new ToyResource($toy))
+        ->additional(['message' => '商品情報が削除されました。商品一覧へ戻ります'])
+        ->response()
+        ->setStatusCode(201);
     }
 }

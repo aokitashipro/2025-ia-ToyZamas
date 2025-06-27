@@ -9,6 +9,7 @@
     const toy = ref(null)
     const loading = ref(true)
     const error = ref(null)
+    const num = ref(0)
 
     const loadToy = async () => {
         try {
@@ -34,13 +35,12 @@
     }
 
     //お気に入り登録
-    const handleSubmit = async () => {
+    async function favoritSubmit () {
         try {
             loading.value = true
             error.value = {}
-            const toyId = route.params.id
             const toyData = {
-                toy_id: toyId,
+                toy_id: toy.value.id,
             }
             console.log('送信データ:', toyData)
 
@@ -63,7 +63,82 @@
             await loadToy();
         }
     }  
-    ///////////////////////////////////////////////////////
+
+    //カート登録
+    async function cartSubmit() {
+
+        if(num.value === 0) {
+            alert('購入数を指定してください。')
+            return;
+        }
+        try {
+            loading.value = true
+            error.value = {}
+            const toyData = {
+                toy_id: toy.value.id,
+                quantity: num.value,
+            }
+            console.log('送信データ:', toyData)
+
+            const response = await apiClient.post('/toyzamas/carts', toyData)
+            console.log('作成成功:', response)
+            alert('カートに追加しました！')
+            // 商品情報を再取得
+            await loadToy();
+        } catch (error) {
+            console.error('カート登録に失敗:', error)
+
+            if (error.errors) {
+                errors.value = error.errors
+            } else {
+                alert('カート追加に失敗しました。')
+            }
+        } finally {
+            loading.value = false
+            // 商品情報を再取得
+            await loadToy();
+        }
+    }
+
+    //予約登録
+    async function reserveSubmit() {
+        if(num.value === 0) {
+            alert('予約数を指定してください。')
+            return;
+        }
+        try {
+            loading.value = true
+            error.value = {}
+            console.log(route.params.id)
+            console.log(toy.value.release_date)
+            console.log(num.value)
+            console.log(toy)
+            const toyData = {
+                toy_id: toy.value.id,
+                reserve_date: toy.value.release_date,
+                reserve_num: num.value,
+            }
+            console.log('送信データ:', toyData)
+
+            const response = await apiClient.post('/toyzamas/reserves', toyData)
+            console.log('作成成功:', response)
+            alert('商品を予約しました！')
+            // 商品情報を再取得
+            await loadToy();
+        } catch (error) {
+            console.error('予約に失敗:', error)
+
+            if (error.errors) {
+                errors.value = error.errors
+            } else {
+                alert('予約に失敗しました。')
+            }
+        } finally {
+            loading.value = false
+            // 商品情報を再取得
+            await loadToy();
+        }
+    }
 
     const goBack = () => {
         router.push('/toyzamas/toys')
@@ -133,7 +208,12 @@
 
             <div class="action-buttons">
                 <button @click="goBack" class="btn btn-secondary">一覧に戻る</button>
-                <button @click="handleSubmit">お気に入りに追加</button>
+                <button @click="favoritSubmit">お気に入りに追加</button>
+                <select v-model="num">
+                    <option v-for="n in toy.stock" :key="n" :value="n">{{ n }}</option>
+                </select>
+                <button v-if="toy.is_reserve" @click="reserveSubmit">予約注文</button>
+                <button v-else @click="cartSubmit">カートに追加</button>
             </div>
         </div>
     </div>
