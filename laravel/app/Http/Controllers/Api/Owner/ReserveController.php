@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Reserve;
 use App\Models\Toy;
 use Illuminate\Support\Facades\DB;
+//メール処理にて追加
+use App\Mail\ReserveCompleteMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class ReserveController extends Controller
@@ -56,10 +59,21 @@ class ReserveController extends Controller
             'reserve_date' => $request->reserve_date,
             'reserve_num' => $request->reserve_num,
         ]);
+
+          // メール送信
+    $user = $reserve->user ?? $reserve->load('user')->user;
+    $toy  = $reserve->toy ?? $reserve->load('toy')->toy;
+
+    if ($user && $user->email) {
+        Mail::to($user->email)->send(new ReserveCompleteMail($user, $toy, $reserve));
+    }
         return response()->json([
             'message' => '電話予約を登録しました。',
             'data' => $reserve
         ], 201);
+
+
+
     }
 
     /**
