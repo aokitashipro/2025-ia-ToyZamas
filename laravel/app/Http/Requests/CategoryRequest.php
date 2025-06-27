@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'sort_order' => ['required', 'integer'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'カテゴリー名は必須です。',
+            'sort_order.required' => '表示順は必須です。',
+            'sort_order.integer' => '表示順は整数で入力してください。',
+        ];
+    }
+
 }

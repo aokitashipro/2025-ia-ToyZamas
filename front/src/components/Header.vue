@@ -12,8 +12,8 @@
         <!-- 管理者ヘッダー -->
         <router-link to="/owner">トップ</router-link>
         <router-link to="/owner/toys">商品</router-link>
-        <router-link to="/owner/categories">カテゴリ</router-link>
-        <router-link to="/owner/series">シリーズ</router-link>
+        <router-link to="/owner/categories">カテゴリ/シリーズ</router-link>
+           <router-link to="/owner/reserve">電話予約</router-link>
         <router-link to="/owner/stocks">在庫</router-link>
         <router-link to="/owner/sales-analysis">売上分析</router-link>
         <router-link to="/logout">ログアウト</router-link>
