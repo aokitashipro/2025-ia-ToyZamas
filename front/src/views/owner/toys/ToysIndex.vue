@@ -106,9 +106,6 @@
     border: 1px solid #ddd;
     padding: 8px;
     }
-    .clum_name{
-        
-    }
     button {
     background-color: #f44336; /* 赤色 */
     color: white;

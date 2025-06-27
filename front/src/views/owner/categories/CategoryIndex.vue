@@ -28,7 +28,7 @@ const fetchCategories = async () => {
     // console.log(res.data);
     categories.value = res.data // 
   } catch (error) {
-    alert('カテゴリー一覧の取得に失敗しました')
+    alert('カテゴリ一覧の取得に失敗しました')
       error.value = '商品の取得に失敗しました'
   }finally {
     loading.value = false
@@ -40,7 +40,7 @@ const confirmDelete = async (id) => {
   if (confirm('本当に削除しますか？')) {
     try {
       await apiClient.delete(`/owner/categories/${id}`)
-      alert('カテゴリーを削除しました')
+      alert('カテゴリを削除しました')
       // // 削除後のリスト再取得、またはローカル更新
       // categories.value = categories.value.filter(c => c.id !== id)
            // 配列部分だけ更新
@@ -106,7 +106,7 @@ onMounted(() => {
 <template>
  <div>
     <h2><router-link to="/owner/series">シリーズ管理はこちら</router-link></h2>
-    <h1> カテゴリー一覧画面</h1>
+    <h1> カテゴリ一覧画面</h1>
         <div v-if="loading">
       読み込み中...
     </div>
