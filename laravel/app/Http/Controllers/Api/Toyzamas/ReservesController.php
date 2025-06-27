@@ -37,9 +37,9 @@ class ReservesController extends Controller
 
         try{
             //salesテーブルに登録
-            $sale = Sale::create([
-                'user_id' => $user_id
-            ]);
+            // $sale = Sale::create([
+            //     'user_id' => $user_id
+            // ]);
 
             $reserve = Reserve::create([
                 'user_id' => $user_id,
@@ -48,13 +48,13 @@ class ReservesController extends Controller
                 'reserve_num' => $request->reserve_num
             ]);
 
-            $sale_item = Sale_Item::create([
-                'sale_id' => $sale->id,
-                'toy_id' => $request->toy_id,
-                'purchase_num' => $request->reserve_num,
-                'purchase_amount' => $request->reserve_num * $request->reserve_price, // 購入金額を計算
-                'purchase_date' => now(),
-            ]);
+            // $sale_item = Sale_Item::create([
+            //     'sale_id' => $sale->id,
+            //     'toy_id' => $request->toy_id,
+            //     'purchase_num' => $request->reserve_num,
+            //     'purchase_amount' => $request->reserve_num * $request->reserve_price, // 購入金額を計算
+            //     'purchase_date' => now(),
+            // ]);
 
             // 在庫減算
             $toy = Toy::find($request->toy_id);
