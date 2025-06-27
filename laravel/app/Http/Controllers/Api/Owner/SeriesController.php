@@ -39,10 +39,10 @@ class SeriesController extends Controller
      */
     public function store(SeriesRequest $request)
     {
-        $Series = Series::create($request->validate());
+        $Series = Series::create($request->validated());
         // 登録完了メッセージを追加してレスポンス
         return (new SeriesListResource($Series ))
-            ->additional(['message' => 'カテゴリーが登録されました'])->response()
+            ->additional(['message' => 'シリーズが登録されました'])->response()
             ->setStatusCode(201);
     }
 
