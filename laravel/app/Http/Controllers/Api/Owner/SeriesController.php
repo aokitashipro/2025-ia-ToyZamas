@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Psy\Util\Json;
 
-use App\Http\Requests\SeriesRequest;//リクエスト追加
+// use App\Http\Requests\SeriesRequest;//リクエスト追加
 
 use App\Http\Resources\Owner\SeriesListResource;//リソース追加
 
@@ -28,7 +28,6 @@ class SeriesController extends Controller
 
         return SeriesListResource::collection($series);
 
-
             // ->json(['data' => $categories], 200);
 
         // 取得したデータをSeriesListResourceに変換し、統一フォーマットで返却
@@ -37,9 +36,9 @@ class SeriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SeriesRequest $request)
+    public function store(Request $request)
     {
-        $Series = Series::create($request->validate());
+        $Series = Series::create($request->all());
         // 登録完了メッセージを追加してレスポンス
         return (new SeriesListResource($Series ))
             ->additional(['message' => 'カテゴリーが登録されました'])->response()

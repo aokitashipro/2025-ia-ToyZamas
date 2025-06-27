@@ -12,6 +12,7 @@ const message = ref('');
 const errorMessage = ref('');
 
 
+
 const submit = async () => {
   console.log("送信内容：", JSON.stringify(form));
   console.log(form)
@@ -19,16 +20,15 @@ const submit = async () => {
    isSubmitting.value = true; // 送信開始でボタン無効化
   try {
     // await apiClient.post('/api/owner/categories', form)//Laravelの api.php はすでに api/ が自動でプレフィックスに付くため、Vue側では /api/ をつけない
-    await apiClient.post('/owner/categories', {
+    await apiClient.post('/owner/series', {
   name: form.name,
   sort_order: form.sort_order
 })
-    router.push('/owner/categories')
+    router.push('/owner/series')
   } catch (error) {
     alert('登録に失敗しました')
   } finally {
     isSubmitting.value = false; // 送信完了でボタン再有効化
-       loading.value = false
   }
 }
 const router = useRouter()
