@@ -40,11 +40,7 @@ const confirmDelete = async (id) => {
   if (confirm('本当に削除しますか？')) {
     try {
       await apiClient.delete(`/owner/series/${id}`)
-      alert('シリーズを削除しました')
-      // // 削除後のリスト再取得、またはローカル更新
-      // series.value = series.value.filter(c => c.id !== id)
-           // 配列部分だけ更新
-      series.value.data = series.value.data.filter(c => c.id !== id)
+      await fetchseries()
     } catch (error) {
       alert('削除に失敗しました')
       console.error(error)

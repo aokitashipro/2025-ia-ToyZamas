@@ -4,16 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Series;
-use GuzzleHttp\Psr7\Response;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Psy\Util\Json;
-
-// use App\Http\Requests\SeriesRequest;//リクエスト追加
-
-use App\Http\Resources\Owner\SeriesListResource;//リソース追加
-
-
+use App\Http\Requests\SeriesRequest;
+use App\Http\Resources\Owner\SeriesListResource;
 
 class SeriesController extends Controller
 {
@@ -22,25 +14,17 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Series::orderBy('sort_order')
-            ->get();//ソート優先度を昇順で並びかえて表示
-
-
+        $series = Series::orderBy('id', 'asc')->get();
         return SeriesListResource::collection($series);
-
-            // ->json(['data' => $categories], 200);
-
-        // 取得したデータをSeriesListResourceに変換し、統一フォーマットで返却
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SeriesRequest $request)
     {
-        $Series = Series::create($request->all());
-        // 登録完了メッセージを追加してレスポンス
-        return (new SeriesListResource($Series ))
+        $series = Series::create($request->validated());
+        return (new SeriesListResource($series))
             ->additional(['message' => 'シリーズが登録されました'])->response()
             ->setStatusCode(201);
     }
@@ -50,8 +34,8 @@ class SeriesController extends Controller
      */
     public function show(string $id)
     {
-        $Series  = Series ::findOrFail($id);
-        return new SeriesListResource($Series);
+        $series = Series::findOrFail($id);
+        return new SeriesListResource($series);
     }
 
     /**
@@ -59,11 +43,11 @@ class SeriesController extends Controller
      */
     public function update(SeriesRequest $request, string $id)
     {
-        $Series = Series::findOrFail($id);
-        $Series->update($request->validated());
+        $series = Series::findOrFail($id);
+        $series->update($request->validated());
         return response()->json([
             'message' => '更新成功',
-            'data' => $Series
+            'data' => $series
         ]);
     }
 
@@ -72,8 +56,8 @@ class SeriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $Series = Series::findOrFail($id);
-        $Series->delete();
+        $series = Series::findOrFail($id);
+        $series->delete();
         return response()->json(['message' => 'カテゴリを削除しました'], 200);
     }
 }

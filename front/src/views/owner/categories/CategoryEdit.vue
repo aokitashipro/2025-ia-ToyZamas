@@ -2,9 +2,10 @@
   <div>
     <h2>カテゴリー編集</h2>
 
+    <button type="button" class="back-btn" @click="router.back()">← 前のページに戻る</button>
+
     <div v-if="isSubmitting">
       <div class="loader"></div>
-      <p>カテゴリー情報を更新中...</p>
     </div>
 
     <form @submit.prevent="submit" v-else>
@@ -15,8 +16,7 @@
 
       <div>
         <label for="sort_order">表示順:</label>
-        <!-- <input type="number" id="sort_order" v-model="form.sort_order" required /> -->
-          <input v-model="form.sort_order" type="number" min="1" max="100" required />
+        <input v-model="form.sort_order" type="number" min="1" max="100" required />
       </div>
 
       <button type="submit" :disabled="isSubmitting">更新</button>
@@ -50,7 +50,6 @@ const message = ref('')
 const errorMessage = ref('')
 
 const fetchCategory = async () => {
-  console.log('id:', props.id)
   isSubmitting.value = true
   try {
     const res = await apiClient.get(`/owner/categories/${props.id}`)
@@ -81,12 +80,12 @@ const submit = async () => {
 
 onMounted(fetchCategory)
 </script>
+
 <style scoped>
-/* スタイルは必要に応じて追加 */
 form {
   max-width: 400px;
   margin: auto;
-} 
+}
 input {
   width: 100%;
   padding: 8px;
@@ -102,6 +101,19 @@ button {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+.back-btn {
+  background: #eee;
+  color: #333;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.back-btn:hover {
+  background: #ddd;
 }
 p {
   margin-top: 10px;

@@ -95,37 +95,100 @@
 </script>
 
 <template>
-
-    <div>
-        <h1 v-if="user">{{ user.name }}</h1>
-        <div v-if="loading">
-        <div class="loader"></div>
-        </div>
-
-        <div v-else-if="error">
-            エラー: {{ error }}
-        </div>
-
-        <div v-else-if="user">
-          <label>
-            名前:
-            <input v-if="user" type="text" v-model="num.name" placeholder="名前を入力してください">
-          </label>
-          <br>
-          <label>
-            メール:
-            <input v-if="user" type="email" v-model="num.email" placeholder="メールを入力してください">
-          </label>
-          <br>
-          <label>
-            管理者:
-            <input v-if="user" type="checkbox" v-model="num.is_admin">
-          </label>
-        <br>
-        <button @click="userSubmit">情報更新</button>
-        <button @click="goBack" class="btn btn-secondary">一覧に戻る</button>
-
-      </div>
+  <div class="user-edit-card">
+    <h1 v-if="user">{{ user.name }}</h1>
+    <div v-if="loading">
+      <div class="loader"></div>
     </div>
 
+    <div v-else-if="error">
+      エラー: {{ error }}
+    </div>
+
+    <div v-else-if="user">
+      <label>
+        名前:
+        <input v-if="user" type="text" v-model="num.name" placeholder="名前を入力してください">
+      </label>
+      <label>
+        メール:
+        <input v-if="user" type="email" v-model="num.email" placeholder="メールを入力してください">
+      </label>
+      <label>
+        管理者:
+        <input v-if="user" type="checkbox" v-model="num.is_admin">
+      </label>
+      <button @click="userSubmit">情報更新</button>
+      <button @click="goBack" class="btn btn-secondary">一覧に戻る</button>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.user-edit-card {
+  max-width: 420px;
+  margin: 2em auto;
+  padding: 2em 1.5em;
+  background: #f9f9fc;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+.user-edit-card h1 {
+  margin-bottom: 1.2em;
+  color: #338fe5;
+  font-size: 1.3em;
+  text-align: center;
+}
+.user-edit-card label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+.user-edit-card input[type="text"],
+.user-edit-card input[type="email"] {
+  flex: 1;
+  margin-left: 1em;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.user-edit-card input[type="checkbox"] {
+  margin-left: 1em;
+  transform: scale(1.2);
+}
+.user-edit-card button {
+  margin-right: 1em;
+  padding: 0.5em 1.5em;
+  background: #338fe5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.user-edit-card button.btn-secondary {
+  background: #eee;
+  color: #338fe5;
+}
+.user-edit-card button:hover:not(.btn-secondary) {
+  background: #226bb3;
+}
+.user-edit-card button.btn-secondary:hover {
+  background: #dbeafe;
+}
+.loader {
+  border: 6px solid #eee;
+  border-top: 6px solid #338fe5;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin: 2em auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+</style>

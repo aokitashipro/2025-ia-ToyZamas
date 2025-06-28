@@ -35,16 +35,11 @@ const fetchCategories = async () => {
   }
 }
 
-
 const confirmDelete = async (id) => {
   if (confirm('本当に削除しますか？')) {
     try {
       await apiClient.delete(`/owner/categories/${id}`)
-      alert('カテゴリを削除しました')
-      // // 削除後のリスト再取得、またはローカル更新
-      // categories.value = categories.value.filter(c => c.id !== id)
-           // 配列部分だけ更新
-      categories.value.data = categories.value.data.filter(c => c.id !== id)
+      await fetchCategories()
     } catch (error) {
       alert('削除に失敗しました')
       console.error(error)

@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Api\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-
-
-use App\Http\Requests\CategoryRequest;//リクエスト追加
-
-use App\Http\Resources\Owner\CategoryListResource;//リソース追加
-
+use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\Owner\CategoryListResource;
 
 class CategoryController extends Controller
 {
@@ -18,27 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //ーーーーーーーーーーーーーーーーーーーーーーーーーー
-    //         // 12件ずつのページネーション
-    $categories = Category::paginate(12);
-
-    // // APIリソースがある場合はコレクションで包む
-    // return CategoryListResource::collection($categories);
-//------------------------------------------------------------
-
-        // $categories = Category::orderBy('sort_order')
-        //     ->get();//ソート優先度を昇順で並びかえて表示
-
+        $categories = Category::orderBy('id', 'asc')->get();
         return CategoryListResource::collection($categories);
-
-        //     // ->json(['data' => $categories], 200);
-        // // 取得したデータをCategoryListResourceに変換し、統一フォーマットで返却
-
-
-     // ->json(['data' => $categories], 200);
-
-        // 取得したデータをCategoryListResourceに変換し、統一フォーマットで返却
-
     }
 
     /**
@@ -46,8 +23,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-          $category = Category::create($request->validated());//>validate()だとエラー
-        // 登録完了メッセージを追加してレスポンス
+        $category = Category::create($request->validated());
         return (new CategoryListResource($category))
             ->additional(['message' => 'カテゴリーが登録されました'])->response()
             ->setStatusCode(201);
@@ -70,10 +46,10 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->update($request->validated());
         return response()
-        ->json([
-            'message' => '更新成功',
-            'data' => $category
-        ]);
+            ->json([
+                'message' => '更新成功',
+                'data' => $category
+            ]);
     }
 
     /**
