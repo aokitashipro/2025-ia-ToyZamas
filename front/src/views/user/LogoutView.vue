@@ -26,6 +26,6 @@ onMounted(() => {
 
 <template>
   <div>
-    ログアウト中...
+    <div class="loader"></div>
   </div>
 </template>

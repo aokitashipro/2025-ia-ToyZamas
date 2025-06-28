@@ -4,10 +4,9 @@
       </component>
 </template>
 <script setup>
-// import Header from './components/Header.vue';
-// import Footer from './components/Footer.vue';
 import OwnerLayout from '@/layouts/OwnerLayout.vue'
 import UserLayout from '@/layouts/UserLayout.vue'
+import LoginLayout from '@/layouts/LoginLayout.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -16,6 +15,7 @@ const route = useRoute()
 const layoutComponent = computed(() => {
   const layout = route.meta.layout
   if (layout === 'owner') return OwnerLayout
+  if (layout === 'login') return LoginLayout
   return UserLayout
 })
 </script>

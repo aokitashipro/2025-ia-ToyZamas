@@ -17,7 +17,7 @@ class HistoryListResource extends JsonResource
                 return [
                     'toy_id' => $item->toy_id,
                     'toy_name' => $item->toy ? $item->toy->name : '不明',
-                    'image_url' => $item->image_url,
+                    'image_url' => $item->toy->image_url,
                     'quantity' => $item->purchase_num,
                     'price' => ($item->toy ? $item->toy->price : 0) . '円',
                     'subtotal' => $item->purchase_amount . '円',

@@ -71,11 +71,11 @@ const router = createRouter({
     // { path: '/about', name: 'about', component: () => import('../views/AboutView.vue'),},
 
     //userディレクトリのルート設定
-    { path: '/login', name: 'login', component: Login,  meta: { layout: 'user' }, }, //デフォルトはuserにしてます。//ログイン用ルートの追加
+    { path: '/login', name: 'login', component: Login,  meta: { layout: 'login' }, }, //デフォルトはuserにしてます。//ログイン用ルートの追加
 
-    { path: '/logout', name: 'logout', component: Logout,  meta: { layout: 'user' }, }, //ログアウト用ルートの追加
+    { path: '/logout', name: 'logout', component: Logout,  meta: { layout: 'login' }, }, //ログアウト用ルートの追加
     
-    { path: '/register', name: 'register', component: Register,  meta: { layout: 'user' }, }, //登録用ルートの追加
+    { path: '/register', name: 'register', component: Register,  meta: { layout: 'login' }, }, //登録用ルートの追加
 
     //Ownerディレクトリのルート設定
     { path: '/owner', name: 'OwnerTop', component: OwnerTop,  meta: { layout: 'owner' },},

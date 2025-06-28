@@ -163,75 +163,172 @@
 </script>
 
 <template>
-    <div>
-        <div>
-            <img v-if="img" :src="img" alt="toy image" class="toy-image">
-            <p v-else>画像が存在しません。</p>
-        </div>
-        <h1 v-if="toy">{{ toy.name }}</h1>
-        <div v-if="loading">
-        <div class="loader"></div>
-        </div>
-
-        <div v-else-if="error">
-            エラー: {{ error }}
-        </div>
-
-        <div v-else-if="toy">
-            <div class="toy-info">
-                <!-- <div class="info-row">
-                    <label>商品名:</label>
-                    <span>{{ toy.name }}</span>
-                </div> -->
-
-                <div class="info-row">
-                    <label>商品説明:</label>
-                    <span>{{ toy.information }}</span>
-                </div>
-
-                <div class="info-row">
-                    <label>価格:</label>
-                    <span>{{ toy.price?.toLocaleString() }}円</span>
-                </div>
-
-                <div class="info-row">
-                    <label>カテゴリ:</label>
-                    <span>{{ toy.category_name }}</span>
-                </div>
-
-                <div class="info-row">
-                    <label>シリーズ:</label>
-                    <span>{{ toy.series_name }}</span>
-                </div>
-
-                <div class="info-row">
-                    <label>在庫:</label>
-                    <span>{{ toy.stock?.toLocaleString() }}コ</span>
-                </div>
-
-                <div class="info-row">
-                    <label>発売日:</label>
-                    <span>{{ toy.release_date }}</span>
-                </div>
+    <div class="toy-show-container">
+        <div class="toy-main-row">
+            <div class="toy-image-col">
+                <img v-if="img" :src="img" alt="toy image" class="toy-image">
+                <p v-else class="no-image-text">画像が存在しません。</p>
             </div>
-
-            <div class="action-buttons">
-                <button @click="goBack" class="btn btn-secondary">一覧に戻る</button>
-                <button @click="favoritSubmit">お気に入りに追加</button>
-                <select v-model="num">
-                    <option v-for="n in toy.stock" :key="n" :value="n">{{ n }}</option>
-                </select>
-                <button v-if="toy.is_reserve" @click="reserveSubmit">予約注文</button>
-                <button v-else @click="cartSubmit">カートに追加</button>
+            <div class="toy-info-col">
+                <h1 v-if="toy" class="toy-title">{{ toy.name }}</h1>
+                <div v-if="loading">
+                    <div class="loader"></div>
+                </div>
+                <div v-else-if="error">
+                    エラー: {{ error }}
+                </div>
+                <div v-else-if="toy">
+                    <div class="toy-info">
+                        <div class="info-row">
+                            <label>商品説明:</label>
+                            <span>{{ toy.information }}</span>
+                        </div>
+                        <div class="info-row">
+                            <label>価格:</label>
+                            <span>{{ toy.price?.toLocaleString() }}円</span>
+                        </div>
+                        <div class="info-row">
+                            <label>カテゴリ:</label>
+                            <span>{{ toy.category_name }}</span>
+                        </div>
+                        <div class="info-row">
+                            <label>シリーズ:</label>
+                            <span>{{ toy.series_name }}</span>
+                        </div>
+                        <div class="info-row">
+                            <label>在庫:</label>
+                            <span>{{ toy.stock?.toLocaleString() }}コ</span>
+                        </div>
+                        <div class="info-row">
+                            <label>発売日:</label>
+                            <span>{{ toy.release_date }}</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button @click="goBack" class="btn btn-secondary">一覧に戻る</button>
+                        <button @click="favoritSubmit" class="btn">お気に入りに追加</button>
+                        <select v-model="num" class="num-select">
+                            <option v-for="n in toy.stock" :key="n" :value="n">{{ n }}</option>
+                        </select>
+                        <button v-if="toy.is_reserve" @click="reserveSubmit" class="btn">予約注文</button>
+                        <button v-else @click="cartSubmit" class="btn">カートに追加</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
 <style scoped>
+.toy-show-container {
+  max-width: 700px;
+  margin: 2em auto;
+  background: #f9f9fc;
+  border: 1px solid #e0e0e0;
+  padding: 2em 1.5em;
+}
+.toy-main-row {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+}
+.toy-image-col {
+  flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.toy-info-col {
+  flex: 1;
+  min-width: 0;
+}
+.toy-title {
+  color: #338fe5;
+  margin: 0 0 1em 0;
+  font-size: 1.5em;
+  text-align: left;
+}
 .toy-image {
-  width: 300px;     /* お好みの幅に調整 */
-  height: auto;     /* アスペクト比を維持 */
+  width: 300px;
+  height: auto;
   display: block;
-  margin: 0 auto 1em auto;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.no-image-text {
+  width: 300px;
+  height: 200px;
+  background: #f0f0f0;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  font-size: 1em;
+  border: 1px dashed #ccc;
+}
+.toy-info {
+  margin-bottom: 2em;
+}
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7em;
+}
+.info-row label {
+  width: 90px;
+  font-weight: bold;
+  color: #338fe5;
+  margin-right: 1em;
+  text-align: right;
+  flex-shrink: 0;
+}
+.info-row span {
+  flex: 1;
+}
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
+  margin-top: 1.5em;
+}
+.btn, .btn-secondary {
+  padding: 0.5em 1.5em;
+  background: #338fe5;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-secondary {
+  background: #eee;
+  color: #338fe5;
+}
+.btn:hover:not(.btn-secondary) {
+  background: #226bb3;
+}
+.btn-secondary:hover {
+  background: #dbeafe;
+}
+.num-select {
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+@media (max-width: 700px) {
+  .toy-main-row {
+    flex-direction: column;
+    gap: 1em;
+  }
+  .toy-image-col {
+    align-items: center;
+    margin-bottom: 1em;
+  }
+  .toy-info-col {
+    width: 100%;
+  }
 }
 </style>

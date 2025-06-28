@@ -1,20 +1,18 @@
 <template>
   <div class="layout-root">
-    <Header v-if="isLoggedIn" />
+    <Header />
     <main class="main-content">
       <div class="page-container">
         <slot />
       </div>
     </main>
-    <Footer v-if="isLoggedIn" />
+    <Footer />
   </div>
 </template>
 
 <script setup>
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
-import { computed } from 'vue'
-const isLoggedIn = computed(() => !!localStorage.getItem('token')) // ユーザー情報があればログインと判断
 </script>
 
 <style scoped>
@@ -24,10 +22,9 @@ const isLoggedIn = computed(() => !!localStorage.getItem('token')) // ユーザ�
   flex-direction: column;
 }
 .page-container {
-  max-width: 1200px;
+  max-width: 420px;
   margin: 0 auto;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding: 2em 0;
 }
 .main-content {
   flex: 1;

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>ショッピングカート</h1>
+  <div class="cart-container">
+    <h1 class="cart-title">ショッピングカート</h1>
     <div v-if="loading">
       <div class="loader"></div>
     </div>
@@ -10,51 +10,73 @@
     <div v-else>
       <template v-if="isPurchased">
         <h2>購入ありがとうございました</h2>
-        <ul>
-          <li v-for="item in purchasedItems" :key="item.cart_id">
-            {{ item.name }} 数量:{{ item.quantity }} {{ (item.quantity * (item.price ?? 0)).toLocaleString() }}円
-          </li>
-        </ul>
+        <div v-for="item in purchasedItems" :key="item.cart_id" class="cart-item">
+          <div class="cart-item-row">
+            <img
+              v-if="item.image_url"
+              :src="laravel_base_url + item.image_url"
+              alt="商品画像"
+              class="cart-image"
+            >
+            <div v-else class="no-image">画像がありません</div>
+            <div class="cart-info">
+              <h2>
+                <RouterLink :to="`/toyzamas/toys/${item.toy_id}`">{{ item.name }}</RouterLink>
+              </h2>
+              <p>価格: {{ (item.price ?? 0).toLocaleString() }}円</p>
+              <p>数量: {{ item.quantity }}</p>
+              <p>小計: {{ (item.quantity * (item.price ?? 0)).toLocaleString() }}円</p>
+            </div>
+          </div>
+        </div>
         <p>
           合計金額：{{ purchasedItems.reduce((sum, item) => sum + (item.quantity * (item.price ?? 0)), 0).toLocaleString() }}円
         </p>
+        <RouterLink to="/toyzamas/buy/history">購入履歴を見る</RouterLink>
       </template>
       <template v-else>
-        <ul v-if="cartItems.length">
-          <div v-for="item in cartItems" :key="item.cart_id">
-            <hr>
-            <br>
-            <img :src="item.image_url" alt="" width="100" height="100">
-            <h2>
-              <RouterLink :to="`/toyzamas/toys/${item.toy_id}`">{{ item.name }}</RouterLink>
-            </h2>
-            <p>
-              {{ (item.quantity * (item.price ?? 0)).toLocaleString() }}円
-              <span style="font-size: 0.8em;">(税込み)</span>
-            </p>
-            <p>
-              数量:
-              <span v-if="item.loading">変更中…</span>
-              <select
-                v-else
-                :value="item.quantity"
-                @change="updateQuantity(item, Number($event.target.value))"
-                :disabled="isBuying"
+        <ul v-if="cartItems.length" class="cart-list">
+          <li v-for="item in cartItems" :key="item.cart_id" class="cart-item">
+            <div class="cart-item-row">
+              <img
+                v-if="item.image_url"
+                :src="laravel_base_url + item.image_url"
+                alt="商品画像"
+                class="cart-image"
               >
-                <option v-for="n in item.stock" :key="n" :value="n">{{ n }}</option>
-              </select>
-              <button @click="handleDelete(item.cart_id)" style="margin-left:1rem;" :disabled="isBuying || isChanging">削除</button>
-            </p>
-            <br>
-          </div>
-          <hr>
-          <p>
+              <div v-else class="no-image">画像がありません</div>
+              <div class="cart-info">
+                <h2>
+                  <RouterLink :to="`/toyzamas/toys/${item.toy_id}`">{{ item.name }}</RouterLink>
+                </h2>
+                <p>
+                  {{ (item.quantity * (item.price ?? 0)).toLocaleString() }}円
+                  <span style="font-size: 0.8em;">(税込み)</span>
+                </p>
+                <p>
+                  数量:
+                  <span v-if="item.loading">変更中…</span>
+                  <select
+                    v-else
+                    :value="item.quantity"
+                    @change="updateQuantity(item, Number($event.target.value))"
+                    :disabled="isBuying"
+                  >
+                    <option v-for="n in item.stock" :key="n" :value="n">{{ n }}</option>
+                  </select>
+                  <button @click="handleDelete(item.cart_id)" style="margin-left:1rem;" :disabled="isBuying || isChanging">削除</button>
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="cart-total">
             お支払い総額(税込)
             {{ cartItems.reduce((sum, item) => sum + (item.quantity * (item.price ?? 0)), 0).toLocaleString() }}円
             <button @click="handleBuy()" style="margin-left:1rem;" :disabled="isBuying || isChanging">購入</button>
-          </p>
+          </li>
         </ul>
-        <div v-else>カートに商品はありません。
+        <div v-else class="cart-empty">
+          カートに商品はありません。
           <br>
           <RouterLink to="/toyzamas/toys">お買い物を続ける</RouterLink>
           <br>
@@ -68,6 +90,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { apiClient } from '@/utils/api.js'
+
+const laravel_base_url = 'http://127.0.0.1:8000/storage/'
 
 const cartItems = ref([])
 const loading = ref(true)
@@ -135,3 +159,67 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+.cart-container {
+  max-width: 700px;
+  margin: 2em auto;
+  background: #f9f9fc;
+  border: 1px solid #e0e0e0;
+  padding: 2em 1.5em;
+}
+.cart-title {
+  text-align: center;
+  color: #338fe5;
+  margin-bottom: 1.5em;
+}
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cart-item {
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1em;
+}
+.cart-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5em;
+}
+.cart-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.no-image {
+  width: 100px;
+  height: 100px;
+  background: #f0f0f0;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95em;
+  border: 1px dashed #ccc;
+}
+.cart-info h2 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.1em;
+}
+.cart-info p {
+  margin: 0.3em 0;
+}
+.cart-total {
+  font-weight: bold;
+  text-align: right;
+  margin-top: 2em;
+}
+.cart-empty {
+  text-align: center;
+  margin: 2em 0;
+}
+</style>
