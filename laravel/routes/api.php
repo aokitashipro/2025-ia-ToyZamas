@@ -43,7 +43,6 @@ Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
     Route::apiResource('/owner/toys', OwnerToyController::class)->only(['index', 'store', 'show', 'destroy']);
     Route::apiResource('/owner/stocks', OwnerStockController::class);
     Route::apiResource('/owner/history', OwnerHistoryController::class);
-    Route::apiResource('/owner/series', OwnerSeriesController::class);
     Route::apiResource('/owner/users', OwnerUserController::class);
     Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
     Route::apiResource('/owner/reserves', OwnerReserveController::class);

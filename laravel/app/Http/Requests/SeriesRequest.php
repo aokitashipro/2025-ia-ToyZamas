@@ -27,15 +27,6 @@ class SeriesRequest extends FormRequest
         ];
     }
 
-
-    public function messages(): array
-    {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'sort_order' => ['required', 'integer'],
-        ];
-    }
-
     public function messages(): array
     {
         return [

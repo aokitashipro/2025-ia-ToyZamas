@@ -46,6 +46,7 @@ const submit = async () => {
       name: form.name,
       sort_order: form.sort_order
     })
+    alert('カテゴリの登録に成功しました。カテゴリ一覧に戻ります。')
     router.push('/owner/categories')
   } catch (error) {
     alert('登録に失敗しました')
