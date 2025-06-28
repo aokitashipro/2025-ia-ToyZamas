@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="loading">読み込み中...</div>
+    <div v-if="loading">
+      <div class="loader"></div>
+    </div>
     <div v-else-if="error">エラー: {{ error }}</div>
     <div v-else-if="toy">
     <h2>ID:{{ toy.id }} 「{{ toy.name }}」</h2>

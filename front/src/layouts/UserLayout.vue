@@ -2,7 +2,9 @@
   <div class="layout-root">
     <Header v-if="isLoggedIn" />
     <main class="main-content">
-      <slot />
+      <div class="page-container">
+        <slot />
+      </div>
     </main>
     <Footer v-if="isLoggedIn" />
   </div>
@@ -20,6 +22,12 @@ const isLoggedIn = computed(() => !!localStorage.getItem('token'))
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 .main-content {
   flex: 1;

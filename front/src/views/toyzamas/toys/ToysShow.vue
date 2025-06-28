@@ -170,7 +170,7 @@
         </div>
         <h1 v-if="toy">{{ toy.name }}</h1>
         <div v-if="loading">
-            読み込み中...
+        <div class="loader"></div>
         </div>
 
         <div v-else-if="error">

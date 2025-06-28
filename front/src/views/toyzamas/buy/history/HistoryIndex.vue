@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>注文履歴</h1>
-    <div v-if="loading">読み込み中...</div>
+    <div v-if="loading">
+      <div class="loader"></div>
+    </div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <div v-if="histories.length">

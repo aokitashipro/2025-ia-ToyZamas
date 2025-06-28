@@ -112,7 +112,7 @@
 <template>
     <div>
         <div v-if="loading">
-            カテゴリデータ、シリーズデータを取得中...
+        <div class="loader"></div>
         </div>
 
         <div v-else-if="loadingStore">

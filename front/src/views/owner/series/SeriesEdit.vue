@@ -2,7 +2,10 @@
   <div>
     <h2>シリーズ編集</h2>
 
-    <div v-if="isSubmitting">読み込み中...</div>
+    <div v-if="isSubmitting">
+      <div class="loader"></div>
+      <p>シリーズ情報を更新中...</p>
+    </div>
 
     <form @submit.prevent="submit" v-else>
       <div>
