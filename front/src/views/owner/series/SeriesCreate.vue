@@ -15,11 +15,13 @@ const router = useRouter()
 const submit = async () => {
   if (isSubmitting.value) return;
   isSubmitting.value = true;
+  console.log(form)
   try {
     await apiClient.post('/owner/series', {
       name: form.name,
       sort_order: form.sort_order
     })
+    alert('シリーズの登録に成功しました。シリーズ一覧に戻ります。')
     router.push('/owner/series')
   } catch (error) {
     console.error('登録エラー詳細:', error);
