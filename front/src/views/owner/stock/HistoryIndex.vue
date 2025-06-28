@@ -15,7 +15,7 @@
         <span> {{ currentPage }} / {{ totalPages }} </span>
         <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">次へ</button>
       </div>
-      <table border="1" style="border-collapse: collapse; width: 100%;">
+      <table>
         <thead>
           <tr>
             <th>日時</th>
@@ -96,6 +96,23 @@ onMounted(() => {
 }
 table {
   margin-top: 2em;
+  width: 100%;
+  border-collapse: collapse;
+  background: #f9f9fc;
+  overflow: hidden;
+}
+th, td {
+  border: 1px solid #e0e0e0;
+  padding: 0.6em 0.8em;
+  text-align: center;
+}
+th {
+  background: #eaf4fb;
+  color: #338fe5;
+  font-weight: bold;
+}
+tr:nth-child(even) {
+  background: #f4f8fb;
 }
 .pagination {
   margin: 1em 0;
@@ -104,5 +121,30 @@ table {
 .pagination button {
   margin: 0 0.5em;
   padding: 0.3em 1em;
+  background: #338fe5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.pagination button:disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
+.loader {
+  border: 6px solid #eee;
+  border-top: 6px solid #338fe5;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin: 2em auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
 </style>

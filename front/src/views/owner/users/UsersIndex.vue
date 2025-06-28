@@ -68,7 +68,7 @@ onMounted(() => {
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.is_admin }}</td> 
-            <td><a :href="`/owner/users/${user.id}`">詳細</a></td>
+            <td><RouterLink :to="`/owner/users/${user.id}`">詳細</RouterLink></td>
             <td><button @click="deleteUser(user.id)">削除</button></td>
           </tr>
         </table>        

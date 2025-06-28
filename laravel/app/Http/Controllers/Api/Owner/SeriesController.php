@@ -23,7 +23,7 @@ class SeriesController extends Controller
      */
     public function store(SeriesRequest $request)
     {
-        $series = Series::create($request->all());
+        $series = Series::create($request->validated());
         return (new SeriesListResource($series))
             ->additional(['message' => 'シリーズが登録されました'])->response()
             ->setStatusCode(201);
