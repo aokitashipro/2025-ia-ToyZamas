@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>売上分析</h2>
+    <h1>売上分析</h1>
     <!-- グラフ -->
     <canvas ref="salesChart"></canvas>
       <!-- 切り替えラジオ -->

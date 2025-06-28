@@ -105,8 +105,12 @@ onMounted(() => {
 
 <template>
  <div>
-    <h2><router-link to="/owner/series">シリーズ管理はこちら</router-link></h2>
-    <h1> カテゴリ一覧画面</h1>
+    <h1>
+      <span class="active-tab">カテゴリ一覧</span>
+      /
+      <RouterLink to="/owner/series">シリーズ一覧</RouterLink>
+    </h1>
+    <router-link to="/owner/categories/create">新規作成</router-link>
         <div v-if="loading">
             <div class="loader"></div>
         </div>
@@ -114,7 +118,6 @@ onMounted(() => {
       エラー: {{ error }}
     </div>
         <div v-else>
-    <router-link to="/owner/categories/create">新規作成</router-link>
     <table>
       <thead>
         <tr>
@@ -143,14 +146,29 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.active-tab {
+  border-bottom: 3px solid #338fe5;
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
 table {
-  width: 100%;
+  width: 500px;           /* テーブル全体の幅を固定（必要に応じて調整） */
+  max-width: 100%;
+  margin: 2em auto 0 auto;
   border-collapse: collapse;
-} 
+  table-layout: fixed;    /* 列幅を固定 */
+}
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 6px;
+  text-align: center;
+  word-break: break-all;
 }
+th:nth-child(1), td:nth-child(1) { width: 50px; }   /* ID */
+th:nth-child(2), td:nth-child(2) { width: 200px; }  /* 名前 */
+th:nth-child(3), td:nth-child(3) { width: 80px; }   /* 表示順 */
+th:nth-child(4), td:nth-child(4) { width: 150px; }   /* 操作 */
 
 button {
   background-color: #f44336; /* 赤色 */

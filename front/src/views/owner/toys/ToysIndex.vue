@@ -59,8 +59,8 @@ onMounted(() => getToys())
 </script>
 
 <template>
+  <h1>登録済み商品一覧</h1>
   <div class="page-container">
-    <h1>登録済み商品一覧</h1>
     <div v-if="loading">
       <div class="loader"></div>
     </div>

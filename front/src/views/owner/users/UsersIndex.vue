@@ -49,13 +49,13 @@ onMounted(() => {
 </script>
 
 <template>
+<h1>ユーザー一覧</h1>
   <div>
     <main>
       <div v-if="loading">
         <div class="loader"></div>
       </div>
       <div v-else>
-        <h1>ユーザー一覧</h1>
         <table border="1">
           <tr>
             <th>ID</th>
