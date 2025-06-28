@@ -53,7 +53,7 @@ const handleSubmit = async () => {
     if(data.user.is_admin === 1){
       router.push('/owner/toys')
     }else if(data.user.is_admin === 0){
-      window.location.href = `/toyzamas/${data.user.id}/top`
+      window.location.href = `/toyzamas/toys`
     }
 
     showMessage('ログイン成功！', false)
@@ -105,13 +105,13 @@ onMounted(() => {
 
 </script>
 <template>
-  <div>
-    <h1>ログイン</h1>
+  <h1>ログイン</h1>
+  <div class="login-card">
     
     <!-- ログインフォーム -->
     <div v-show="!isLoggedIn">
       <form @submit.prevent="handleSubmit">
-        <div>
+        <div class="form-row">
           <label for="email">Email:</label>
           <input 
             id="email" 
@@ -122,7 +122,7 @@ onMounted(() => {
           >
         </div>
         
-        <div>
+        <div class="form-row">
           <label for="password">Password:</label>
           <input 
             id="password" 
@@ -133,19 +133,19 @@ onMounted(() => {
           >
         </div>
         
-        <button type="submit" :disabled="isLoading">
+        <button type="submit" :disabled="isLoading" class="login-btn">
           {{ isLoading ? 'ログイン中...' : 'Login' }}
         </button>
       </form>
 
       <div 
         v-if="message.text" 
-        :style="{ color: message.isError ? 'red' : 'green' }"
+        :style="{ color: message.isError ? 'red' : 'green', marginTop: '1em' }"
       >
         {{ message.text }}
       </div>
       
-      <p>
+      <p class="register-link">
         <router-link to="/register">アカウントをお持ちでない方はこちら</router-link>
       </p>
     </div>
@@ -154,13 +154,67 @@ onMounted(() => {
     <div v-show="isLoggedIn">
       <h2>ログイン済み</h2>
       <p>ログインが完了しました。</p>
-      <button @click="handleLogout">ログアウト</button>
-      <p>
-        <router-link to="`/toyzamas/${data.user.id}/toys`">商品一覧</router-link>
-        <router-link to="/toyzamas/${{data.user.id}}">top</router-link>
-      </p>
+      <button @click="handleLogout" class="logout-btn">ログアウト</button>
     </div>
   </div>
 </template>
+
+<style scoped>
+.login-card {
+  max-width: 400px;
+  margin: 2em auto;
+  padding: 2em 1.5em;
+  background: #f9f9fc;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+h1 {
+  text-align: center;
+  color: #338fe5;
+  margin-bottom: 1.5em;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.form-row label {
+  width: 90px;
+  margin-right: 1em;
+  text-align: right;
+  flex-shrink: 0;
+}
+.form-row input {
+  flex: 1;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-btn, .logout-btn {
+  display: block;
+  width: 100%;
+  padding: 0.6em 0;
+  background: #338fe5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.login-btn:hover:not(:disabled),
+.logout-btn:hover {
+  background: #226bb3;
+}
+.register-link {
+  text-align: center;
+  margin-top: 1.5em;
+}
+</style>
 
 <!-- ログアウトは別でつくる -->

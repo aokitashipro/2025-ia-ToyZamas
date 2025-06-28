@@ -1,17 +1,23 @@
 <template>
   <footer class="footer">
-    <nav v-if="!isOwnerRoute" class="mt-2 space-x-4">
+    <nav v-if="isLoginRoute" class="mt-2 space-x-4">
+    </nav>
+    <nav v-else-if="!isOwnerRoute" class="mt-2 space-x-4">
       <router-link to="/toyzamas/toys">商品一覧</router-link>
       <router-link to="/toyzamas/favorites">お気に入り</router-link>
       <router-link to="/toyzamas/cart">カート</router-link>
     </nav>
-    <div class="footer-row" v-if="!isOwnerRoute">
+    <div class="footer-row" v-if="isLoginRoute">
+      <img src="@/assets/logo_toyzamas_frame.svg" alt="ToyZamasロゴ" class="footer-logo" />
+      <p class="footer-copy">&copy; 2025 ToyZamas ログイン画面</p>
+    </div>
+    <div class="footer-row" v-else-if="!isOwnerRoute">
       <img src="@/assets/logo_toyzamas_frame.svg" alt="ToyZamasロゴ" class="footer-logo" />
       <p class="footer-copy">&copy; 2025 ToyZamas ECサイト - All rights reserved.</p>
     </div>
     <div v-else>
       <img src="@/assets/logo_toyzamas_frame.svg" alt="ToyZamasロゴ" class="footer-logo" />
-      <p> 2025 ToyZamas 管理画面</p>
+      <p>2025 ToyZamas 管理画面</p>
     </div>
   </footer>
 </template>
@@ -24,6 +30,9 @@ const route = useRoute()
 
 const isOwnerRoute = computed(() => {
   return route.path.startsWith('/owner')
+})
+const isLoginRoute = computed(() => {
+  return route.path === '/login' || route.path === '/logout' || route.path === '/register'
 })
 </script>
 
