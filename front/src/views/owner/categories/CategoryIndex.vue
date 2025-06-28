@@ -108,8 +108,8 @@ onMounted(() => {
     <h2><router-link to="/owner/series">シリーズ管理はこちら</router-link></h2>
     <h1> カテゴリ一覧画面</h1>
         <div v-if="loading">
-      読み込み中...
-    </div>
+            <div class="loader"></div>
+        </div>
     <div v-else-if="error">
       エラー: {{ error }}
     </div>

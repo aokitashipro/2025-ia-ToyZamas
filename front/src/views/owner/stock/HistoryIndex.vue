@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1><RouterLink :to="`/owner/stocks`">在庫管理</RouterLink> / 在庫履歴</h1>
-    <div v-if="loading">読み込み中...</div>
+      <div v-if="loading">
+          <div class="loader"></div>
+      </div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
       <table border="1" style="border-collapse: collapse; width: 100%;">

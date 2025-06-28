@@ -16,7 +16,9 @@
     </div>
 
       <!-- 読み込み -->
-    <div v-if="loading">読み込み中...</div>
+    <div v-if="loading">
+      <div class="loader"></div>
+    </div>
         <!-- 表 -->
     <div v-else>
       <table>

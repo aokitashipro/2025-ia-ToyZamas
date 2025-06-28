@@ -16,7 +16,6 @@
     <nav>
       <template v-if="isOwnerRoute">
         <!-- 管理者ヘッダー -->
-        <router-link to="/owner">トップ</router-link>
         <router-link to="/owner/toys">商品</router-link>
         <router-link to="/owner/categories">カテゴリ/シリーズ</router-link>
            <router-link to="/owner/reserve">電話予約</router-link>
@@ -59,10 +58,12 @@ const isOwnerRoute = computed(() => {
 .header {
   background-color: #338fe5;
   color: rgb(211, 196, 196);
-  padding: 1em;
+  padding: 0em 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2em;
+  min-height: 36px;
 }
 
 nav a,
@@ -72,6 +73,11 @@ nav button {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.header img {
+  margin-top: 1em;
+  height: 50px !important;
 }
 
 nav a:hover,

@@ -52,7 +52,7 @@ onMounted(() => {
   <div>
     <main>
       <div v-if="loading">
-        ユーザーデータを取得中...
+        <div class="loader"></div>
       </div>
       <div v-else>
         <h1>ユーザー一覧</h1>

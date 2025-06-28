@@ -2,7 +2,7 @@
   <div>
     <h1>ショッピングカート</h1>
     <div v-if="loading">
-      読み込み中...
+      <div class="loader"></div>
     </div>
     <div v-else-if="error">
       エラー: {{ error }}

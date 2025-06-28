@@ -53,7 +53,7 @@
     <div>
         <h1>商品詳細</h1>
         <div v-if="loading">
-            商品情報を読み取り中...
+            <div class="loader"></div>
         </div>
 
         <div v-else-if="error">
