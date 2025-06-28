@@ -19,7 +19,7 @@ class CategoryListResource extends JsonResource
             'id'         => $this->id,
             'name'       => $this->name,
             'sort_order' => $this->sort_order,
-            
+
         ];
     }
 }
