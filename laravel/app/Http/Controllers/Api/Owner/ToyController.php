@@ -31,7 +31,11 @@ class ToyController extends Controller
     public function store(Request $request)
     {
         //publicのstorageに画像ファイルを保存
-        $file_path = $request->image_url->store('images', 'public');
+        if($request->image_url !== 'null'){
+            $file_path = $request->image_url->store('images', 'public');
+        }else{
+            $file_path = null;
+        }
 
         $toy = Toy::create([
             'name' => $request->name,
