@@ -8,55 +8,23 @@ use App\Http\Resources\Toyzamas\ToyResource;
 use Illuminate\Http\Request;
 use App\Models\Toy;
 
-use Illuminate\Support\Facades\Log;
+use App\Services\SortService;
 
 
 class ToyController extends Controller
 {
+    private $sort;
+    public function __construct(SortService $sortService)
+    {
+        $this->sort = $sortService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $result = $request->query('sort'); //sortの値があればtrue,無ければfalse
-        if ($result)
-        {
-            //予約対象商品なら
-            if($request->sort == 1) {
-                $toys = Toy::where('is_reserve', true)->get();
-                return ToyListResource::collection($toys);
-            }
-
-        } else {
-            Log::info($request->category_id);
-            Log::info($request->series_id);
-
-            if($request->category_id != 0 && $request->series_id != 0)
-            {
-                $toys = Toy::with(['category', 'series'])
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->where('category_id',$request->category_id)
-                ->where('series_id',$request->series_id)
-                ->where('is_reserve', false) // ★追加
-                ->get();
-            } else if($request->category_id != 0 && $request->series_id == 0){
-                $toys = Toy::with(['category', 'series'])
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->where('category_id',$request->category_id)
-                ->where('is_reserve', false) // ★追加
-                ->get();
-            } else if($request->category_id == 0 && $request->series_id != 0){
-                $toys = Toy::with(['category', 'series'])
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->where('series_id',$request->series_id)
-                ->where('is_reserve', false) // ★追加
-                ->get();
-            } else{
-                $toys = Toy::where('is_reserve', false) // ★追加
-                ->orderBy('id', 'asc')->get();
-            }
-        }
-        return ToyListResource::collection($toys);
+        $result = $this->sort->sort($request);
+        return ToyListResource::collection($result);
     }
 
     /**
