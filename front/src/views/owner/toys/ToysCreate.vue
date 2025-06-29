@@ -59,23 +59,13 @@
           error.value = null
 
           //image_urlに画像情報を保存
-          image_url.value = fileInput.value.files[0]
+          if(fileInput.value.files[0]){
+            image_url.value = fileInput.value.files[0]
+          }else{
+            image_url.value =  null
+          }
 
-          //is_selling, is_reserveを文字列から1, 0に変換
-          //true, falseだと.appendした際に文字列に変換されてしまう
-          // console.log(is_selling, is_reserve)
-          // if(is_selling === '販売中'){
-          //     is_selling.value = 1
-          // }else if(is_selling === '販売中止'){
-          //     is_selling.value = 0
-          // }
-          // if(is_reserve === '予約可能'){
-          //     is_reserve.value = 1
-          // }else if(is_reserve === '予約不可'){
-          //     is_reserve.value = 0
-          // }
-
-          console.log(is_selling, is_reserve)
+          console.log(image_url.value)
 
           const formData = new FormData()
           formData.append('name', name.value)
