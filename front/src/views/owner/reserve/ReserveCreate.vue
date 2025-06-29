@@ -126,10 +126,10 @@ const submitReserve = async () => {
 }
 
 async function editReserve(reserve) {
-  if (isEdit.value === false) {
+  if (isEdit.value === false){
     isEdit.value = true
     reserve_id.value = reserve.id
-  } else if (isEdit.value === true) {
+  } else if (isEdit.value === true){
     isSubmitting.value = true
     loading.value = true
     form.value.user_id = reserve.user_id

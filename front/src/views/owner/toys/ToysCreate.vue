@@ -1,111 +1,111 @@
 <script setup>
-    import { ref, onMounted} from 'vue'
-    import { apiClient } from '@/utils/api';
-    import { useRouter } from 'vue-router';
+  import { ref, onMounted} from 'vue'
+  import { apiClient } from '@/utils/api';
+  import { useRouter } from 'vue-router';
 
-    let name = ref(null);
-    let information = ref(null);
-    let price = ref(0);
-    let is_selling = ref(false);
-    let is_reserve = ref(false);
-    let category_id = ref(0);
-    let series_id = ref(0);
-    let image_url = ref(null);
-    let stock = ref(0);
-    let release_date = ref(null);
+  let name = ref(null);
+  let information = ref(null);
+  let price = ref(0);
+  let is_selling = ref(false);
+  let is_reserve = ref(false);
+  let category_id = ref(0);
+  let series_id = ref(0);
+  let image_url = ref(null);
+  let stock = ref(0);
+  let release_date = ref(null);
 
-    const categories = ref([])
-    const series = ref([])
+  const categories = ref([])
+  const series = ref([])
 
-    const loading = ref(true)
-    const loadingStore = ref(false)
-    const error = ref(null)
-    const router = useRouter()
+  const loading = ref(true)
+  const loadingStore = ref(false)
+  const error = ref(null)
+  const router = useRouter()
 
-    const fileInput = ref(null)
+  const fileInput = ref(null)
 
 
-    async function getCategories(){
-        try{
-            loading.value = true
-            loadingStore.value = false
-            error.value = null
+  async function getCategories(){
+    try{
+        loading.value = true
+        loadingStore.value = false
+        error.value = null
 
-            const response_categories = await apiClient.get('/owner/categories')
-            categories.value = response_categories.data
-            console.log(categories.value)
-        }catch(err){
-            console.log('カテゴリ名の取得に失敗:', err)
-            alert('カテゴリ名一覧の取得に失敗しました')
-        }
+        const response_categories = await apiClient.get('/owner/categories')
+        categories.value = response_categories.data
+        console.log(categories.value)
+    }catch(err){
+        console.log('カテゴリ名の取得に失敗:', err)
+        alert('カテゴリ名一覧の取得に失敗しました')
     }
+  }
 
-    async function getSeries(){
-        try{
-        const response_series = await apiClient.get('/owner/series')
-        series.value = response_series.data
-        }catch(err){
-            console.log('シリーズ名の取得に失敗:', err)
-            error.value = 'シリーズ名一覧の取得に失敗しました'
-        }finally{
-            loading.value = false
-        }
+  async function getSeries(){
+    try{
+    const response_series = await apiClient.get('/owner/series')
+    series.value = response_series.data
+    }catch(err){
+        console.log('シリーズ名の取得に失敗:', err)
+        error.value = 'シリーズ名一覧の取得に失敗しました'
+    }finally{
+        loading.value = false
     }
+  }
 
-    async function toyStore(){
-        try{
-            loading.value = false
-            loadingStore.value = true
-            error.value = null
+  async function toyStore(){
+      try{
+          loading.value = false
+          loadingStore.value = true
+          error.value = null
 
-            //image_urlに画像情報を保存
-            image_url.value = fileInput.value.files[0]
+          //image_urlに画像情報を保存
+          image_url.value = fileInput.value.files[0]
 
-            //is_selling, is_reserveを文字列から1, 0に変換
-            //true, falseだと.appendした際に文字列に変換されてしまう
-            // console.log(is_selling, is_reserve)
-            // if(is_selling === '販売中'){
-            //     is_selling.value = 1
-            // }else if(is_selling === '販売中止'){
-            //     is_selling.value = 0
-            // }
-            // if(is_reserve === '予約可能'){
-            //     is_reserve.value = 1
-            // }else if(is_reserve === '予約不可'){
-            //     is_reserve.value = 0
-            // }
+          //is_selling, is_reserveを文字列から1, 0に変換
+          //true, falseだと.appendした際に文字列に変換されてしまう
+          // console.log(is_selling, is_reserve)
+          // if(is_selling === '販売中'){
+          //     is_selling.value = 1
+          // }else if(is_selling === '販売中止'){
+          //     is_selling.value = 0
+          // }
+          // if(is_reserve === '予約可能'){
+          //     is_reserve.value = 1
+          // }else if(is_reserve === '予約不可'){
+          //     is_reserve.value = 0
+          // }
 
-            console.log(is_selling, is_reserve)
+          console.log(is_selling, is_reserve)
 
-            const formData = new FormData()
-            formData.append('name', name.value)
-            formData.append('information', information.value)
-            formData.append('price', price.value)
-            formData.append('is_selling', is_selling.value ? 1 : 0)
-            formData.append('is_reserve', is_reserve.value ? 1 : 0)
-            formData.append('category_id', category_id.value)
-            formData.append('series_id', series_id.value)
-            formData.append('image_url', image_url.value)
-            formData.append('stock', stock.value)
-            formData.append('release_date', release_date.value)
+          const formData = new FormData()
+          formData.append('name', name.value)
+          formData.append('information', information.value)
+          formData.append('price', price.value)
+          formData.append('is_selling', is_selling.value ? 1 : 0)
+          formData.append('is_reserve', is_reserve.value ? 1 : 0)
+          formData.append('category_id', category_id.value)
+          formData.append('series_id', series_id.value)
+          formData.append('image_url', image_url.value)
+          formData.append('stock', stock.value)
+          formData.append('release_date', release_date.value)
 
-            const response = await apiClient.post('/owner/toys', formData)
+          const response = await apiClient.post('/owner/toys', formData)
 
-            alert('商品を登録しました')
-            router.push('/owner/toys')
-        }catch(err){
-            console.log('商品の登録に失敗：', err)
-            error.value = '商品の登録に失敗しました'
-        }finally{
-            loadingStore.value = false
-        }
-    }
+          alert('商品を登録しました')
+          router.push('/owner/toys')
+      }catch(err){
+          console.log('商品の登録に失敗：', err)
+          error.value = '商品の登録に失敗しました'
+      }finally{
+          loadingStore.value = false
+      }
+  }
 
-    onMounted(() =>{
-        getCategories()
-        getSeries()
-        }
-    )
+  onMounted(() =>{
+      getCategories()
+      getSeries()
+      }
+  )
 
 </script>
 

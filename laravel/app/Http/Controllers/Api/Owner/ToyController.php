@@ -108,26 +108,140 @@ class ToyController extends Controller
 
     public function sort(Request $request)
     {
-        if($request->sort === 'price_high'){
-            $toys = Toy::with(['category', 'series'])
-                ->orderBy('price', 'desc')
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->get();
-        }else if($request->sort === 'price_low'){
-            $toys = Toy::with(['category', 'series'])
-                ->orderBy('price', 'asc')
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->get();
-        }else if($request->sort === 'stock_much'){
-            $toys = Toy::with(['category', 'series'])
-                ->orderBy('stock', 'desc')
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->get();
-        }else if($request->sort === 'stock_little'){
-            $toys = Toy::with(['category', 'series'])
-                ->orderBy('price', 'asc')
-                ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
-                ->get();
+        if($request->sort){ //ソートがあるとき
+            if($request->category_filter && $request->series_filter){
+                if($request->sort === 'price_high'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where([
+                            ['category_id', '=', $request->category_filter],
+                            ['series_id', '=', $request->series_filter]
+                        ])
+                        ->orderBy('price', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'price_low'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where([
+                            ['category_id', '=', $request->category_filter],
+                            ['series_id', '=', $request->series_filter]
+                        ])
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_much'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where([
+                            ['category_id', '=', $request->category_filter],
+                            ['series_id', '=', $request->series_filter]
+                        ])
+                        ->orderBy('stock', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_little'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where([
+                            ['category_id', '=', $request->category_filter],
+                            ['series_id', '=', $request->series_filter]
+                        ])
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }
+            }else if($request->category_filter){
+                if($request->sort === 'price_high'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('category_id', $request->category_filter)
+                        ->orderBy('price', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'price_low'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('category_id', $request->category_filter)
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_much'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('category_id', $request->category_filter)
+                        ->orderBy('stock', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_little'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('category_id', $request->category_filter)
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }
+            }else if($request->series_filter){
+                if($request->sort === 'price_high'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('series_id', $request->series_filter)
+                        ->orderBy('price', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'price_low'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('series_id', $request->series_filter)
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_much'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('series_id', $request->series_filter)
+                        ->orderBy('stock', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_little'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->where('series_id', $request->series_filter)
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }
+            }else{
+                if($request->sort === 'price_high'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->orderBy('price', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'price_low'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->orderBy('price', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_much'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->orderBy('stock', 'desc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }else if($request->sort === 'stock_little'){
+                    $toys = Toy::with(['category', 'series'])
+                        ->orderBy('stock', 'asc')
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+                }
+            }
+        }else{ //ソートがないとき
+            if($request->category_filter && $request->series_filter){
+                $toys = Toy::with(['category', 'series'])
+                        ->where([
+                            ['category_id', '=', $request->category_filter],
+                            ['series_id', '=', $request->series_filter]
+                        ])
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+            }else if($request->category_filter){
+                $toys = Toy::with(['category', 'series'])
+                        ->where('category_id', $request->category_filter)
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+            }else if($request->series_filter){
+                $toys = Toy::with(['category', 'series'])
+                        ->where('series_id', $request->series_filter)
+                        ->select('id', 'name', 'price', 'category_id', 'series_id', 'stock', 'is_selling', 'is_reserve', 'created_at')
+                        ->get();
+            }
         }
         return ToyListResource::collection($toys);
     }
