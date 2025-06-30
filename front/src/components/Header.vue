@@ -35,6 +35,7 @@
         <span class="user-name" v-if="userName">ログイン:{{ userName }}さん</span>
         <router-link to="/toyzamas/toys">商品一覧</router-link>
         <router-link to="/toyzamas/cart">カート</router-link>
+        <router-link to="/toyzamas/reserves">予約一覧</router-link>
         <router-link to="/toyzamas/buy/history">購入履歴</router-link>
         <router-link to="/toyzamas/favorites">お気に入り</router-link>
         <router-link to="/logout">ログアウト</router-link>

@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             // UserSeeder::class,
             CategorySeeder::class,
             SeriesSeeder::class,
-            ToySeeder::class
+            // ToySeeder::class
         ]); // 追記
     }
 }

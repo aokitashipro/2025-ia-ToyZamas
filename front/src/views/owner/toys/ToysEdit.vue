@@ -17,6 +17,7 @@
     const laravel_base_url = 'http://127.0.0.1:8000/storage/'
     const img = ref(null)
     const fileInput = ref(null)
+    const image_url = ref(null)
 
     const route = useRoute()
     const router = useRouter()
@@ -94,6 +95,8 @@
         if(fileInput.value.files[0]){
           toy.image_url = fileInput.value.files[0]
         }
+        
+        console.log(toy.image_url)
 
         const formData = new FormData()
         formData.append('name', toy.name)

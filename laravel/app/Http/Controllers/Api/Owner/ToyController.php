@@ -78,9 +78,12 @@ class ToyController extends Controller
         $toy->price = $request->price;
         $toy->category_id = $request->category_id;
         $toy->series_id = $request->series_id;
-        if($toy->image_url !== $request->image_url){
+
+        if($request->image_url !== $toy->image_url && $request->image_url !== 'null'){
             $file_path = $request->image_url->store('images', 'public');
             $toy->image_url = $file_path;
+        }else{
+            $toy->image_url = $request->image_url;
         }
         $toy->is_selling = $request->is_selling;
         $toy->is_reserve = $request->is_reserve;
