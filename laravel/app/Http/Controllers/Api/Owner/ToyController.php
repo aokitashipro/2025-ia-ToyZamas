@@ -72,18 +72,19 @@ class ToyController extends Controller
     public function update(Request $request, string $id)
     {
         $toy = Toy::findOrFail($id);
-        if($request->image_url !== 'null'){
-            $file_path = $request->image_url->store('images', 'public');
-        }else{
-            $file_path = null;
-        }
 
         $toy->name = $request->name;
         $toy->information = $request->information;
         $toy->price = $request->price;
         $toy->category_id = $request->category_id;
         $toy->series_id = $request->series_id;
-        $toy->image_url = $file_path;
+
+        if($request->image_url !== $toy->image_url && $request->image_url !== 'null'){
+            $file_path = $request->image_url->store('images', 'public');
+            $toy->image_url = $file_path;
+        }else{
+            $toy->image_url = $request->image_url;
+        }
         $toy->is_selling = $request->is_selling;
         $toy->is_reserve = $request->is_reserve;
         $toy->release_date = $request->release_date;

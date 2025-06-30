@@ -22,6 +22,10 @@
             const response = await apiClient.get(`/owner/toys/${toyId}`)
             toy.value = response.data
 
+            if(toy.value.image_url === 'null'){
+              toy.value.image_url = null
+            }
+
             img.value = laravel_base_url + toy.value.image_url
             
         }catch(err){
