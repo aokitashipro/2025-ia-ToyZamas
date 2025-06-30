@@ -93,10 +93,10 @@
         }
 
         if(fileInput.value.files[0]){
-          image_url.value = fileInput.value.files[0]
-        }else{
-          image_url.value =  null
+          toy.image_url = fileInput.value.files[0]
         }
+        
+        console.log(toy.image_url)
 
         const formData = new FormData()
         formData.append('name', toy.name)
