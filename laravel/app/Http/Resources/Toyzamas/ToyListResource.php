@@ -16,7 +16,7 @@ class ToyListResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            // 'id' => $this->id,
+            'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
             'image_url' => $this->image_url

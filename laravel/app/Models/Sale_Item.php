@@ -17,5 +17,7 @@ class Sale_Item extends Model
     {
         return $this->belongsTo(Toy::class, 'toy_id'); // 外部キー名を指定
     }
-    protected $fillable = ['sele_id', 'toy_id','purchase_num','purchase_amout'];
+  
+    protected $fillable = ['sale_id', 'toy_id','purchase_num','purchase_amount'];//20250624:スペルを修正
+
 }

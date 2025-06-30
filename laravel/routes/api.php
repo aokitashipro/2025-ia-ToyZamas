@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Owner\UserController as OwnerUserController;
 use App\Http\Controllers\Api\Owner\SalesAnalysisController as OwnerSalesAnalysisController;
 
 //user側のコントローラを追加
+use App\Http\Controllers\Api\Toyzamas\TopController as UserTopController;
 use App\Http\Controllers\Api\Toyzamas\ToyController as UserToyController;
 use App\Http\Controllers\Api\Toyzamas\CartController as UserCartController;
 use App\Http\Controllers\Api\Toyzamas\BuyController as UserBuyController;
@@ -29,38 +30,34 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
-// Owner用ルート追加
-Route::apiResource('/owner/toys', OwnerToyController::class);
-Route::apiResource('/owner/stocks', OwnerStockController::class);
-Route::apiResource('/owner/history', OwnerHistoryController::class);
-Route::apiResource('/owner/reserves', OwnerReserveController::class);
-Route::apiResource('/owner/categories', OwnerCategoryController::class);
-Route::apiResource('/owner/series', OwnerSeriesController::class);
-Route::apiResource('/owner/users', OwnerUserController::class);
-Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
-
 //ユーザデータの登録、ログイン
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 //認証完了しているかつ管理者権限を持っている場合に実行
 Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    // Owner用ルート追加
+    Route::apiResource('/owner/toys', OwnerToyController::class)->only(['index', 'store', 'show', 'destroy']);
+    Route::apiResource('/owner/stocks', OwnerStockController::class);
+    Route::apiResource('/owner/history', OwnerHistoryController::class);
+    Route::apiResource('/owner/users', OwnerUserController::class);
+    Route::apiResource('/owner/sales-analysis', OwnerSalesAnalysisController::class);
+    Route::apiResource('/owner/reserves', OwnerReserveController::class);
+    // Toyを更新するためのルート
+    Route::post('/owner/toys/{toy}/update', [OwnerToyController::class, 'update']);
+    // Toyindexでソートをかけるためのルート
+    Route::post('/owner/toys/sort', [OwnerToyController::class, 'sort']);
 });
 
 
 //認証管理しているかつユーザー権限を持っている場合に実行
 Route::middleware(['auth:sanctum', 'can:user'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/toyzamas/carts', UserCartController::class);
-});
 
-//ポストマン用
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
     // User用ルート
+    Route::get('/toyzamas/top', [UserTopController::class, 'index']);
     Route::apiResource('/toyzamas/toys', UserToyController::class);
     Route::apiResource('/toyzamas/carts', UserCartController::class);
     Route::apiResource('/toyzamas/buy', UserBuyController::class);
@@ -68,3 +65,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/toyzamas/reserves', UserReservesController::class);
     Route::apiResource('/toyzamas/favorites', UserFavoritesController::class);
 });
+
+//ごり押し用
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('/owner/categories', OwnerCategoryController::class);
+    Route::apiResource('/owner/series', OwnerSeriesController::class);
+});
+
+
+
+

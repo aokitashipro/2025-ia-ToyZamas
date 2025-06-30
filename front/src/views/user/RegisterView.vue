@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -123,9 +122,9 @@ onMounted(() => {
     <h1>ユーザー登録</h1>
     
     <!-- 登録フォーム -->
-    <div v-show="!isCompleted">
+    <div v-show="!isCompleted" class="register-card">
       <form @submit.prevent="handleSubmit">
-        <div>
+        <div class="form-row">
           <label for="name">お名前:</label>
           <input 
             id="name" 
@@ -135,7 +134,7 @@ onMounted(() => {
           >
         </div>
         
-        <div>
+        <div class="form-row">
           <label for="email">メールアドレス:</label>
           <input 
             id="email" 
@@ -145,7 +144,7 @@ onMounted(() => {
           >
         </div>
         
-        <div>
+        <div class="form-row">
           <label for="password">パスワード:</label>
           <input 
             id="password" 
@@ -156,7 +155,7 @@ onMounted(() => {
           >
         </div>
         
-        <div>
+        <div class="form-row">
           <label for="confirmPassword">パスワード確認:</label>
           <input 
             id="confirmPassword" 
@@ -166,7 +165,7 @@ onMounted(() => {
           >
         </div>
         
-        <button type="submit" :disabled="isLoading">
+        <button type="submit" :disabled="isLoading" class="register-btn">
           {{ isLoading ? '登録中...' : '登録する' }}
         </button>
       </form>
@@ -187,7 +186,64 @@ onMounted(() => {
     <div v-show="isCompleted">
       <h2>登録完了！</h2>
       <p>ユーザー登録が完了しました。</p>
-      <button @click="handleLogout">ログアウト</button>
+      <button><router-link to="/toyzamas/toys">トップページへ</router-link></button> 
+      <br>
+      <!-- <button @click="handleLogout">ログアウト</button> -->
     </div>
   </div>
 </template>
+
+<style scoped>
+.register-card {
+  max-width: 400px;
+  margin: 2em auto;
+  padding: 2em 1.5em;
+  background: #f9f9fc;
+  border: 1px solid #e0e0e0;
+}
+h1, h2 {
+  text-align: center;
+  color: #338fe5;
+  margin-bottom: 1.5em;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.form-row label {
+  width: 110px;
+  margin-right: 1em;
+  text-align: right;
+  flex-shrink: 0;
+}
+.form-row input {
+  flex: 1;
+  padding: 0.4em;
+  border: 1px solid #ccc;
+}
+button, .register-btn {
+  display: block;
+  width: 100%;
+  padding: 0.6em 0;
+  background: #338fe5;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+button:hover:not(:disabled),
+.register-btn:hover {
+  background: #226bb3;
+}
+p {
+  text-align: center;
+  margin-top: 1.5em;
+}
+</style>

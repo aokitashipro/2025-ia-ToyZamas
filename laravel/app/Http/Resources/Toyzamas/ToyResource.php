@@ -23,6 +23,7 @@ class ToyResource extends JsonResource
             'series_name' => $this->series->name,
             'image_url' => $this->image_url,
             'stock' => $this->stock,
+            'is_reserve' => $this->is_reserve,
             'release_date' => $this->release_date
         ];
     }

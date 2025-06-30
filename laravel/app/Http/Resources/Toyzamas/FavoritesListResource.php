@@ -17,7 +17,8 @@ class FavoritesListResource extends JsonResource
         return [
             // 'user_name' => $this->user->name,
             'id' => $this->id,
-            'toy_name' => $this->toy->name,
+            'toy_id' => $this->toy_id,
+            'name' => $this->toy->name,
             'price' => $this->toy->price,
             'image_url' => $this->toy->image_url
         ];
