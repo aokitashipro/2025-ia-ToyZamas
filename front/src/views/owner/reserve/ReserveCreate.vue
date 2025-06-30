@@ -66,7 +66,7 @@
           <td v-else>{{ reserve.reserve_num }}</td>
           <td>
             <button @click="editReserve(reserve)" :disabled="isSubmitting || loading">
-              {{ isEdit && reserve_id === reserve.id ? '予約登録' : '予約編集' }}
+              {{ isEdit && reserve_id === reserve.id ? '予約更新' : '予約編集' }}
             </button>
             <button @click="deleteReserve(reserve.id)" :disabled="isSubmitting || loading">削除</button>
           </td>
