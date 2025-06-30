@@ -19,6 +19,7 @@ class ReservesListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->toy->name,
             'price' => $this->toy->price,
+            'image_url' => $this->toy->image_url,
             'reserve_num' => $this->reserve_num,
             'total' => $this->toy->price * $this->reserve_num,
             'reserve_date' => $this->toy->release_date,
